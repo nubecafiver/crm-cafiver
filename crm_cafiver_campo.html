@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Cafiver · Mis clientes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4efe4; --card:#fffdf8; --card-2:#faf5ea; --border:#e2d8c6;
+    --ink:#2a1f16; --ink-2:#6b5d4d; --muted:#9a8b76;
+    --dorado:#a8742e; --dorado-bg:#f3e7d2;
+    --verde:#4f7a3f; --ambar:#c2871f; --rojo:#b8472f;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  .num{font-family:'Space Grotesk',sans-serif;font-variant-numeric:tabular-nums}
+  .hidden{display:none!important}
+  button{font-family:inherit;cursor:pointer;border:none}
+  input,select,textarea{font-family:inherit;font-size:16px}
+  .wrap{max-width:560px;margin:0 auto;min-height:100vh}
+
+  /* conexión */
+  #netbar{position:sticky;top:0;z-index:30;background:var(--rojo);color:#fff;font-size:13px;text-align:center;padding:7px;font-weight:500}
+
+  /* login */
+  #login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .login-card{width:100%;max-width:380px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:36px 28px;box-shadow:0 6px 24px rgba(80,60,30,.08)}
+  .brand{font-family:'Space Grotesk';font-weight:700;letter-spacing:.16em;font-size:22px;color:var(--ink)}
+  .brand .dot{color:var(--dorado)}
+  .login-sub{color:var(--ink-2);font-size:13px;margin:6px 0 26px}
+  label{display:block;font-size:12px;color:var(--ink-2);margin:0 0 7px;letter-spacing:.03em;text-transform:uppercase;font-weight:600}
+  .login-card input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:11px;color:var(--ink);padding:14px;margin-bottom:18px}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--dorado);outline-offset:1px;border-color:transparent}
+  .btn-primary{width:100%;background:var(--dorado);color:#fff;font-weight:600;font-size:16px;padding:15px;border-radius:11px}
+  .btn-primary:active{filter:brightness(.94)}
+  .btn-primary:disabled{opacity:.6}
+  .login-msg{font-size:13px;color:var(--rojo);margin-top:14px;min-height:18px;text-align:center}
+
+  /* topbar */
+  .top{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:20}
+  .top .hi{font-size:12px;color:var(--ink-2)}
+  .top .nm{font-family:'Space Grotesk';font-weight:500;font-size:15px}
+  .icon-btn{background:var(--card-2);border:1px solid var(--border);color:var(--ink-2);width:40px;height:40px;border-radius:11px;font-size:18px;display:flex;align-items:center;justify-content:center}
+
+  .pad{padding:16px 16px 90px}
+
+  /* KPIs campo */
+  .kchips{display:flex;gap:10px;margin-bottom:16px}
+  .kchip{flex:1;background:var(--card);border:1px solid var(--border);border-radius:13px;padding:13px}
+  .kchip .v{font-family:'Space Grotesk';font-weight:700;font-size:20px}
+  .kchip .l{font-size:11px;color:var(--ink-2);margin-top:2px}
+  .kchip.warn .v{color:var(--rojo)}
+
+  .search{width:100%;background:var(--card);border:1px solid var(--border);border-radius:13px;padding:14px;margin-bottom:14px}
+
+  /* cliente card */
+  .ccard{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:15px;margin-bottom:11px;display:flex;gap:13px;align-items:center;cursor:pointer}
+  .ccard:active{background:var(--card-2)}
+  .dot-sem{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+  .dot-sem.v{background:var(--verde)} .dot-sem.a{background:var(--ambar)} .dot-sem.r{background:var(--rojo)}
+  .ccard .info{flex:1;min-width:0}
+  .ccard .cn{font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ccard .meta{font-size:12px;color:var(--ink-2);margin-top:3px}
+  .ccard .vta{text-align:right;font-family:'Space Grotesk';font-weight:500;font-size:14px;white-space:nowrap}
+  .ccard .dias{font-size:11px;color:var(--muted);margin-top:2px;text-align:right}
+
+  .empty{text-align:center;color:var(--muted);padding:50px 20px;font-size:14px}
+
+  /* ficha */
+  .fhead{background:var(--card);border-bottom:1px solid var(--border);padding:16px 18px;position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px}
+  .back{background:var(--card-2);border:1px solid var(--border);width:40px;height:40px;border-radius:11px;font-size:20px;color:var(--ink);flex-shrink:0}
+  .fhead .ft{font-family:'Space Grotesk';font-weight:500;font-size:16px;line-height:1.2}
+  .fhead .fs{font-size:12px;color:var(--ink-2);margin-top:2px}
+
+  .sec{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:13px}
+  .sec h4{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:13px;font-weight:600}
+  .datarow{display:flex;justify-content:space-between;padding:7px 0;font-size:14px;border-bottom:1px solid var(--card-2)}
+  .datarow:last-child{border:none}
+  .datarow .k{color:var(--ink-2)} .datarow .vv{font-weight:500;text-align:right}
+  .prod{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;color:var(--ink-2)}
+  .prod b{color:var(--ink);font-weight:500}
+
+  .fld{margin-bottom:12px}
+  .fld label{margin-bottom:6px}
+  .fld input,.fld select,.fld textarea{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:11px;padding:13px;color:var(--ink)}
+  textarea{resize:vertical;min-height:80px}
+  .btn-save{width:100%;background:var(--ink);color:var(--card);font-weight:600;padding:14px;border-radius:11px;font-size:15px}
+  .btn-out{width:100%;background:var(--dorado);color:#fff;font-weight:700;padding:16px;border-radius:13px;font-size:16px;margin-bottom:13px}
+  .btn-geo{width:100%;background:var(--card-2);border:1px solid var(--border);color:var(--ink);padding:13px;border-radius:11px;font-size:14px;font-weight:500}
+  .btn-geo.ok{background:var(--dorado-bg);border-color:var(--dorado);color:var(--dorado)}
+
+  /* visita historial */
+  .vrow{border-left:3px solid var(--dorado);padding:10px 0 10px 13px;margin-bottom:12px}
+  .vrow .vt{font-size:12px;color:var(--muted)}
+  .vrow .vres{font-weight:600;font-size:14px;margin:3px 0}
+  .vrow .vnota{font-size:13px;color:var(--ink-2)}
+  .pend{display:inline-block;font-size:10px;background:var(--ambar);color:#fff;padding:1px 7px;border-radius:10px;margin-left:6px;vertical-align:middle}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--verde);color:#fff;padding:13px 22px;border-radius:12px;font-size:14px;font-weight:600;z-index:40;opacity:0;transition:opacity .25s;max-width:90vw;text-align:center}
+  .toast.show{opacity:1}
+  .toast.err{background:var(--rojo)}
+
+  /* modal visita */
+  #visita{position:fixed;inset:0;background:var(--bg);z-index:50;overflow-y:auto}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- login -->
+<div id="login">
+  <div class="login-card">
+    <div class="brand">CAFIVER<span class="dot">·</span></div>
+    <div class="login-sub">App de ventas · campo</div>
+    <label for="email">Correo</label>
+    <input id="email" type="email" autocomplete="username" inputmode="email" placeholder="tu@cafiver.com.mx">
+    <label for="pass">Contraseña</label>
+    <input id="pass" type="password" autocomplete="current-password" placeholder="••••••••">
+    <button class="btn-primary" id="btnLogin">Entrar</button>
+    <div class="login-msg" id="loginMsg"></div>
+  </div>
+</div>
+
+<!-- app -->
+<div id="app" class="hidden">
+  <div id="netbar" class="hidden">Sin conexión · tus cambios se guardan y se envían al reconectar</div>
+
+  <!-- LISTA -->
+  <div id="vlista">
+    <div class="top">
+      <div>
+        <div class="hi">Hola</div>
+        <div class="nm" id="vNom">—</div>
+      </div>
+      <button class="icon-btn" id="btnLogout" title="Salir">⎋</button>
+    </div>
+    <div class="pad">
+      <div class="kchips">
+        <div class="kchip"><div class="v num" id="kTot">—</div><div class="l">Mis clientes</div></div>
+        <div class="kchip warn"><div class="v num" id="kFrio">—</div><div class="l">Por visitar</div></div>
+        <div class="kchip"><div class="v num" id="kVta">—</div><div class="l">Mi cartera</div></div>
+      </div>
+      <input class="search" id="buscar" placeholder="Buscar mi cliente…">
+      <div id="lista"></div>
+    </div>
+  </div>
+
+  <!-- FICHA -->
+  <div id="vficha" class="hidden">
+    <div class="fhead">
+      <button class="back" id="btnBack">‹</button>
+      <div>
+        <div class="ft" id="fNom">—</div>
+        <div class="fs" id="fSub">—</div>
+      </div>
+    </div>
+    <div class="pad">
+      <button class="btn-out" id="btnNuevaVisita">+ Registrar visita</button>
+
+      <div class="sec">
+        <h4>Resumen comercial</h4>
+        <div class="datarow"><span class="k">Venta del año</span><span class="vv num" id="fVta">—</span></div>
+        <div class="datarow"><span class="k">Kilos del año</span><span class="vv num" id="fKg">—</span></div>
+        <div class="datarow"><span class="k">Última compra</span><span class="vv" id="fUlt">—</span></div>
+        <div class="datarow"><span class="k">Canal</span><span class="vv" id="fCanal">—</span></div>
+      </div>
+
+      <div class="sec" id="fProdSec">
+        <h4>Lo que más compra</h4>
+        <div id="fProd"></div>
+      </div>
+
+      <div class="sec">
+        <h4>Datos de contacto</h4>
+        <div class="fld"><label>Teléfono</label><input id="cTel" inputmode="tel" placeholder="Agregar teléfono"></div>
+        <div class="fld"><label>Dirección</label><input id="cDir" placeholder="Agregar dirección"></div>
+        <div class="fld"><label>Persona de contacto</label><input id="cCont" placeholder="Nombre de quien atiende"></div>
+        <button class="btn-save" id="btnSaveCont">Guardar contacto</button>
+      </div>
+
+      <div class="sec">
+        <h4>Historial de visitas</h4>
+        <div id="fVisitas"><div class="empty" style="padding:20px">Sin visitas registradas</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL VISITA -->
+<div id="visita" class="hidden">
+  <div class="fhead">
+    <button class="back" id="vCerrar">‹</button>
+    <div><div class="ft">Registrar visita</div><div class="fs" id="vClienteNom">—</div></div>
+  </div>
+  <div class="pad">
+    <div class="fld"><label>Tipo</label>
+      <select id="vTipo"><option>Visita presencial</option><option>Llamada</option><option>Pedido</option><option>Cobranza</option></select></div>
+    <div class="fld"><label>Resultado</label>
+      <select id="vResult"><option>Tomó pedido</option><option>Seguimiento</option><option>No había nadie</option><option>No compró</option><option>Solo visita</option></select></div>
+    <div class="fld"><label>Notas</label><textarea id="vNotas" placeholder="¿Qué pasó en la visita?"></textarea></div>
+    <div class="fld"><label>Próxima acción (opcional)</label><input id="vProx" placeholder="Ej. Llevar muestra de tueste oscuro"></div>
+    <div class="fld"><label>Próxima fecha (opcional)</label><input id="vProxFecha" type="date"></div>
+    <div class="fld"><button class="btn-geo" id="vGeo">📍 Adjuntar mi ubicación</button></div>
+    <button class="btn-primary" id="vGuardar">Guardar visita</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyBdv1Rss2nCmylGaCKbjnTjynJJIAQi8P8",
+    authDomain: "cafiver-crm.firebaseapp.com",
+    projectId: "cafiver-crm",
+    storageBucket: "cafiver-crm.firebasestorage.app",
+    messagingSenderId: "1027513512882",
+    appId: "1:1027513512882:web:7e6a329917abc44daf2aab"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+  // PERSISTENCIA OFFLINE — el corazón de la app de campo
+  db.enablePersistence({synchronizeTabs:true}).catch(()=>{});
+
+  const $ = id => document.getElementById(id);
+  const pesos = n => '$' + Math.round(n||0).toLocaleString('es-MX');
+  const cortoP = n => n>=1e6?('$'+(n/1e6).toFixed(1)+'M'):n>=1e3?('$'+Math.round(n/1e3)+'k'):('$'+Math.round(n||0));
+  const hoy = new Date();
+  const diasDesde = f => f?Math.floor((hoy-new Date(f))/86400000):9999;
+  const sem = d => d<30?'v':d<60?'a':'r';
+
+  let UID=null, MISCLIENTES=[], MISVISITAS=[], clienteActual=null, geoActual=null;
+
+  // conexión
+  function pintarNet(){ $('netbar').classList.toggle('hidden', navigator.onLine); }
+  window.addEventListener('online', pintarNet); window.addEventListener('offline', pintarNet);
+
+  // login
+  $('btnLogin').addEventListener('click', login);
+  $('pass').addEventListener('keydown',e=>{if(e.key==='Enter')login();});
+  function login(){
+    const m=$('loginMsg'); m.textContent='';
+    const b=$('btnLogin'); b.disabled=true; b.textContent='Entrando…';
+    auth.signInWithEmailAndPassword($('email').value.trim(), $('pass').value)
+      .catch(err=>{ m.textContent=err.code==='auth/invalid-credential'?'Correo o contraseña incorrectos.':err.message; })
+      .finally(()=>{ b.disabled=false; b.textContent='Entrar'; });
+  }
+  $('btnLogout').addEventListener('click',()=>auth.signOut());
+
+  auth.onAuthStateChanged(async u=>{
+    if(!u){ $('app').classList.add('hidden'); $('login').classList.remove('hidden'); return; }
+    UID=u.uid; $('login').classList.add('hidden'); $('app').classList.remove('hidden'); pintarNet();
+    try{ const vd=await db.collection('vendedores').doc(UID).get(); $('vNom').textContent=vd.exists?(vd.data().nombre||vd.data().correo||u.email):u.email; }
+    catch(e){ $('vNom').textContent=u.email; }
+    await cargar();
+  });
+
+  async function cargar(){
+    try{
+      const cs=await db.collection('clientes').where('vendedorId','==',UID).get();
+      MISCLIENTES=cs.docs.map(d=>({id:d.id,...d.data()}));
+      const vs=await db.collection('visitas').where('vendedorId','==',UID).get();
+      MISVISITAS=vs.docs.map(d=>({id:d.id,...d.data(),_pend:d.metadata.hasPendingWrites}));
+    }catch(e){ toast('Error al cargar: '+e.message,true); }
+    // KPIs
+    $('kTot').textContent=MISCLIENTES.length;
+    const frios=MISCLIENTES.filter(c=>diasDesde(c.ultimaCompra)>=30).length;
+    $('kFrio').textContent=frios;
+    $('kVta').textContent=cortoP(MISCLIENTES.reduce((s,c)=>s+(c.ventaAnioMXN||0),0));
+    pintarLista();
+  }
+
+  $('buscar').addEventListener('input', pintarLista);
+  function pintarLista(){
+    const q=$('buscar').value.trim().toLowerCase();
+    const lista=MISCLIENTES
+      .filter(c=>!q||(c.nombre||'').toLowerCase().includes(q))
+      .sort((a,b)=>diasDesde(b.ultimaCompra)-diasDesde(a.ultimaCompra));
+    const cont=$('lista');
+    if(!lista.length){ cont.innerHTML='<div class="empty">'+(MISCLIENTES.length?'Sin resultados':'Aún no tienes clientes asignados')+'</div>'; return; }
+    cont.innerHTML='';
+    lista.forEach(c=>{
+      const d=diasDesde(c.ultimaCompra);
+      const el=document.createElement('div'); el.className='ccard';
+      el.innerHTML=`<div class="dot-sem ${sem(d)}"></div>
+        <div class="info"><div class="cn">${c.nombre||c.id}</div><div class="meta">${c.canal||''}</div></div>
+        <div><div class="vta num">${cortoP(c.ventaAnioMXN)}</div><div class="dias">${d>900?'sin compras':d+' días'}</div></div>`;
+      el.onclick=()=>abrirFicha(c);
+      cont.appendChild(el);
+    });
+  }
+
+  // ---- ficha ----
+  function abrirFicha(c){
+    clienteActual=c;
+    $('vlista').classList.add('hidden'); $('vficha').classList.remove('hidden'); window.scrollTo(0,0);
+    $('fNom').textContent=c.nombre||c.id;
+    $('fSub').textContent=(c.canal||'')+' · '+(c.vkburTexto||c.vkbur||'');
+    $('fVta').textContent=pesos(c.ventaAnioMXN);
+    $('fKg').textContent=(c.kgAnio||0).toLocaleString('es-MX')+' kg';
+    const d=diasDesde(c.ultimaCompra);
+    $('fUlt').textContent=(c.ultimaCompra||'—')+(d<900?' ('+d+' días)':'');
+    $('fCanal').textContent=c.canal||'—';
+    // productos
+    const ps=c.topProductos||[];
+    $('fProdSec').style.display=ps.length?'block':'none';
+    $('fProd').innerHTML=ps.map(p=>`<div class="prod"><span>${p.desc||p.matnr}</span><b>${pesos(p.venta)}</b></div>`).join('');
+    // contacto
+    $('cTel').value=c.telefono||''; $('cDir').value=c.direccion||''; $('cCont').value=c.contacto||'';
+    // visitas
+    pintarVisitas(c.id);
+  }
+  $('btnBack').addEventListener('click',()=>{ $('vficha').classList.add('hidden'); $('vlista').classList.remove('hidden'); });
+
+  function pintarVisitas(clienteId){
+    const vs=MISVISITAS.filter(v=>v.clienteId===clienteId).sort((a,b)=>(b.fechaHora||'').localeCompare(a.fechaHora||''));
+    const cont=$('fVisitas');
+    if(!vs.length){ cont.innerHTML='<div class="empty" style="padding:20px">Sin visitas registradas</div>'; return; }
+    cont.innerHTML=vs.map(v=>{
+      const f=v.fechaHora?new Date(v.fechaHora).toLocaleString('es-MX',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'';
+      return `<div class="vrow"><div class="vt">${f} · ${v.tipo||''}${v._pend?'<span class="pend">por enviar</span>':''}</div>
+        <div class="vres">${v.resultado||''}</div>
+        ${v.notas?`<div class="vnota">${v.notas}</div>`:''}
+        ${v.proximaAccion?`<div class="vnota">→ ${v.proximaAccion}${v.proximaFecha?' ('+v.proximaFecha+')':''}</div>`:''}</div>`;
+    }).join('');
+  }
+
+  // guardar contacto
+  $('btnSaveCont').addEventListener('click', async ()=>{
+    const b=$('btnSaveCont'); b.disabled=true; b.textContent='Guardando…';
+    try{
+      await db.collection('clientes').doc(clienteActual.id).update({
+        telefono:$('cTel').value.trim(), direccion:$('cDir').value.trim(), contacto:$('cCont').value.trim()
+      });
+      Object.assign(clienteActual,{telefono:$('cTel').value.trim(),direccion:$('cDir').value.trim(),contacto:$('cCont').value.trim()});
+      toast('Contacto guardado');
+    }catch(e){ toast('Error: '+e.message,true); }
+    finally{ b.disabled=false; b.textContent='Guardar contacto'; }
+  });
+
+  // ---- visita ----
+  $('btnNuevaVisita').addEventListener('click',()=>{
+    geoActual=null; $('vGeo').className='btn-geo'; $('vGeo').textContent='📍 Adjuntar mi ubicación';
+    $('vNotas').value=''; $('vProx').value=''; $('vProxFecha').value=''; $('vTipo').selectedIndex=0; $('vResult').selectedIndex=0;
+    $('vClienteNom').textContent=clienteActual.nombre||clienteActual.id;
+    $('visita').classList.remove('hidden'); window.scrollTo(0,0);
+  });
+  $('vCerrar').addEventListener('click',()=>$('visita').classList.add('hidden'));
+
+  $('vGeo').addEventListener('click',()=>{
+    if(!navigator.geolocation){ toast('Sin GPS disponible',true); return; }
+    $('vGeo').textContent='Obteniendo ubicación…';
+    navigator.geolocation.getCurrentPosition(
+      p=>{ geoActual={lat:p.coords.latitude,lng:p.coords.longitude}; $('vGeo').className='btn-geo ok'; $('vGeo').textContent='📍 Ubicación adjuntada ✓'; },
+      ()=>{ $('vGeo').textContent='📍 Adjuntar mi ubicación'; toast('No se pudo obtener ubicación',true); },
+      {enableHighAccuracy:true,timeout:8000});
+  });
+
+  $('vGuardar').addEventListener('click', async ()=>{
+    const b=$('vGuardar'); b.disabled=true; b.textContent='Guardando…';
+    const visita={
+      clienteId:clienteActual.id, clienteNombre:clienteActual.nombre||'', vendedorId:UID,
+      cedi:clienteActual.cedi||'', fechaHora:new Date().toISOString(),
+      tipo:$('vTipo').value, resultado:$('vResult').value, notas:$('vNotas').value.trim(),
+      proximaAccion:$('vProx').value.trim(), proximaFecha:$('vProxFecha').value||'', geo:geoActual||null
+    };
+    try{
+      // add() no se "espera" si está offline — se encola. Por eso no bloqueamos con await largo.
+      const ref=db.collection('visitas').doc();
+      visita.id=ref.id;
+      ref.set(visita); // no await: offline-safe, se sincroniza solo
+      MISVISITAS.push({...visita,_pend:!navigator.onLine});
+      toast(navigator.onLine?'Visita guardada':'Visita guardada — se enviará al reconectar');
+      $('visita').classList.add('hidden');
+      pintarVisitas(clienteActual.id);
+    }catch(e){ toast('Error: '+e.message,true); }
+    finally{ b.disabled=false; b.textContent='Guardar visita'; }
+  });
+
+  let toastT;
+  function toast(m,err){ const t=$('toast'); t.textContent=m; t.className='toast show'+(err?' err':''); clearTimeout(toastT); toastT=setTimeout(()=>t.className='toast',3000); }
+</script>
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRM Cafiver · Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{font-family:'Inter',system-ui,sans-serif;background:#0f0b08;color:#f0e9df;-webkit-font-smoothing:antialiased;min-height:100vh}
+  .num{font-family:'Space Grotesk',sans-serif;font-variant-numeric:tabular-nums}
+  .hidden{display:none!important}
+  button{font-family:inherit;cursor:pointer;border:none}
+  .brand{font-family:'Space Grotesk';font-weight:700;letter-spacing:.16em}
+  .dot{color:#d9a441}
+
+  /* ===== LANDING ===== */
+  #landing{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center;
+    background:radial-gradient(800px 500px at 50% 0%, rgba(217,164,65,.12), transparent 65%)}
+  #landing .brand{font-size:34px;margin-bottom:10px}
+  #landing .tag{color:#a8998a;font-size:15px;margin-bottom:6px}
+  #landing .demo-pill{display:inline-block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#d9a441;border:1px solid #5a4525;border-radius:20px;padding:5px 14px;margin-bottom:40px}
+  .roles{display:flex;gap:20px;flex-wrap:wrap;justify-content:center}
+  .role{width:280px;background:#1c1510;border:1px solid #3a2e24;border-radius:18px;padding:30px 26px;text-align:left;transition:.18s}
+  .role:hover{border-color:#d9a441;transform:translateY(-3px)}
+  .role .ico{font-size:30px;margin-bottom:14px}
+  .role h3{font-family:'Space Grotesk';font-size:19px;font-weight:500;margin-bottom:8px}
+  .role p{color:#a8998a;font-size:13px;line-height:1.6;margin-bottom:18px}
+  .role .go{color:#d9a441;font-size:13px;font-weight:600}
+
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid #2a2017;position:sticky;top:0;background:#0f0b08;z-index:40}
+  .topbar .brand{font-size:15px}
+  .back-demo{background:#1c1510;border:1px solid #3a2e24;color:#a8998a;padding:8px 14px;border-radius:9px;font-size:13px}
+  .back-demo:hover{color:#f0e9df;border-color:#d9a441}
+
+  /* ===== PHONE ===== */
+  #vendedor{padding:30px 16px 50px;display:flex;flex-direction:column;align-items:center;gap:14px}
+  .phone{width:360px;max-width:94vw;height:740px;background:#f4efe4;border-radius:38px;border:11px solid #1a1410;box-shadow:0 24px 70px rgba(0,0,0,.55);overflow:hidden;position:relative;color:#2a1f16;display:flex;flex-direction:column}
+  .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:140px;height:26px;background:#1a1410;border-radius:0 0 16px 16px;z-index:10}
+  .screen{flex:1;overflow-y:auto;overflow-x:hidden}
+  .scr{display:none;flex-direction:column;min-height:100%}
+  .scr.on{display:flex}
+  .hint{color:#9a8b76;font-size:12px;text-align:center;max-width:360px}
+
+  /* app claro */
+  .ah{padding:30px 18px 14px;background:#fffdf8;border-bottom:1px solid #e2d8c6}
+  .ah .hi{font-size:12px;color:#6b5d4d}
+  .ah .nm{font-family:'Space Grotesk';font-weight:500;font-size:16px}
+  .pad{padding:16px}
+  .kchips{display:flex;gap:9px;margin-bottom:15px}
+  .kchip{flex:1;background:#fffdf8;border:1px solid #e2d8c6;border-radius:12px;padding:11px}
+  .kchip .v{font-family:'Space Grotesk';font-weight:700;font-size:18px}
+  .kchip .v.r{color:#b8472f}
+  .kchip .l{font-size:10px;color:#6b5d4d;margin-top:2px}
+  .ccard{background:#fffdf8;border:1px solid #e2d8c6;border-radius:13px;padding:13px;margin-bottom:10px;display:flex;gap:11px;align-items:center;cursor:pointer}
+  .ccard:active{background:#faf5ea}
+  .sem{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+  .sem.v{background:#4f7a3f}.sem.a{background:#c2871f}.sem.r{background:#b8472f}
+  .ccard .cn{font-weight:600;font-size:14px}
+  .ccard .meta{font-size:11px;color:#6b5d4d;margin-top:2px}
+  .ccard .vt{margin-left:auto;text-align:right;font-family:'Space Grotesk';font-weight:500;font-size:13px}
+  .ccard .di{font-size:10px;color:#9a8b76;margin-top:2px}
+
+  .fh{padding:30px 16px 14px;background:#fffdf8;border-bottom:1px solid #e2d8c6;display:flex;align-items:center;gap:11px}
+  .bk{background:#faf5ea;border:1px solid #e2d8c6;width:36px;height:36px;border-radius:10px;font-size:19px;color:#2a1f16;flex-shrink:0}
+  .fh .ft{font-family:'Space Grotesk';font-weight:500;font-size:15px;line-height:1.2}
+  .fh .fs{font-size:11px;color:#6b5d4d;margin-top:2px}
+  .sec{background:#fffdf8;border:1px solid #e2d8c6;border-radius:13px;padding:14px;margin-bottom:11px}
+  .sec h4{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#9a8b76;margin-bottom:11px;font-weight:600}
+  .dr{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid #faf5ea}
+  .dr:last-child{border:none}.dr .k{color:#6b5d4d}.dr .vv{font-weight:500}
+  .prod{display:flex;justify-content:space-between;font-size:12px;padding:5px 0;color:#6b5d4d}.prod b{color:#2a1f16;font-weight:500}
+  .acts{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+  .act{padding:14px 10px;border-radius:13px;font-weight:600;font-size:13px;text-align:center;border:1px solid #e2d8c6;background:#fffdf8;color:#2a1f16}
+  .act.primary{background:#a8742e;color:#fff;border-color:#a8742e}
+  .act .ic{display:block;font-size:19px;margin-bottom:4px}
+
+  /* pedido */
+  .pitem{background:#fffdf8;border:1px solid #e2d8c6;border-radius:12px;padding:12px;margin-bottom:9px}
+  .pitem .pt{font-weight:600;font-size:13px}
+  .pitem .pp{font-size:12px;color:#6b5d4d;margin-top:2px}
+  .pitem .stk{font-size:11px;margin-top:4px;display:flex;align-items:center;gap:5px}
+  .stk .dotlive{width:6px;height:6px;border-radius:50%;background:#4f7a3f}
+  .stk.no{color:#b8472f}.stk.ok{color:#4f7a3f}
+  .qty{display:flex;align-items:center;gap:12px;margin-top:9px}
+  .qbtn{width:32px;height:32px;border-radius:9px;background:#faf5ea;border:1px solid #e2d8c6;font-size:18px;color:#2a1f16;display:flex;align-items:center;justify-content:center}
+  .qn{font-family:'Space Grotesk';font-weight:600;font-size:15px;min-width:22px;text-align:center}
+  .ptot{position:sticky;bottom:0;background:#fffdf8;border-top:1px solid #e2d8c6;padding:14px 16px;display:flex;align-items:center;justify-content:space-between}
+  .ptot .tl{font-size:12px;color:#6b5d4d}.ptot .tv{font-family:'Space Grotesk';font-weight:700;font-size:20px}
+  .btn-full{width:100%;background:#a8742e;color:#fff;font-weight:700;padding:15px;border-radius:12px;font-size:15px}
+  .btn-full:active{filter:brightness(.94)}
+  .btn-dark{width:100%;background:#2a1f16;color:#fffdf8;font-weight:600;padding:14px;border-radius:12px;font-size:14px}
+
+  /* visita */
+  .opt{padding:13px;border:1px solid #e2d8c6;border-radius:11px;margin-bottom:8px;font-size:14px;font-weight:500;background:#fffdf8;display:flex;align-items:center;gap:10px}
+  .opt.sel{border-color:#a8742e;background:#f3e7d2;color:#a8742e}
+  .photo{height:120px;border:2px dashed #d8ccb6;border-radius:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#9a8b76;font-size:13px;gap:6px;margin-bottom:11px;background:#faf5ea}
+  .photo.done{border-style:solid;border-color:#4f7a3f;background:#eef4e6;color:#4f7a3f}
+  .map{height:120px;border-radius:13px;margin-bottom:11px;position:relative;overflow:hidden;background:
+    linear-gradient(#e8dfcb,#e8dfcb) padding-box,
+    repeating-linear-gradient(0deg,#ddd2bd 0 1px,transparent 1px 26px),
+    repeating-linear-gradient(90deg,#ddd2bd 0 1px,transparent 1px 26px);background-color:#e8dfcb}
+  .pin{position:absolute;top:50%;left:50%;transform:translate(-50%,-100%);font-size:26px}
+  .maptag{position:absolute;bottom:8px;left:8px;background:#fffdf8;border:1px solid #e2d8c6;border-radius:8px;padding:4px 9px;font-size:11px;font-weight:500}
+
+  /* embudo */
+  .kcol{margin-bottom:14px}
+  .kcol .kt{font-size:12px;font-weight:600;color:#6b5d4d;margin-bottom:8px;display:flex;justify-content:space-between}
+  .ktag{font-family:'Space Grotesk'}
+  .kcard{background:#fffdf8;border:1px solid #e2d8c6;border-left:3px solid #a8742e;border-radius:0 10px 10px 0;padding:11px;margin-bottom:7px}
+  .kcard .kn{font-weight:600;font-size:13px}
+  .kcard .km{font-size:11px;color:#6b5d4d;margin-top:3px}
+  .kcard.win{border-left-color:#4f7a3f}
+
+  /* metas */
+  .ring{width:140px;height:140px;margin:6px auto 16px;position:relative}
+  .ring svg{transform:rotate(-90deg)}
+  .ring .rc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .ring .rp{font-family:'Space Grotesk';font-weight:700;font-size:30px}
+  .ring .rl{font-size:11px;color:#6b5d4d}
+  .mbar{margin-bottom:13px}
+  .mbar .mt{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px}
+  .mtrack{height:9px;background:#e8dfcb;border-radius:6px;overflow:hidden}
+  .mfill{height:100%;background:#a8742e;border-radius:6px}
+
+  /* tabbar */
+  .tabbar{display:flex;background:#fffdf8;border-top:1px solid #e2d8c6}
+  .tab{flex:1;padding:9px 4px;text-align:center;font-size:10px;color:#9a8b76}
+  .tab.on{color:#a8742e}
+  .tab .ti{font-size:18px;display:block;margin-bottom:2px}
+
+  /* ===== DIRECCION (oscuro) ===== */
+  #direccion{max-width:1180px;margin:0 auto;padding:24px}
+  .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#7d6f60;margin-bottom:12px}
+  .dk-kpis{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:13px;margin-bottom:26px}
+  .dk{background:#1c1510;border:1px solid #3a2e24;border-radius:14px;padding:18px}
+  .dk.hero{background:linear-gradient(135deg,#241a12,#1c1510);border-color:#4a3823}
+  .dk .l{font-size:12px;color:#a8998a;margin-bottom:9px}
+  .dk .v{font-family:'Space Grotesk';font-weight:700;font-size:28px}
+  .dk.hero .v{font-size:38px;color:#d9a441}
+  .dk .s{font-size:11px;color:#7d6f60;margin-top:6px}
+  .drow{display:grid;grid-template-columns:1.4fr 1fr;gap:15px;margin-bottom:22px}
+  .dpanel{background:#1c1510;border:1px solid #3a2e24;border-radius:14px;padding:20px}
+  .dpanel h3{font-family:'Space Grotesk';font-size:14px;font-weight:500;margin-bottom:16px}
+  .cbar{display:flex;align-items:center;gap:10px;margin-bottom:11px}
+  .cbar .cl{width:90px;font-size:12px;color:#a8998a;text-align:right}
+  .ctrack{flex:1;height:20px;background:#0f0b08;border-radius:5px;overflow:hidden}
+  .cfill{height:100%;background:#d9a441;border-radius:5px}
+  .cv{font-family:'Space Grotesk';font-size:12px;color:#a8998a;width:54px}
+  .therm{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+  .tc{background:#1c1510;border:1px solid #3a2e24;border-radius:13px;padding:15px;border-left-width:3px}
+  .tc.c30{border-left-color:#d9a441}.tc.c60{border-left-color:#cf7d3e}.tc.c90{border-left-color:#7c8aa8}
+  .tc .tt{font-size:11px;color:#a8998a;margin-bottom:6px}
+  .tc .tn{font-family:'Space Grotesk';font-weight:700;font-size:26px}
+  .tc.c30 .tn{color:#d9a441}.tc.c60 .tn{color:#cf7d3e}.tc.c90 .tn{color:#7c8aa8}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#7d6f60;font-weight:500;padding:0 10px 10px;border-bottom:1px solid #3a2e24}
+  td{padding:10px;border-bottom:1px solid rgba(58,46,36,.5)}
+  .vtrack{height:8px;background:#0f0b08;border-radius:5px;overflow:hidden;width:120px}
+  .vfill{height:100%;border-radius:5px}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#4f7a3f;color:#fff;padding:13px 22px;border-radius:12px;font-size:14px;font-weight:600;z-index:60;opacity:0;transition:opacity .25s;text-align:center;max-width:90vw}
+  .toast.show{opacity:1}
+  .overlay{position:fixed;inset:0;background:rgba(15,11,8,.7);display:flex;align-items:center;justify-content:center;z-index:55}
+  .ocard{background:#fffdf8;color:#2a1f16;border-radius:18px;padding:30px;text-align:center;max-width:280px}
+  .spin{width:38px;height:38px;border:3px solid #e2d8c6;border-top-color:#a8742e;border-radius:50%;margin:0 auto 16px;animation:sp 1s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  @media(max-width:880px){.dk-kpis{grid-template-columns:1fr 1fr}.drow{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ===== LANDING ===== -->
+<div id="landing">
+  <div class="brand" style="font-size:34px">CAFIVER<span class="dot">·</span>CRM</div>
+  <div class="tag">Sistema de relación con clientes y fuerza de ventas</div>
+  <div class="demo-pill">Demo · datos de ejemplo</div>
+  <div class="roles">
+    <div class="role" onclick="ver('vendedor')">
+      <div class="ico">📱</div>
+      <h3>Vendedor en campo</h3>
+      <p>Lo que ve el vendedor en su celular: sus clientes, tomar pedidos contra SAP, registrar visitas con foto y ubicación, su embudo y sus metas.</p>
+      <div class="go">Ver la app →</div>
+    </div>
+    <div class="role" onclick="ver('direccion')">
+      <div class="ico">📊</div>
+      <h3>Dirección</h3>
+      <p>El tablero de control: venta del año, desempeño por CEDI, clientes que se enfrían, cumplimiento de metas por vendedor.</p>
+      <div class="go">Ver la consola →</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== VENDEDOR ===== -->
+<div id="vendedor" class="hidden">
+  <div class="topbar">
+    <div class="brand">CAFIVER<span class="dot">·</span>CRM</div>
+    <button class="back-demo" onclick="ver('landing')">← Cambiar vista</button>
+  </div>
+  <div style="padding:30px 16px 50px;display:flex;flex-direction:column;align-items:center;gap:14px">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+
+        <!-- LISTA -->
+        <div class="scr on" id="s-lista">
+          <div class="ah"><div class="hi">Hola</div><div class="nm">Luis Hernández · CEDI Cancún</div></div>
+          <div class="pad">
+            <div class="kchips">
+              <div class="kchip"><div class="v num">38</div><div class="l">Mis clientes</div></div>
+              <div class="kchip"><div class="v num r">9</div><div class="l">Por visitar</div></div>
+              <div class="kchip"><div class="v num">$4.1M</div><div class="l">Mi cartera</div></div>
+            </div>
+            <div class="ccard" onclick="scr('s-ficha')">
+              <div class="sem r"></div><div><div class="cn">HOTEL RIU CANCÚN</div><div class="meta">Coffee Service</div></div>
+              <div class="vt"><div class="num">$1.2M</div><div class="di">68 días</div></div>
+            </div>
+            <div class="ccard" onclick="scr('s-ficha')">
+              <div class="sem r"></div><div><div class="cn">OMNILIFE MANUFACTURA</div><div class="meta">Nichos</div></div>
+              <div class="vt"><div class="num">$842k</div><div class="di">61 días</div></div>
+            </div>
+            <div class="ccard" onclick="scr('s-ficha')">
+              <div class="sem a"></div><div><div class="cn">PROMOTORA TURÍSTICA MX</div><div class="meta">Coffee Service</div></div>
+              <div class="vt"><div class="num">$513k</div><div class="di">42 días</div></div>
+            </div>
+            <div class="ccard" onclick="scr('s-ficha')">
+              <div class="sem v"></div><div><div class="cn">HEMA IMPORT & EXPORT</div><div class="meta">Nichos</div></div>
+              <div class="vt"><div class="num">$486k</div><div class="di">8 días</div></div>
+            </div>
+            <div class="ccard" onclick="scr('s-ficha')">
+              <div class="sem v"></div><div><div class="cn">INSTITUTO SPAC</div><div class="meta">Coffee Service</div></div>
+              <div class="vt"><div class="num">$312k</div><div class="di">5 días</div></div>
+            </div>
+          </div>
+          <div class="tabbar">
+            <div class="tab on"><span class="ti">👥</span>Clientes</div>
+            <div class="tab" onclick="scr('s-embudo')"><span class="ti">📈</span>Embudo</div>
+            <div class="tab" onclick="scr('s-metas')"><span class="ti">🎯</span>Metas</div>
+          </div>
+        </div>
+
+        <!-- FICHA -->
+        <div class="scr" id="s-ficha">
+          <div class="fh"><button class="bk" onclick="scr('s-lista')">‹</button>
+            <div><div class="ft">HOTEL RIU CANCÚN</div><div class="fs">Coffee Service · Cancún</div></div></div>
+          <div class="pad">
+            <div class="acts">
+              <div class="act primary" onclick="scr('s-pedido')"><span class="ic">🛒</span>Tomar pedido</div>
+              <div class="act" onclick="scr('s-visita')"><span class="ic">📋</span>Registrar visita</div>
+            </div>
+            <div class="sec"><h4>Resumen comercial</h4>
+              <div class="dr"><span class="k">Venta del año</span><span class="vv num">$1,243,800</span></div>
+              <div class="dr"><span class="k">Kilos del año</span><span class="vv num">3,420 kg</span></div>
+              <div class="dr"><span class="k">Última compra</span><span class="vv">hace 68 días ⚠</span></div>
+            </div>
+            <div class="sec"><h4>Lo que más compra</h4>
+              <div class="prod"><span>HB reg molido 500g/20 pzas</span><b>$612,400</b></div>
+              <div class="prod"><span>Coffee kit regular 30g/100</span><b>$338,900</b></div>
+              <div class="prod"><span>Cappuccino en polvo</span><b>$104,200</b></div>
+            </div>
+            <div class="sec"><h4>Contacto</h4>
+              <div class="dr"><span class="k">Teléfono</span><span class="vv">998 848 7900</span></div>
+              <div class="dr"><span class="k">Atiende</span><span class="vv">Chef Ramírez</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PEDIDO -->
+        <div class="scr" id="s-pedido">
+          <div class="fh"><button class="bk" onclick="scr('s-ficha')">‹</button>
+            <div><div class="ft">Nuevo pedido</div><div class="fs">HOTEL RIU CANCÚN</div></div></div>
+          <div class="pad">
+            <div class="pitem">
+              <div class="pt">HB reg molido 500g/20 pzas</div>
+              <div class="pp">$315.00 / caja</div>
+              <div class="stk ok"><span class="dotlive"></span>Stock SAP: 1,240 cajas · en vivo</div>
+              <div class="qty"><button class="qbtn" onclick="qchg(0,-1)">−</button><span class="qn" id="q0">4</span><button class="qbtn" onclick="qchg(0,1)">+</button></div>
+            </div>
+            <div class="pitem">
+              <div class="pt">Coffee kit regular 30g/100 pzas</div>
+              <div class="pp">$440.00 / caja</div>
+              <div class="stk ok"><span class="dotlive"></span>Stock SAP: 320 cajas · en vivo</div>
+              <div class="qty"><button class="qbtn" onclick="qchg(1,-1)">−</button><span class="qn" id="q1">2</span><button class="qbtn" onclick="qchg(1,1)">+</button></div>
+            </div>
+            <div class="pitem">
+              <div class="pt">Cappuccino en polvo 20503228</div>
+              <div class="pp">$210.00 / caja</div>
+              <div class="stk no">● Sin stock en SAP · en vivo</div>
+              <div class="qty"><button class="qbtn" onclick="qchg(2,-1)">−</button><span class="qn" id="q2">0</span><button class="qbtn" onclick="qchg(2,1)">+</button></div>
+            </div>
+          </div>
+          <div class="ptot"><div><div class="tl">Total del pedido</div><div class="tv num" id="ptotal">$2,140.00</div></div>
+            <button class="btn-full" style="width:auto;padding:13px 20px" onclick="enviarPedido()">Enviar a SAP</button></div>
+        </div>
+
+        <!-- VISITA -->
+        <div class="scr" id="s-visita">
+          <div class="fh"><button class="bk" onclick="scr('s-ficha')">‹</button>
+            <div><div class="ft">Registrar visita</div><div class="fs">HOTEL RIU CANCÚN</div></div></div>
+          <div class="pad">
+            <h4 style="font-size:11px;text-transform:uppercase;color:#9a8b76;margin-bottom:9px;font-weight:600">Resultado</h4>
+            <div class="opt sel">✓ Tomó pedido</div>
+            <div class="opt">Seguimiento</div>
+            <div class="opt">No había nadie</div>
+            <input type="file" id="dFotoInput" accept="image/*" capture="environment" hidden>
+            <div class="photo" id="dPhoto">📷 Tomar foto de anaquel</div>
+            <img id="dFotoPrev" class="hidden" style="width:100%;border-radius:13px;margin-bottom:11px;border:1px solid #e2d8c6;display:block">
+            <div class="map" id="dMap"><div class="pin">📍</div><div class="maptag" id="dMapTag">Tocar para hacer check-in</div></div>
+            <button class="btn-full" onclick="guardarVisita()">Guardar visita</button>
+          </div>
+        </div>
+
+        <!-- EMBUDO -->
+        <div class="scr" id="s-embudo">
+          <div class="ah"><div class="hi">Mi embudo</div><div class="nm">3 oportunidades · $1.4M</div></div>
+          <div class="pad">
+            <div class="kcol"><div class="kt"><span>Prospecto</span><span class="ktag">1</span></div>
+              <div class="kcard"><div class="kn">CLUB DE GOLF CANCÚN</div><div class="km">$420k · café para restaurante</div></div></div>
+            <div class="kcol"><div class="kt"><span>Cotización</span><span class="ktag">1</span></div>
+              <div class="kcard"><div class="kn">HOTEL RIU CANCÚN</div><div class="km">$680k · renovar contrato anual</div></div></div>
+            <div class="kcol"><div class="kt"><span>Ganado</span><span class="ktag">1</span></div>
+              <div class="kcard win"><div class="kn">PLAYA RESORT SPA</div><div class="km">$310k · cerrado este mes ✓</div></div></div>
+          </div>
+          <div class="tabbar">
+            <div class="tab" onclick="scr('s-lista')"><span class="ti">👥</span>Clientes</div>
+            <div class="tab on"><span class="ti">📈</span>Embudo</div>
+            <div class="tab" onclick="scr('s-metas')"><span class="ti">🎯</span>Metas</div>
+          </div>
+        </div>
+
+        <!-- METAS -->
+        <div class="scr" id="s-metas">
+          <div class="ah"><div class="hi">Mis metas</div><div class="nm">Junio 2026</div></div>
+          <div class="pad">
+            <div class="ring">
+              <svg width="140" height="140"><circle cx="70" cy="70" r="60" fill="none" stroke="#e8dfcb" stroke-width="12"/>
+                <circle cx="70" cy="70" r="60" fill="none" stroke="#a8742e" stroke-width="12" stroke-linecap="round" stroke-dasharray="377" stroke-dashoffset="121"/></svg>
+              <div class="rc"><div class="rp">68%</div><div class="rl">de mi meta</div></div>
+            </div>
+            <div class="mbar"><div class="mt"><span>Venta del mes</span><span class="num">$680k / $1.0M</span></div><div class="mtrack"><div class="mfill" style="width:68%"></div></div></div>
+            <div class="mbar"><div class="mt"><span>Visitas</span><span class="num">22 / 30</span></div><div class="mtrack"><div class="mfill" style="width:73%"></div></div></div>
+            <div class="mbar"><div class="mt"><span>Clientes reactivados</span><span class="num">3 / 5</span></div><div class="mtrack"><div class="mfill" style="width:60%"></div></div></div>
+            <div class="mbar"><div class="mt"><span>Pedidos nuevos</span><span class="num">14 / 18</span></div><div class="mtrack"><div class="mfill" style="width:78%"></div></div></div>
+          </div>
+          <div class="tabbar">
+            <div class="tab" onclick="scr('s-lista')"><span class="ti">👥</span>Clientes</div>
+            <div class="tab" onclick="scr('s-embudo')"><span class="ti">📈</span>Embudo</div>
+            <div class="tab on"><span class="ti">🎯</span>Metas</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="hint">Toca un cliente para abrir su ficha · prueba "Tomar pedido" y "Registrar visita" · usa la barra de abajo para Embudo y Metas</div>
+  </div>
+</div>
+
+<!-- ===== DIRECCION ===== -->
+<div id="direccion" class="hidden">
+  <div class="topbar">
+    <div class="brand">CAFIVER<span class="dot">·</span>CRM</div>
+    <button class="back-demo" onclick="ver('landing')">← Cambiar vista</button>
+  </div>
+  <div style="max-width:1180px;margin:0 auto;padding:24px">
+    <div class="eyebrow">Cartera anual · facturación SAP</div>
+    <div class="dk-kpis">
+      <div class="dk hero"><div class="l">Venta anual</div><div class="v">$265.0 M</div><div class="s">$265,033,447</div></div>
+      <div class="dk"><div class="l">Clientes</div><div class="v">5,234</div><div class="s">en cartera</div></div>
+      <div class="dk"><div class="l">Asignados</div><div class="v">5,234</div><div class="s">100% repartidos</div></div>
+      <div class="dk"><div class="l" style="color:#c66b4a">Enfriándose</div><div class="v" style="color:#c66b4a">1,355</div><div class="s">+30 días sin comprar</div></div>
+    </div>
+    <div class="drow">
+      <div class="dpanel"><h3>Venta por CEDI</h3>
+        <div class="cbar"><div class="cl">Nichos</div><div class="ctrack"><div class="cfill" style="width:100%"></div></div><div class="cv">$65.9M</div></div>
+        <div class="cbar"><div class="cl">Cuentas clave</div><div class="ctrack"><div class="cfill" style="width:61%"></div></div><div class="cv">$40.3M</div></div>
+        <div class="cbar"><div class="cl">Cancún</div><div class="ctrack"><div class="cfill" style="width:56%"></div></div><div class="cv">$36.8M</div></div>
+        <div class="cbar"><div class="cl">Golfo-Sur</div><div class="ctrack"><div class="cfill" style="width:42%"></div></div><div class="cv">$27.5M</div></div>
+        <div class="cbar"><div class="cl">Centro</div><div class="ctrack"><div class="cfill" style="width:40%"></div></div><div class="cv">$26.2M</div></div>
+        <div class="cbar"><div class="cl">Occidente</div><div class="ctrack"><div class="cfill" style="width:36%"></div></div><div class="cv">$23.6M</div></div>
+        <div class="cbar"><div class="cl">Norte</div><div class="ctrack"><div class="cfill" style="width:26%"></div></div><div class="cv">$17.1M</div></div>
+      </div>
+      <div class="dpanel"><h3>Termómetro de cartera</h3>
+        <div class="therm" style="grid-template-columns:1fr">
+          <div class="tc c30"><div class="tt">Tibios · +30 días</div><div class="tn num">1,355</div></div>
+          <div class="tc c60"><div class="tt">Fríos · +60 días</div><div class="tn num">654</div></div>
+          <div class="tc c90"><div class="tt">Helados · +90 días</div><div class="tn num">360</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="dpanel"><h3>Cumplimiento de metas · por vendedor</h3>
+      <table>
+        <thead><tr><th>Vendedor</th><th>CEDI</th><th>Meta del mes</th><th>Avance</th><th style="text-align:right">%</th></tr></thead>
+        <tbody>
+          <tr><td>Luis Hernández</td><td>Cancún</td><td class="num">$1.0M</td><td><div class="vtrack"><div class="vfill" style="width:68%;background:#d9a441"></div></div></td><td style="text-align:right" class="num">68%</td></tr>
+          <tr><td>Ana Robles</td><td>Centro</td><td class="num">$0.9M</td><td><div class="vtrack"><div class="vfill" style="width:91%;background:#8a9b6e"></div></div></td><td style="text-align:right" class="num">91%</td></tr>
+          <tr><td>Jorge Lara</td><td>Golfo-Sur</td><td class="num">$0.6M</td><td><div class="vtrack"><div class="vfill" style="width:44%;background:#c66b4a"></div></div></td><td style="text-align:right" class="num">44%</td></tr>
+          <tr><td>María Fuentes</td><td>Nichos</td><td class="num">$2.4M</td><td><div class="vtrack"><div class="vfill" style="width:82%;background:#8a9b6e"></div></div></td><td style="text-align:right" class="num">82%</td></tr>
+          <tr><td>Pedro Sánchez</td><td>Occidente</td><td class="num">$0.8M</td><td><div class="vtrack"><div class="vfill" style="width:57%;background:#d9a441"></div></div></td><td style="text-align:right" class="num">57%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="text-align:center;color:#7d6f60;font-size:12px;margin-top:24px">Demo · cifras de cartera reales, vendedores y metas de ejemplo</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  function ver(v){ ['landing','vendedor','direccion'].forEach(x=>document.getElementById(x).classList.add('hidden')); document.getElementById(v).classList.remove('hidden'); window.scrollTo(0,0); }
+  function scr(id){ document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on')); document.getElementById(id).classList.add('on'); document.querySelector('.screen').scrollTo(0,0); }
+
+  const precios=[315,440,210], qty=[4,2,0];
+  function qchg(i,d){ qty[i]=Math.max(0,qty[i]+d); document.getElementById('q'+i).textContent=qty[i]; recalc(); }
+  function recalc(){ const t=qty.reduce((s,q,i)=>s+q*precios[i],0); document.getElementById('ptotal').textContent='$'+t.toLocaleString('es-MX',{minimumFractionDigits:2}); }
+
+  function enviarPedido(){
+    const ov=document.createElement('div'); ov.className='overlay';
+    ov.innerHTML='<div class="ocard"><div class="spin"></div><div style="font-weight:600">Creando pedido en SAP…</div><div style="font-size:12px;color:#6b5d4d;margin-top:6px">BAPI_SALESORDER_CREATEFROMDAT2</div></div>';
+    document.body.appendChild(ov);
+    setTimeout(()=>{ ov.querySelector('.ocard').innerHTML='<div style="font-size:38px;margin-bottom:10px">✓</div><div style="font-weight:600">Pedido creado en SAP</div><div class="num" style="font-size:22px;color:#a8742e;margin:8px 0">0012487</div><button class="btn-dark" onclick="this.closest(\'.overlay\').remove();scr(\'s-ficha\')">Listo</button>'; },1900);
+  }
+  function guardarVisita(){ toast('Visita guardada ✓'); setTimeout(()=>scr('s-ficha'),700); }
+
+  document.getElementById('dPhoto').addEventListener('click',()=>document.getElementById('dFotoInput').click());
+  document.getElementById('dFotoInput').addEventListener('change',e=>{
+    const f=e.target.files[0]; if(!f) return;
+    const prev=document.getElementById('dFotoPrev');
+    prev.src=URL.createObjectURL(f); prev.classList.remove('hidden');
+    const p=document.getElementById('dPhoto'); p.classList.add('done'); p.textContent='📷 Foto tomada ✓';
+  });
+  document.getElementById('dMap').addEventListener('click',()=>{
+    const tag=document.getElementById('dMapTag');
+    if(!navigator.geolocation){ tag.textContent='GPS no disponible aquí'; return; }
+    tag.textContent='Obteniendo ubicación…';
+    navigator.geolocation.getCurrentPosition(
+      pos=>{ tag.textContent='✓ Check-in '+pos.coords.latitude.toFixed(4)+', '+pos.coords.longitude.toFixed(4); },
+      ()=>{ tag.textContent='No se pudo obtener ubicación'; },
+      {enableHighAccuracy:true,timeout:8000});
+  });
+
+  let tt;
+  function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.className='toast show'; clearTimeout(tt); tt=setTimeout(()=>t.className='toast',2200); }
+</script>
+</body>
+</html>

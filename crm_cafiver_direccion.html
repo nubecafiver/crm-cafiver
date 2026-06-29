@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRM Cafiver · Dirección</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --espresso:#17120e; --surface:#221a14; --surface-2:#2b211a; --border:#3a2e24;
+    --crema:#f0e9df; --cafe-leche:#a8998a; --muted:#7d6f60;
+    --dorado:#d9a441; --dorado-soft:rgba(217,164,65,.14);
+    --grano:#8a9b6e; --alerta:#c66b4a;
+    --t30:#d9a441; --t60:#cf7d3e; --t90:#7c8aa8;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Inter',system-ui,sans-serif;background:var(--espresso);color:var(--crema);
+    -webkit-font-smoothing:antialiased;min-height:100vh;
+  }
+  .num{font-family:'Space Grotesk',sans-serif;font-variant-numeric:tabular-nums}
+  .hidden{display:none!important}
+
+  /* ---------- LOGIN ---------- */
+  #login{
+    min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
+    background:
+      radial-gradient(900px 500px at 50% -10%, rgba(217,164,65,.10), transparent 60%),
+      var(--espresso);
+  }
+  .login-card{
+    width:100%;max-width:380px;background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius);padding:38px 32px;
+  }
+  .brand{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:.18em;font-size:22px}
+  .brand .dot{color:var(--dorado)}
+  .login-sub{color:var(--cafe-leche);font-size:13px;margin:6px 0 28px;letter-spacing:.02em}
+  label{display:block;font-size:12px;color:var(--cafe-leche);margin:0 0 7px;letter-spacing:.04em;text-transform:uppercase}
+  input{
+    width:100%;background:var(--espresso);border:1px solid var(--border);border-radius:10px;
+    color:var(--crema);font-size:15px;padding:12px 14px;font-family:inherit;margin-bottom:18px;
+  }
+  input:focus{outline:2px solid var(--dorado);outline-offset:1px;border-color:transparent}
+  button{font-family:inherit;cursor:pointer;border:none}
+  .btn-primary{
+    width:100%;background:var(--dorado);color:#241a09;font-weight:600;font-size:15px;
+    padding:13px;border-radius:10px;transition:filter .15s;
+  }
+  .btn-primary:hover{filter:brightness(1.07)}
+  .btn-primary:disabled{opacity:.6;cursor:wait}
+  .login-msg{font-size:13px;color:var(--alerta);margin-top:14px;min-height:18px;text-align:center}
+
+  /* ---------- APP ---------- */
+  #app{max-width:1180px;margin:0 auto;padding:22px 24px 60px}
+  header{display:flex;align-items:center;justify-content:space-between;padding:8px 0 26px;flex-wrap:wrap;gap:12px}
+  .who{display:flex;align-items:center;gap:14px;color:var(--cafe-leche);font-size:13px}
+  .btn-ghost{background:transparent;color:var(--cafe-leche);border:1px solid var(--border);padding:8px 14px;border-radius:9px;font-size:13px}
+  .btn-ghost:hover{color:var(--crema);border-color:var(--dorado)}
+
+  .eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+
+  /* KPIs */
+  .kpis{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:14px;margin-bottom:28px}
+  .kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px}
+  .kpi.hero{background:linear-gradient(135deg,var(--surface-2),var(--surface));border-color:#4a3823}
+  .kpi-label{font-size:12px;color:var(--cafe-leche);letter-spacing:.03em;margin-bottom:10px}
+  .kpi-val{font-size:30px;font-weight:700;line-height:1}
+  .kpi.hero .kpi-val{font-size:40px;color:var(--dorado)}
+  .kpi-sub{font-size:12px;color:var(--muted);margin-top:8px}
+
+  /* paneles */
+  .row{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-bottom:24px}
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px}
+  .panel h3{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:500;margin-bottom:18px;letter-spacing:.01em}
+  .chart-box{position:relative;height:300px}
+
+  /* termómetro */
+  .therm{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .therm-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;position:relative;overflow:hidden}
+  .therm-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
+  .therm-card.c30::before{background:var(--t30)}
+  .therm-card.c60::before{background:var(--t60)}
+  .therm-card.c90::before{background:var(--t90)}
+  .therm-tag{font-size:12px;color:var(--cafe-leche);margin-bottom:8px}
+  .therm-num{font-size:34px;font-weight:700}
+  .therm-card.c30 .therm-num{color:var(--t30)}
+  .therm-card.c60 .therm-num{color:var(--t60)}
+  .therm-card.c90 .therm-num{color:var(--t90)}
+  .therm-pct{font-size:12px;color:var(--muted);margin-top:6px}
+
+  /* tabla */
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500;padding:0 12px 12px;border-bottom:1px solid var(--border)}
+  td{padding:12px;border-bottom:1px solid rgba(58,46,36,.5);color:var(--crema)}
+  td.r,th.r{text-align:right}
+  tr:hover td{background:rgba(217,164,65,.04)}
+  .chip{display:inline-block;font-size:11px;padding:3px 9px;border-radius:20px;background:var(--surface-2);color:var(--cafe-leche);border:1px solid var(--border)}
+  .rank{color:var(--muted);font-family:'Space Grotesk',sans-serif;width:26px}
+
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:34px}
+  .section-title{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.04em;color:var(--cafe-leche);margin:6px 0 14px}
+
+  @media(max-width:880px){
+    .kpis{grid-template-columns:1fr 1fr}
+    .row{grid-template-columns:1fr}
+    .therm{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<div id="login">
+  <div class="login-card">
+    <div class="brand">CAFIVER<span class="dot">·</span>CRM</div>
+    <div class="login-sub">Consola de Dirección</div>
+    <label for="email">Correo</label>
+    <input id="email" type="email" autocomplete="username" placeholder="tu@cafiver.com.mx">
+    <label for="pass">Contraseña</label>
+    <input id="pass" type="password" autocomplete="current-password" placeholder="••••••••">
+    <button class="btn-primary" id="btnLogin">Entrar</button>
+    <div class="login-msg" id="loginMsg"></div>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app" class="hidden">
+  <header>
+    <div>
+      <div class="brand" style="font-size:18px">CAFIVER<span class="dot">·</span>CRM</div>
+      <div style="color:var(--muted);font-size:12px;letter-spacing:.04em;margin-top:3px">Dirección comercial</div>
+    </div>
+    <div class="who">
+      <span id="userEmail"></span>
+      <button class="btn-ghost" id="btnLogout">Salir</button>
+    </div>
+  </header>
+
+  <div class="eyebrow">Cartera anual · facturación SAP</div>
+  <div class="kpis">
+    <div class="kpi hero">
+      <div class="kpi-label">Venta anual</div>
+      <div class="kpi-val num" id="kVenta">—</div>
+      <div class="kpi-sub" id="kVentaSub"></div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Clientes</div>
+      <div class="kpi-val num" id="kClientes">—</div>
+      <div class="kpi-sub">en cartera</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Sin asignar</div>
+      <div class="kpi-val num" id="kSinV">—</div>
+      <div class="kpi-sub">esperan vendedor</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Enfriándose</div>
+      <div class="kpi-val num" id="kFrio" style="color:var(--alerta)">—</div>
+      <div class="kpi-sub">+30 días sin comprar</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="panel">
+      <h3>Venta por CEDI</h3>
+      <div class="chart-box"><canvas id="chartCedi"></canvas></div>
+    </div>
+    <div class="panel">
+      <h3>Mezcla por canal</h3>
+      <div class="chart-box"><canvas id="chartCanal"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section-title">Termómetro de cartera · clientes sin comprar</div>
+  <div class="therm" style="margin-bottom:28px">
+    <div class="therm-card c30">
+      <div class="therm-tag">Tibios · +30 días</div>
+      <div class="therm-num num" id="t30">—</div>
+      <div class="therm-pct" id="t30p"></div>
+    </div>
+    <div class="therm-card c60">
+      <div class="therm-tag">Fríos · +60 días</div>
+      <div class="therm-num num" id="t60">—</div>
+      <div class="therm-pct" id="t60p"></div>
+    </div>
+    <div class="therm-card c90">
+      <div class="therm-tag">Helados · +90 días</div>
+      <div class="therm-num num" id="t90">—</div>
+      <div class="therm-pct" id="t90p"></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>Top 20 clientes por venta</h3>
+    <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th class="rank">#</th><th>Cliente</th><th>CEDI</th><th>Canal</th><th class="r">Venta anual</th></tr></thead>
+        <tbody id="topBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="foot" id="foot"></div>
+</div>
+
+<!-- ============ Firebase + Chart.js ============ -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyBdv1Rss2nCmylGaCKbjnTjynJJIAQi8P8",
+    authDomain: "cafiver-crm.firebaseapp.com",
+    projectId: "cafiver-crm",
+    storageBucket: "cafiver-crm.firebasestorage.app",
+    messagingSenderId: "1027513512882",
+    appId: "1:1027513512882:web:7e6a329917abc44daf2aab"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  const $ = id => document.getElementById(id);
+  const pesos = n => '$' + Math.round(n).toLocaleString('es-MX');
+  const millones = n => '$' + (n/1e6).toFixed(1) + ' M';
+  const limpiaCedi = c => (c||'').replace('Central-','').replace('CuentasClave','Cuentas clave').replace('Ecommerce','E-commerce');
+
+  // Paleta para gráficas
+  const COLORES = ['#d9a441','#cf7d3e','#8a9b6e','#7c8aa8','#b5764a','#9a8d6f','#c9a06a','#6f8a7d'];
+  let chartCedi, chartCanal;
+
+  // ---------- Auth ----------
+  $('btnLogin').addEventListener('click', login);
+  $('pass').addEventListener('keydown', e => { if(e.key==='Enter') login(); });
+  function login(){
+    const msg = $('loginMsg'); msg.textContent='';
+    const btn = $('btnLogin'); btn.disabled=true; btn.textContent='Entrando…';
+    auth.signInWithEmailAndPassword($('email').value.trim(), $('pass').value)
+      .catch(err=>{
+        const map={
+          'auth/invalid-credential':'Correo o contraseña incorrectos.',
+          'auth/invalid-email':'El correo no tiene un formato válido.',
+          'auth/user-not-found':'No existe una cuenta con ese correo.',
+          'auth/wrong-password':'Contraseña incorrecta.',
+          'auth/too-many-requests':'Demasiados intentos. Espera un momento.'
+        };
+        msg.textContent = map[err.code] || ('No se pudo entrar: '+err.message);
+      })
+      .finally(()=>{ btn.disabled=false; btn.textContent='Entrar'; });
+  }
+  $('btnLogout').addEventListener('click', ()=>auth.signOut());
+
+  auth.onAuthStateChanged(user=>{
+    if(user){
+      $('login').classList.add('hidden');
+      $('app').classList.remove('hidden');
+      $('userEmail').textContent = user.email;
+      cargar();
+    }else{
+      $('app').classList.add('hidden');
+      $('login').classList.remove('hidden');
+    }
+  });
+
+  // ---------- Carga del resumen (1 sola lectura) ----------
+  async function cargar(){
+    let snap;
+    try{
+      snap = await db.collection('resumen').doc('general').get();
+    }catch(e){
+      $('foot').textContent = 'No se pudo leer el resumen: '+e.message+' (revisa las reglas de seguridad de la colección resumen).';
+      return;
+    }
+    if(!snap.exists){ $('foot').textContent='Aún no existe resumen/general. Corre generarResumen() en Apps Script.'; return; }
+    const d = snap.data();
+
+    // KPIs
+    $('kVenta').textContent = millones(d.ventaTotal);
+    $('kVentaSub').textContent = pesos(d.ventaTotal);
+    $('kClientes').textContent = (d.totalClientes||0).toLocaleString('es-MX');
+    $('kSinV').textContent = (d.sinVendedor||0).toLocaleString('es-MX');
+    $('kFrio').textContent = (d.inactividad?.mas30||0).toLocaleString('es-MX');
+
+    // Termómetro
+    const tot = d.totalClientes||1;
+    const setT=(n,id,idp)=>{ $(id).textContent=(n||0).toLocaleString('es-MX'); $(idp).textContent=((n||0)/tot*100).toFixed(1)+'% de la cartera'; };
+    setT(d.inactividad?.mas30,'t30','t30p');
+    setT(d.inactividad?.mas60,'t60','t60p');
+    setT(d.inactividad?.mas90,'t90','t90p');
+
+    // Gráfica CEDI (barras horizontales por venta)
+    const cedis = Object.keys(d.porCedi||{}).map(k=>({n:limpiaCedi(k),v:d.porCedi[k].venta,c:d.porCedi[k].clientes}))
+                        .sort((a,b)=>b.v-a.v);
+    if(chartCedi) chartCedi.destroy();
+    chartCedi = new Chart($('chartCedi'),{
+      type:'bar',
+      data:{ labels:cedis.map(x=>x.n),
+        datasets:[{ data:cedis.map(x=>x.v), backgroundColor:'#d9a441', borderRadius:5, barThickness:18 }] },
+      options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{display:false}, tooltip:{ callbacks:{
+          label:c=>'  '+millones(c.raw)+' · '+cedis[c.dataIndex].c+' clientes' }}},
+        scales:{
+          x:{ ticks:{ color:'#7d6f60', callback:v=>'$'+(v/1e6).toFixed(0)+'M' }, grid:{color:'rgba(58,46,36,.6)'}, border:{display:false} },
+          y:{ ticks:{ color:'#a8998a', font:{size:12} }, grid:{display:false}, border:{display:false} }
+        } }
+    });
+
+    // Gráfica canal (dona)
+    const canales = Object.keys(d.porCanal||{}).map(k=>({n:k,v:d.porCanal[k].venta})).sort((a,b)=>b.v-a.v);
+    if(chartCanal) chartCanal.destroy();
+    chartCanal = new Chart($('chartCanal'),{
+      type:'doughnut',
+      data:{ labels:canales.map(x=>x.n),
+        datasets:[{ data:canales.map(x=>x.v), backgroundColor:COLORES, borderColor:'#221a14', borderWidth:2 }] },
+      options:{ responsive:true, maintainAspectRatio:false, cutout:'62%',
+        plugins:{ legend:{ position:'bottom', labels:{ color:'#a8998a', font:{size:11}, boxWidth:10, padding:10 } },
+          tooltip:{ callbacks:{ label:c=>' '+c.label+': '+millones(c.raw) }}} }
+    });
+
+    // Top 20
+    const tb = $('topBody'); tb.innerHTML='';
+    (d.topClientes||[]).forEach((c,i)=>{
+      const tr=document.createElement('tr');
+      tr.innerHTML = `<td class="rank">${i+1}</td>
+        <td>${c.nombre||c.id}</td>
+        <td><span class="chip">${limpiaCedi(c.cedi)}</span></td>
+        <td style="color:var(--cafe-leche)">${c.canal||''}</td>
+        <td class="r num">${pesos(c.venta)}</td>`;
+      tb.appendChild(tr);
+    });
+
+    // Pie
+    const f = d.generado ? new Date(d.generado) : null;
+    $('foot').textContent = f ? ('Datos actualizados el '+f.toLocaleString('es-MX')) : '';
+  }
+</script>
+</body>
+</html>
