@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ficha de cliente | Cafiver CRM móvil</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = { darkMode: "class", theme: { extend: {
+    colors: {
+      "surface": "#faf9f9", "background": "#faf9f9", "on-background": "#1a1c1c",
+      "surface-container-lowest": "#ffffff", "surface-container-low": "#f4f3f3",
+      "surface-container": "#eeeeee", "surface-container-high": "#e9e8e8", "surface-container-highest": "#e3e2e2",
+      "on-surface": "#1a1c1c", "on-surface-variant": "#414752",
+      "outline": "#717784", "outline-variant": "#c0c7d4",
+      "primary": "#005da9", "on-primary": "#ffffff", "primary-container": "#0176d3", "on-primary-container": "#fefcff",
+      "primary-fixed": "#d4e3ff", "on-primary-fixed": "#001c39",
+      "secondary": "#00658e", "secondary-container": "#43beff", "on-secondary-container": "#004a6a",
+      "tertiary": "#086a34", "on-tertiary": "#ffffff", "tertiary-container": "#2e844a",
+      "tertiary-fixed": "#9ff6b0", "on-tertiary-fixed": "#00210b", "on-tertiary-fixed-variant": "#005226",
+      "error": "#ba1a1a", "on-error": "#ffffff"
+    },
+    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "2xl": "1rem", "full": "9999px" },
+    spacing: { "xs": "0.25rem", "sm": "0.5rem", "md": "1rem", "lg": "1.5rem", "xl": "2rem", "gutter": "1rem", "margin-mobile": "1rem" },
+    fontFamily: { "sans": ["Hanken Grotesk", "sans-serif"] },
+    fontSize: {
+      "headline-lg-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+      "headline-md": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+      "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+      "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "700"}],
+      "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "500"}]
+    }
+  } } }
+</script>
+<style>
+  body { font-family: 'Hanken Grotesk', sans-serif; -webkit-tap-highlight-color: transparent; min-height: max(884px, 100dvh); }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+</head>
+<body class="bg-background text-on-background min-h-screen pb-20 max-w-[420px] mx-auto border-x border-outline-variant/40">
+
+<!-- Barra superior -->
+<header class="bg-surface sticky top-0 z-40 flex justify-between items-center w-full px-margin-mobile h-16 border-b border-outline-variant">
+  <div class="flex items-center gap-4">
+    <a href="cafiver_clientes_lista_movil.html" class="material-symbols-outlined text-primary cursor-pointer active:opacity-80">arrow_back</a>
+    <h1 class="text-headline-md font-bold text-primary">Cliente</h1>
+  </div>
+  <div class="flex items-center gap-4">
+    <span class="material-symbols-outlined text-on-surface-variant cursor-pointer">notifications</span>
+    <span class="material-symbols-outlined text-on-surface-variant cursor-pointer">more_vert</span>
+  </div>
+</header>
+
+<main>
+  <!-- Cabecera de perfil -->
+  <section class="bg-surface px-margin-mobile pt-lg pb-sm">
+    <div class="flex items-start justify-between mb-md">
+      <div class="flex items-center gap-4">
+        <div class="w-16 h-16 rounded-2xl bg-tertiary-fixed text-on-tertiary-fixed-variant flex items-center justify-center font-bold text-[22px]">CA</div>
+        <div>
+          <h2 class="text-headline-lg-mobile leading-tight">Cafés de Altura S.A.</h2>
+          <p class="text-body-sm text-on-surface-variant">Ing. Laura Beltrán · Compras</p>
+        </div>
+      </div>
+      <span class="material-symbols-outlined text-primary cursor-pointer">edit</span>
+    </div>
+
+    <!-- Acciones rápidas -->
+    <div class="grid grid-cols-2 gap-md mb-lg">
+      <button class="flex items-center justify-center gap-sm bg-primary py-3 rounded-xl text-on-primary text-label-md transition-all active:scale-95"><span class="material-symbols-outlined text-[20px]">add_shopping_cart</span> Nuevo pedido</button>
+      <button class="flex items-center justify-center gap-sm bg-surface-container border border-outline-variant py-3 rounded-xl text-primary text-label-md transition-all active:scale-95"><span class="material-symbols-outlined text-[20px]">call</span> Llamar</button>
+    </div>
+
+    <!-- Embudo -->
+    <div class="flex items-center gap-1 overflow-x-auto no-scrollbar py-2">
+      <div class="flex-shrink-0 flex items-center px-4 py-2 bg-tertiary rounded-full text-on-tertiary gap-1"><span class="material-symbols-outlined text-[14px]">check</span><span class="text-label-sm uppercase">Prospecto</span></div>
+      <div class="w-4 h-[1px] bg-outline-variant"></div>
+      <div class="flex-shrink-0 flex items-center px-4 py-2 bg-tertiary rounded-full text-on-tertiary gap-1"><span class="material-symbols-outlined text-[14px]">check</span><span class="text-label-sm uppercase">Cotización</span></div>
+      <div class="w-4 h-[1px] bg-outline-variant"></div>
+      <div class="flex-shrink-0 px-4 py-2 bg-primary-container rounded-full text-on-primary-container"><span class="text-label-sm uppercase">Pedido</span></div>
+      <div class="w-4 h-[1px] bg-outline-variant"></div>
+      <div class="flex-shrink-0 px-4 py-2 border border-outline-variant rounded-full text-on-surface-variant"><span class="text-label-sm uppercase">Facturado</span></div>
+      <div class="w-4 h-[1px] bg-outline-variant"></div>
+      <div class="flex-shrink-0 px-4 py-2 border border-outline-variant rounded-full text-on-surface-variant"><span class="text-label-sm uppercase">Ganado</span></div>
+    </div>
+  </section>
+
+  <!-- Pestañas -->
+  <nav class="bg-surface sticky top-16 z-30 flex w-full border-b border-outline-variant">
+    <button class="flex-1 py-4 text-center text-label-md border-b-2 border-primary text-primary transition-colors" id="tab-resumen" onclick="switchTab('resumen')">Resumen</button>
+    <button class="flex-1 py-4 text-center text-label-md text-on-surface-variant border-b-2 border-transparent transition-colors" id="tab-bitacora" onclick="switchTab('bitacora')">Bitácora</button>
+    <button class="flex-1 py-4 text-center text-label-md text-on-surface-variant border-b-2 border-transparent transition-colors" id="tab-contacto" onclick="switchTab('contacto')">Contacto</button>
+  </nav>
+
+  <div class="p-margin-mobile">
+    <!-- Resumen -->
+    <div class="tab-content active space-y-md" id="content-resumen">
+      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md">
+        <div class="flex items-center justify-between mb-md">
+          <h3 class="text-label-md text-on-surface-variant uppercase">Negocio abierto</h3>
+          <span class="text-tertiary text-headline-md font-bold">$245,000</span>
+        </div>
+        <div class="space-y-sm">
+          <div class="flex justify-between"><span class="text-body-sm text-on-surface-variant">Cierre estimado</span><span class="text-body-sm font-semibold">24 oct 2025</span></div>
+          <div class="flex justify-between"><span class="text-body-sm text-on-surface-variant">Probabilidad</span><span class="text-body-sm font-semibold">75%</span></div>
+          <div class="flex justify-between"><span class="text-body-sm text-on-surface-variant">Origen</span><span class="text-body-sm font-semibold">Referido</span></div>
+        </div>
+      </div>
+      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md">
+        <h3 class="text-label-md text-on-surface-variant uppercase mb-md">Datos clave</h3>
+        <div class="grid grid-cols-2 gap-md">
+          <div><p class="text-label-sm text-on-surface-variant uppercase">Giro</p><p class="text-body-md">Cafetería · Mayorista</p></div>
+          <div><p class="text-label-sm text-on-surface-variant uppercase">CEDI</p><p class="text-body-md">Nichos</p></div>
+          <div class="col-span-2"><p class="text-label-sm text-on-surface-variant uppercase">Pedido recurrente</p><p class="text-body-md">Café en grano Altura 120 kg · Molido Espresso 60 kg · Descafeinado 15 kg / mes</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bitácora -->
+    <div class="tab-content space-y-md" id="content-bitacora">
+      <div class="flex flex-col gap-gutter">
+        <div class="relative pl-8 pb-4">
+          <div class="absolute left-0 top-0 h-full w-[2px] bg-outline-variant ml-3 mt-4"></div>
+          <div class="absolute left-0 top-0 w-6 h-6 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container z-10"><span class="material-symbols-outlined text-[14px]">description</span></div>
+          <div class="bg-surface-container-low p-md rounded-xl">
+            <div class="flex justify-between items-start mb-xs"><span class="text-label-md text-on-surface">Cotización enviada</span><span class="text-label-sm text-on-surface-variant">hace 2 h</span></div>
+            <p class="text-body-sm text-on-surface-variant">Reposición trimestral Q3. Vigencia 30 días. Espera confirmación de volumen.</p>
+          </div>
+        </div>
+        <div class="relative pl-8 pb-4">
+          <div class="absolute left-0 top-0 h-full w-[2px] bg-outline-variant ml-3 mt-4"></div>
+          <div class="absolute left-0 top-0 w-6 h-6 rounded-full bg-tertiary flex items-center justify-center text-on-tertiary z-10"><span class="material-symbols-outlined text-[14px]">photo_camera</span></div>
+          <div class="bg-surface-container-low p-md rounded-xl">
+            <div class="flex justify-between items-start mb-xs"><span class="text-label-md text-on-surface">Visita con evidencia</span><span class="text-label-sm text-on-surface-variant">Ayer</span></div>
+            <p class="text-body-sm text-on-surface-variant">Check-in en sucursal centro. Foto de anaquel y exhibidor cargada.</p>
+          </div>
+        </div>
+        <div class="relative pl-8">
+          <div class="absolute left-0 top-0 w-6 h-6 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container z-10"><span class="material-symbols-outlined text-[14px]">call</span></div>
+          <div class="bg-surface-container-low p-md rounded-xl">
+            <div class="flex justify-between items-start mb-xs"><span class="text-label-md text-on-surface">Llamada de seguimiento</span><span class="text-label-sm text-on-surface-variant">12 ago</span></div>
+            <p class="text-body-sm text-on-surface-variant">La Ing. Beltrán solicitó adelantar entrega de octubre por temporada alta.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contacto -->
+    <div class="tab-content space-y-md" id="content-contacto">
+      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md">
+        <h3 class="text-label-md text-on-surface-variant uppercase mb-md">Contacto directo</h3>
+        <div class="space-y-lg">
+          <div class="flex items-center gap-4"><div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center"><span class="material-symbols-outlined text-primary">mail</span></div><div><p class="text-label-sm text-on-surface-variant uppercase">Correo</p><p class="text-body-md text-primary">compras@cafesdealtura.mx</p></div></div>
+          <div class="flex items-center gap-4"><div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center"><span class="material-symbols-outlined text-primary">phone</span></div><div><p class="text-label-sm text-on-surface-variant uppercase">Teléfono</p><p class="text-body-md">+52 273 734 2210</p></div></div>
+          <div class="flex items-center gap-4"><div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center"><span class="material-symbols-outlined text-primary">location_on</span></div><div><p class="text-label-sm text-on-surface-variant uppercase">Domicilio</p><p class="text-body-md">Av. Independencia 45, Huatusco, Ver.</p></div></div>
+        </div>
+      </div>
+      <button class="w-full py-4 border border-outline-variant rounded-xl flex items-center justify-center gap-2 text-primary text-label-md active:bg-surface-container-low"><span class="material-symbols-outlined">directions</span> Cómo llegar</button>
+    </div>
+  </div>
+</main>
+
+<!-- Barra inferior -->
+<nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[420px] z-50 flex justify-around items-center px-4 h-16 bg-surface border-t border-outline-variant shadow-md">
+  <a class="flex flex-col items-center justify-center text-on-surface-variant" href="#"><span class="material-symbols-outlined">home</span><span class="text-label-sm">Inicio</span></a>
+  <a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1" href="cafiver_clientes_lista_movil.html"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">groups</span><span class="text-label-sm">Clientes</span></a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant" href="#"><span class="material-symbols-outlined">receipt_long</span><span class="text-label-sm">Pedidos</span></a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant" href="#"><span class="material-symbols-outlined">map</span><span class="text-label-sm">Rutas</span></a>
+</nav>
+
+<script>
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(b => { b.classList.remove('border-primary','text-primary'); b.classList.add('border-transparent','text-on-surface-variant'); });
+    document.getElementById('content-' + tabId).classList.add('active');
+    const b = document.getElementById('tab-' + tabId);
+    b.classList.remove('border-transparent','text-on-surface-variant'); b.classList.add('border-primary','text-primary');
+    if (window.navigator.vibrate) window.navigator.vibrate(10);
+  }
+</script>
+</body></html>

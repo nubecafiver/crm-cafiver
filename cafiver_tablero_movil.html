@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Inicio | Cafiver CRM móvil</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = { darkMode: "class", theme: { extend: {
+    colors: {
+      "surface": "#faf9f9", "background": "#faf9f9", "surface-dim": "#dadada",
+      "surface-container-lowest": "#ffffff", "surface-container-low": "#f4f3f3",
+      "surface-container": "#eeeeee", "surface-container-high": "#e9e8e8",
+      "surface-container-highest": "#e3e2e2", "surface-variant": "#e3e2e2",
+      "on-surface": "#1a1c1c", "on-surface-variant": "#414752",
+      "outline": "#717784", "outline-variant": "#c0c7d4",
+      "primary": "#005da9", "on-primary": "#ffffff",
+      "primary-container": "#0176d3", "on-primary-container": "#fefcff",
+      "primary-fixed": "#d4e3ff", "primary-fixed-dim": "#a4c9ff", "on-primary-fixed-variant": "#004884",
+      "secondary": "#00658e", "on-secondary": "#ffffff",
+      "secondary-container": "#43beff", "on-secondary-container": "#004a6a",
+      "secondary-fixed": "#c7e7ff", "on-secondary-fixed-variant": "#004c6c",
+      "tertiary": "#086a34", "on-tertiary": "#ffffff",
+      "tertiary-container": "#2e844a", "on-tertiary-container": "#f6fff3",
+      "tertiary-fixed": "#9ff6b0", "on-tertiary-fixed": "#00210b", "on-tertiary-fixed-variant": "#005226",
+      "error": "#ba1a1a", "on-error": "#ffffff"
+    },
+    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "2xl": "1rem", "full": "9999px" },
+    spacing: { "base": "4px", "xs": "0.25rem", "sm": "0.5rem", "md": "1rem", "lg": "1.5rem",
+      "xl": "2rem", "margin-mobile": "1rem" },
+    fontFamily: { "sans": ["Hanken Grotesk", "sans-serif"] },
+    fontSize: {
+      "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+      "headline-lg-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+      "headline-md": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+      "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+      "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "700"}],
+      "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "500"}]
+    }
+  } } }
+</script>
+<style>
+  body { font-family: 'Hanken Grotesk', sans-serif; -webkit-tap-highlight-color: transparent; min-height: max(884px, 100dvh); }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .ios-active:active { transform: scale(0.96); transition: transform 0.1s ease; }
+</style>
+</head>
+<body class="bg-background text-on-surface min-h-screen pb-24 max-w-[420px] mx-auto border-x border-outline-variant/40">
+
+<!-- Barra superior -->
+<header class="bg-surface sticky top-0 z-40 border-b border-outline-variant flex justify-between items-center w-full px-margin-mobile h-16">
+  <div class="flex items-center gap-3">
+    <div class="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-on-primary-container text-[20px]">coffee</span></div>
+    <h1 class="text-headline-md font-bold text-primary">Cafiver CRM</h1>
+  </div>
+  <div class="flex items-center gap-2">
+    <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors ios-active"><span class="material-symbols-outlined text-on-surface-variant">notifications</span></button>
+    <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-label-sm font-bold">RM</div>
+  </div>
+</header>
+
+<main class="px-margin-mobile pt-lg space-y-lg">
+  <!-- Bienvenida -->
+  <section>
+    <p class="text-label-md text-on-surface-variant uppercase tracking-wider mb-xs">Resumen del día</p>
+    <h2 class="text-headline-lg-mobile">Hola, Ricardo</h2>
+  </section>
+
+  <!-- Tarjetas resumen -->
+  <section class="grid grid-cols-2 gap-md">
+    <div class="col-span-1 p-md rounded-xl bg-surface-container-lowest border border-outline-variant shadow-sm flex flex-col justify-between h-32 ios-active">
+      <div class="flex justify-between items-start"><span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">groups</span><span class="text-tertiary text-label-sm">+12%</span></div>
+      <div><p class="text-body-sm text-on-surface-variant">Visitas hoy</p><p class="text-headline-md">8 / 12</p></div>
+    </div>
+    <div class="col-span-1 p-md rounded-xl bg-surface-container-lowest border border-outline-variant shadow-sm flex flex-col justify-between h-32 ios-active">
+      <div class="flex justify-between items-start"><span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">payments</span><span class="text-tertiary text-label-sm">+5%</span></div>
+      <div><p class="text-body-sm text-on-surface-variant">Venta del mes</p><p class="text-headline-md">$186k</p></div>
+    </div>
+    <!-- Gráfica -->
+    <div class="col-span-2 p-md rounded-xl bg-surface-container-lowest border border-outline-variant shadow-sm ios-active">
+      <div class="flex justify-between items-center mb-md">
+        <div><p class="text-body-sm text-on-surface-variant">Mi desempeño</p><p class="text-headline-md font-bold text-primary">$186,400.00</p></div>
+        <div class="flex flex-col items-end"><span class="px-2 py-1 bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-lg text-label-sm">+24.8%</span></div>
+      </div>
+      <div class="h-24 w-full flex items-end justify-between gap-1 mt-md">
+        <div class="bg-primary-fixed-dim w-full h-[40%] rounded-t-sm"></div>
+        <div class="bg-primary-fixed-dim w-full h-[60%] rounded-t-sm"></div>
+        <div class="bg-primary-fixed-dim w-full h-[55%] rounded-t-sm"></div>
+        <div class="bg-primary-fixed-dim w-full h-[80%] rounded-t-sm"></div>
+        <div class="bg-primary-fixed-dim w-full h-[70%] rounded-t-sm"></div>
+        <div class="bg-primary-fixed-dim w-full h-[95%] rounded-t-sm"></div>
+        <div class="bg-primary w-full h-[100%] rounded-t-sm shadow-[0_-4px_10px_rgba(0,93,169,0.3)]"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Acciones rápidas -->
+  <section>
+    <h3 class="text-label-md text-on-surface-variant mb-md uppercase">Acciones rápidas</h3>
+    <div class="flex gap-md overflow-x-auto no-scrollbar -mx-margin-mobile px-margin-mobile">
+      <button class="flex-shrink-0 flex flex-col items-center gap-sm ios-active"><div class="w-14 h-14 rounded-full bg-primary-container flex items-center justify-center shadow-lg"><span class="material-symbols-outlined text-on-primary-container">add_shopping_cart</span></div><span class="text-label-sm">Nuevo pedido</span></button>
+      <button class="flex-shrink-0 flex flex-col items-center gap-sm ios-active"><div class="w-14 h-14 rounded-full bg-secondary-container flex items-center justify-center shadow-lg"><span class="material-symbols-outlined text-on-secondary-container">photo_camera</span></div><span class="text-label-sm">Evidencia</span></button>
+      <button class="flex-shrink-0 flex flex-col items-center gap-sm ios-active"><div class="w-14 h-14 rounded-full bg-tertiary-container flex items-center justify-center shadow-lg"><span class="material-symbols-outlined text-on-tertiary-container">person_add</span></div><span class="text-label-sm">Prospecto</span></button>
+      <button class="flex-shrink-0 flex flex-col items-center gap-sm ios-active"><div class="w-14 h-14 rounded-full bg-surface-container-highest flex items-center justify-center shadow-lg"><span class="material-symbols-outlined text-on-surface-variant">location_on</span></div><span class="text-label-sm">Check-in</span></button>
+      <button class="flex-shrink-0 flex flex-col items-center gap-sm ios-active"><div class="w-14 h-14 rounded-full bg-surface-container-highest flex items-center justify-center shadow-lg"><span class="material-symbols-outlined text-on-surface-variant">call</span></div><span class="text-label-sm">Llamar</span></button>
+    </div>
+  </section>
+
+  <!-- Próximas visitas -->
+  <section class="space-y-md">
+    <div class="flex justify-between items-center">
+      <h3 class="text-headline-md">Próximas visitas</h3>
+      <button class="text-primary text-label-md">Ver ruta</button>
+    </div>
+    <div class="space-y-sm">
+      <div class="p-md rounded-xl bg-surface-container-lowest border border-outline-variant flex items-center gap-md ios-active shadow-sm">
+        <div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center"><span class="material-symbols-outlined text-on-secondary-fixed-variant text-[20px]">store</span></div>
+        <div class="flex-1"><p class="text-[14px] font-semibold leading-tight">Abarrotes El Puerto</p><p class="text-body-sm text-on-surface-variant">Veracruz · 9:30 AM</p></div>
+        <div class="text-right"><p class="text-label-md text-primary">$22,500</p><p class="text-label-sm text-on-surface-variant">Prospecto</p></div>
+      </div>
+      <div class="p-md rounded-xl bg-surface-container-lowest border border-outline-variant flex items-center gap-md ios-active shadow-sm">
+        <div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center"><span class="material-symbols-outlined text-on-tertiary-fixed-variant text-[20px]">restaurant</span></div>
+        <div class="flex-1"><p class="text-[14px] font-semibold leading-tight">Restaurante Los Portales</p><p class="text-body-sm text-on-surface-variant">Orizaba · 11:00 AM</p></div>
+        <div class="text-right"><p class="text-label-md text-primary">$52,000</p><p class="text-label-sm text-on-surface-variant">Cotización</p></div>
+      </div>
+      <div class="p-md rounded-xl bg-surface-container-lowest border border-outline-variant flex items-center gap-md ios-active shadow-sm">
+        <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center"><span class="material-symbols-outlined text-on-primary-fixed-variant text-[20px]">local_cafe</span></div>
+        <div class="flex-1"><p class="text-[14px] font-semibold leading-tight">Cafetería Central</p><p class="text-body-sm text-on-surface-variant">Fortín · 1:15 PM</p></div>
+        <div class="text-right"><p class="text-label-md text-primary">$41,000</p><p class="text-label-sm text-on-surface-variant">Pedido</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Meta del mes -->
+  <section class="bg-primary text-on-primary p-lg rounded-2xl relative overflow-hidden">
+    <div class="relative z-10">
+      <h4 class="text-label-md opacity-80 uppercase tracking-widest mb-sm">Mi meta del mes</h4>
+      <div class="flex justify-between items-end">
+        <div><p class="text-display-lg">$186.4k</p><p class="text-body-sm opacity-80">Vendido de $250k</p></div>
+        <span class="material-symbols-outlined text-[48px] opacity-20">insights</span>
+      </div>
+      <div class="mt-lg h-2 bg-on-primary/20 rounded-full overflow-hidden"><div class="h-full bg-white w-3/4"></div></div>
+      <div class="flex justify-between mt-sm text-label-sm"><span>Meta: $250k</span><span>75% alcanzado</span></div>
+    </div>
+    <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-on-primary/10 rounded-full"></div>
+  </section>
+</main>
+
+<!-- Barra inferior -->
+<nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[420px] z-50 flex justify-around items-center px-4 h-16 bg-surface border-t border-outline-variant shadow-md">
+  <a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 ios-active" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span><span class="text-label-sm">Inicio</span></a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant ios-active" href="#"><span class="material-symbols-outlined">groups</span><span class="text-label-sm">Clientes</span></a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant ios-active" href="#"><span class="material-symbols-outlined">receipt_long</span><span class="text-label-sm">Pedidos</span></a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant ios-active" href="#"><span class="material-symbols-outlined">map</span><span class="text-label-sm">Rutas</span></a>
+</nav>
+
+<!-- Botón flotante -->
+<button class="fixed bottom-20 right-6 w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center z-50 ios-active active:scale-90 transition-all"><span class="material-symbols-outlined text-[28px]">add</span></button>
+</body></html>

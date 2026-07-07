@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Embudo | Cafiver CRM</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = { darkMode: "class", theme: { extend: {
+    colors: {
+      "surface": "#faf9f9", "background": "#faf9f9",
+      "surface-container-lowest": "#ffffff", "surface-container-low": "#f4f3f3",
+      "surface-container": "#eeeeee", "surface-container-high": "#e9e8e8", "surface-container-highest": "#e3e2e2",
+      "on-surface": "#1a1c1c", "on-surface-variant": "#414752", "outline": "#717784", "outline-variant": "#c0c7d4",
+      "primary": "#005da9", "on-primary": "#ffffff", "primary-container": "#0176d3", "on-primary-container": "#fefcff",
+      "secondary": "#00658e", "secondary-container": "#43beff", "on-secondary-container": "#004a6a",
+      "tertiary": "#086a34", "on-tertiary": "#ffffff", "tertiary-container": "#2e844a",
+      "tertiary-fixed": "#9ff6b0", "on-tertiary-fixed-variant": "#005226", "error": "#ba1a1a", "gold": "#b8860b"
+    },
+    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "2xl": "1rem", "full": "9999px" },
+    spacing: { "xs": "0.25rem", "sm": "0.5rem", "md": "1rem", "lg": "1.5rem", "xl": "2rem", "margin-mobile": "1rem", "margin-desktop": "1.5rem" },
+    fontFamily: { "sans": ["Hanken Grotesk", "sans-serif"] },
+    fontSize: {
+      "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+      "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+      "headline-md": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+      "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+      "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "700"}],
+      "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "500"}]
+    }
+  } } }
+</script>
+<style>
+  body { font-family: 'Hanken Grotesk', sans-serif; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+  .col-body::-webkit-scrollbar { width: 5px; } .col-body::-webkit-scrollbar-thumb { background: #c0c7d4; border-radius: 3px; }
+  .card.dragging { opacity: .4; }
+  .drop-hint { outline: 2px dashed #0176d3; outline-offset: -2px; border-radius: 8px; }
+</style>
+</head>
+<body class="bg-background text-on-surface flex flex-col h-screen overflow-hidden">
+<aside class="hidden lg:flex flex-col fixed left-0 top-0 h-full p-md w-64 bg-surface-container border-r border-outline-variant z-50">
+  <div class="flex items-center gap-sm mb-xl"><div class="w-10 h-10 bg-primary-container rounded flex items-center justify-center text-on-primary-container"><span class="material-symbols-outlined text-headline-md" style="font-variation-settings: 'FILL' 1;">coffee</span></div><div><h1 class="text-headline-md text-primary">Cafiver CRM</h1><p class="text-label-sm text-on-surface-variant">Sistema de ventas</p></div></div>
+  <button class="mb-lg w-full py-sm px-md bg-primary text-on-primary text-label-md rounded-lg flex items-center justify-center gap-xs shadow-sm hover:brightness-110 transition-all"><span class="material-symbols-outlined text-[18px]">add</span> Nuevo negocio</button>
+  <nav class="flex flex-col gap-xs flex-1">
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#"><span class="material-symbols-outlined">dashboard</span><span class="text-label-md">Tablero</span></a>
+    <a class="flex items-center gap-md px-md py-sm bg-primary-container text-on-primary-container font-bold rounded-lg" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_tree</span><span class="text-label-md">Embudo</span></a>
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#"><span class="material-symbols-outlined">groups</span><span class="text-label-md">Clientes</span></a>
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#"><span class="material-symbols-outlined">receipt_long</span><span class="text-label-md">Pedidos</span></a>
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#"><span class="material-symbols-outlined">map</span><span class="text-label-md">Rutas</span></a>
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#"><span class="material-symbols-outlined">calendar_month</span><span class="text-label-md">Agenda</span></a>
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#"><span class="material-symbols-outlined">bar_chart</span><span class="text-label-md">Reportes</span></a>
+  </nav>
+  <div class="mt-auto pt-md border-t border-outline-variant flex items-center gap-sm px-sm py-xs"><div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-label-md font-bold">BA</div><div><p class="text-label-md">Bob Amaya</p><p class="text-label-sm text-on-surface-variant">Administrador</p></div></div>
+</aside>
+
+<main class="flex-1 lg:ml-64 flex flex-col bg-background overflow-hidden">
+  <header class="px-margin-desktop py-md border-b border-outline-variant bg-surface flex items-center justify-between">
+    <div class="flex items-center gap-md"><div class="w-11 h-11 bg-primary rounded-lg flex items-center justify-center text-white"><span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">account_tree</span></div><div><p class="text-label-md text-on-surface-variant">Pipeline</p><h1 class="text-headline-lg">Embudo de ventas</h1></div></div>
+    <div class="flex items-center gap-sm">
+      <select class="bg-surface-container border border-outline-variant rounded-lg text-body-md py-2 px-4 outline-none focus:ring-1 focus:ring-primary"><option>Todos los vendedores</option><option>Ricardo Mendoza</option><option>Alma Rosas</option></select>
+      <button class="bg-primary text-white text-label-md px-4 py-2 rounded-lg hover:opacity-90 shadow-sm transition-all">Nuevo negocio</button>
+    </div>
+  </header>
+  <section id="board" class="flex-1 overflow-x-auto flex gap-md p-margin-desktop"></section>
+</main>
+
+<script>
+  const STAGES = [
+    { id:'prospecto', name:'Prospecto', color:'#717784' },
+    { id:'cotizacion', name:'Cotización', color:'#b8860b' },
+    { id:'pedido', name:'Pedido', color:'#0176d3' },
+    { id:'facturado', name:'Facturado', color:'#00658e' },
+    { id:'ganado', name:'Ganado', color:'#086a34' },
+  ];
+  const ST = { nuevo:['bg-surface-container-high','text-on-surface-variant','Nuevo'], seg:['bg-secondary-container','text-on-secondary-container','En seguimiento'], cal:['bg-tertiary-fixed','text-on-tertiary-fixed-variant','Calificado'] };
+  let DEALS = [
+    {stage:'prospecto',company:'Cafetería La Parroquia',place:'Córdoba',value:38000,st:'nuevo',rep:'RM',date:'8 jul'},
+    {stage:'prospecto',company:'Abarrotes El Puerto',place:'Veracruz',value:22500,st:'nuevo',rep:'AR',date:'9 jul'},
+    {stage:'prospecto',company:'Hotel Bello Veracruz',place:'Boca del Río',value:64000,st:'seg',rep:'RM',date:'10 jul'},
+    {stage:'cotizacion',company:'Restaurante Los Portales',place:'Orizaba',value:52000,st:'seg',rep:'RM',date:'7 jul'},
+    {stage:'cotizacion',company:'Súper Che',place:'Ixtaczoquitlán',value:96500,st:'cal',rep:'AR',date:'7 jul'},
+    {stage:'cotizacion',company:'Cafetería Central',place:'Fortín',value:41000,st:'seg',rep:'RM',date:'11 jul'},
+    {stage:'pedido',company:'Panadería La Esperanza',place:'Córdoba',value:29800,st:'cal',rep:'AR',date:'6 jul'},
+    {stage:'pedido',company:'Distribuidora del Golfo',place:'Veracruz',value:184000,st:'cal',rep:'RM',date:'6 jul'},
+    {stage:'facturado',company:'Hotel Mocambo',place:'Boca del Río',value:112000,st:'cal',rep:'RM',date:'4 jul'},
+    {stage:'facturado',company:'Comedor Industrial Ixtac',place:'Ixtaczoquitlán',value:76500,st:'cal',rep:'AR',date:'5 jul'},
+    {stage:'ganado',company:'Cafés de Altura S.A.',place:'Huatusco',value:245000,st:'cal',rep:'RM',date:'2 jul'},
+    {stage:'ganado',company:'Restaurante El Fogón',place:'Orizaba',value:58000,st:'cal',rep:'AR',date:'3 jul'},
+  ];
+  const mxn = n => '$'+n.toLocaleString('es-MX');
+  const board = document.getElementById('board');
+  let dragId = null;
+
+  function card(d,i){
+    const s = STAGES.find(x=>x.id===d.stage), st = ST[d.st];
+    return `<article class="card bg-surface-container-lowest border border-outline-variant rounded-lg p-md cursor-grab shadow-[0_1px_2px_rgba(0,0,0,.05)]" draggable="true" data-id="${i}" style="border-left:3px solid ${s.color}">
+      <div class="flex justify-between items-start gap-2"><p class="font-semibold text-body-md leading-tight">${d.company}</p><span class="px-2 py-0.5 ${st[0]} ${st[1]} rounded text-label-sm font-bold whitespace-nowrap">${st[2]}</span></div>
+      <p class="text-label-sm text-on-surface-variant mt-0.5">${d.place}</p>
+      <p class="text-headline-md font-bold mt-2">${mxn(d.value)}</p>
+      <div class="flex items-center gap-2 mt-2"><div class="w-6 h-6 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center text-[10px] font-bold">${d.rep}</div><span class="text-label-sm text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[13px]">event</span>${d.date}</span></div>
+    </article>`;
+  }
+  function render(){
+    board.innerHTML = STAGES.map(s=>{
+      const items = DEALS.map((d,i)=>({d,i})).filter(x=>x.d.stage===s.id);
+      const total = items.reduce((a,x)=>a+x.d.value,0);
+      return `<div class="w-72 shrink-0 flex flex-col">
+        <div class="flex items-center gap-2 pb-2 mb-3 border-b-2" style="border-color:${s.color}">
+          <span class="w-2.5 h-2.5 rounded-full" style="background:${s.color}"></span>
+          <span class="text-label-md uppercase">${s.name}</span>
+          <span class="text-label-sm font-bold text-on-surface-variant bg-surface-container-lowest border border-outline-variant px-2 rounded-full">${items.length}</span>
+          <span class="ml-auto text-label-md">${mxn(total)}</span>
+        </div>
+        <div class="col-body flex-1 overflow-y-auto flex flex-col gap-2 pr-1 pb-10" data-stage="${s.id}">${items.map(x=>card(x.d,x.i)).join('')}</div>
+      </div>`;
+    }).join('');
+    wire();
+  }
+  function wire(){
+    document.querySelectorAll('.card').forEach(c=>{
+      c.addEventListener('dragstart',()=>{dragId=+c.dataset.id;c.classList.add('dragging');});
+      c.addEventListener('dragend',()=>c.classList.remove('dragging'));
+    });
+    document.querySelectorAll('.col-body').forEach(b=>{
+      b.addEventListener('dragover',e=>{e.preventDefault();b.classList.add('drop-hint');});
+      b.addEventListener('dragleave',()=>b.classList.remove('drop-hint'));
+      b.addEventListener('drop',e=>{e.preventDefault();b.classList.remove('drop-hint');if(dragId!==null){DEALS[dragId].stage=b.dataset.stage;render();}});
+    });
+  }
+  render();
+</script>
+</body></html>

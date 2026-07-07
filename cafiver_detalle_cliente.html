@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ficha de cliente | Cafiver CRM</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: { extend: {
+      colors: {
+        "surface": "#faf9f9", "background": "#faf9f9", "surface-dim": "#dadada",
+        "surface-container-lowest": "#ffffff", "surface-container-low": "#f4f3f3",
+        "surface-container": "#eeeeee", "surface-container-high": "#e9e8e8",
+        "surface-container-highest": "#e3e2e2", "surface-variant": "#e3e2e2",
+        "on-surface": "#1a1c1c", "on-surface-variant": "#414752",
+        "outline": "#717784", "outline-variant": "#c0c7d4",
+        "inverse-surface": "#2f3131", "inverse-on-surface": "#f1f0f0",
+        "primary": "#005da9", "on-primary": "#ffffff",
+        "primary-container": "#0176d3", "on-primary-container": "#fefcff",
+        "inverse-primary": "#a4c9ff", "surface-tint": "#005fac",
+        "secondary": "#00658e", "on-secondary": "#ffffff",
+        "secondary-container": "#43beff", "on-secondary-container": "#004a6a",
+        "tertiary": "#086a34", "on-tertiary": "#ffffff",
+        "tertiary-container": "#2e844a", "on-tertiary-container": "#f6fff3",
+        "tertiary-fixed": "#9ff6b0", "on-tertiary-fixed": "#00210b", "on-tertiary-fixed-variant": "#005226",
+        "error": "#ba1a1a", "on-error": "#ffffff", "error-container": "#ffdad6", "on-error-container": "#93000a",
+        "primary-fixed": "#d4e3ff", "on-primary-fixed": "#001c39", "on-primary-fixed-variant": "#004884",
+        "secondary-fixed": "#c7e7ff", "on-secondary-fixed": "#001e2e"
+      },
+      borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "9999px" },
+      spacing: { "base": "4px", "xs": "0.25rem", "sm": "0.5rem", "md": "1rem", "lg": "1.5rem",
+        "xl": "2rem", "gutter": "1rem", "margin-mobile": "1rem", "margin-desktop": "1.5rem" },
+      fontFamily: { "sans": ["Hanken Grotesk", "sans-serif"] },
+      fontSize: {
+        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+        "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+        "headline-lg-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+        "headline-md": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+        "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "700"}],
+        "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "500"}]
+      }
+    } }
+  }
+</script>
+<style>
+  body { font-family: 'Hanken Grotesk', sans-serif; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+  .pipeline-chevron { clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%, 10% 50%); }
+  .pipeline-chevron:first-child { clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%); }
+  .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+  .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+  .custom-scrollbar::-webkit-scrollbar-thumb { background: #dddbda; border-radius: 10px; }
+</style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+
+<!-- SideNavBar (Escritorio) -->
+<aside class="hidden lg:flex flex-col fixed left-0 top-0 h-full p-md bg-surface-container border-r border-outline-variant w-64 z-50">
+  <div class="flex items-center gap-sm mb-xl px-sm">
+    <div class="w-8 h-8 bg-primary rounded flex items-center justify-center text-white">
+      <span class="material-symbols-outlined text-[20px]">coffee</span>
+    </div>
+    <div>
+      <h1 class="font-sans text-headline-md text-primary leading-tight">Cafiver CRM</h1>
+      <p class="text-label-sm text-on-surface-variant uppercase tracking-wider">Sistema de ventas</p>
+    </div>
+  </div>
+  <nav class="flex-1 space-y-1">
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg text-label-md" href="#">
+      <span class="material-symbols-outlined">dashboard</span> Tablero
+    </a>
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg text-label-md" href="#">
+      <span class="material-symbols-outlined">account_tree</span> Embudo
+    </a>
+    <a class="flex items-center gap-md px-md py-sm bg-primary-container text-on-primary-container font-bold rounded-lg transition-all duration-200 text-label-md" href="#">
+      <span class="material-symbols-outlined">groups</span> Clientes
+    </a>
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg text-label-md" href="#">
+      <span class="material-symbols-outlined">receipt_long</span> Pedidos
+    </a>
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg text-label-md" href="#">
+      <span class="material-symbols-outlined">map</span> Rutas
+    </a>
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg text-label-md" href="#">
+      <span class="material-symbols-outlined">calendar_month</span> Agenda
+    </a>
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg text-label-md" href="#">
+      <span class="material-symbols-outlined">bar_chart</span> Reportes
+    </a>
+  </nav>
+  <button class="mt-auto bg-primary text-white py-sm rounded-lg text-label-md flex items-center justify-center gap-xs hover:bg-primary-container transition-colors">
+    <span class="material-symbols-outlined text-sm">add</span> Nuevo negocio
+  </button>
+</aside>
+
+<!-- Contenido principal -->
+<main class="lg:ml-64 min-h-screen flex flex-col">
+  <!-- TopNavBar -->
+  <header class="flex justify-between items-center w-full px-margin-desktop h-16 z-40 sticky top-0 bg-surface border-b border-outline-variant">
+    <div class="flex items-center flex-1 max-w-xl">
+      <div class="relative w-full">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+        <input class="w-full bg-surface-container-low border border-outline-variant rounded-full py-1.5 pl-10 pr-4 text-body-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Buscar clientes, negocios y tareas..." type="text"/>
+      </div>
+    </div>
+    <div class="flex items-center gap-md ml-lg">
+      <button class="p-sm text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full"><span class="material-symbols-outlined">notifications</span></button>
+      <button class="p-sm text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full"><span class="material-symbols-outlined">settings</span></button>
+      <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-label-md font-bold">BA</div>
+    </div>
+  </header>
+
+  <!-- Encabezado del cliente -->
+  <section class="bg-white p-lg md:px-margin-desktop border-b border-outline-variant">
+    <div class="max-w-[1400px] mx-auto">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-md mb-lg">
+        <div class="flex items-center gap-lg">
+          <div class="w-20 h-20 rounded-xl overflow-hidden shadow-sm border border-outline-variant bg-primary-container flex items-center justify-center">
+            <span class="text-white text-[28px] font-bold tracking-tight">CA</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-sm flex-wrap">
+              <h2 class="text-display-lg text-on-surface tracking-tight">Cafés de Altura S.A.</h2>
+              <span class="bg-tertiary-fixed text-on-tertiary-fixed px-2 py-0.5 rounded text-label-sm uppercase font-bold">Cuenta clave</span>
+            </div>
+            <p class="text-body-lg text-on-surface-variant">Ing. Laura Beltrán · Gerente de Compras · Huatusco, Ver.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-sm">
+          <button class="px-md py-sm border border-outline-variant text-primary text-label-md rounded hover:bg-surface-container-low transition-colors">Editar datos</button>
+          <button class="px-md py-sm bg-primary text-white text-label-md rounded hover:opacity-90 transition-opacity">Registrar acción</button>
+        </div>
+      </div>
+      <!-- Embudo de la cuenta -->
+      <div class="w-full flex items-center h-10 bg-surface-container rounded-lg overflow-hidden">
+        <div class="flex-1 pipeline-chevron bg-tertiary text-white flex items-center justify-center gap-xs h-full px-lg relative z-50">
+          <span class="material-symbols-outlined text-[18px]">check_circle</span><span class="text-label-md">Prospecto</span>
+        </div>
+        <div class="flex-1 pipeline-chevron bg-tertiary text-white flex items-center justify-center gap-xs h-full px-lg relative z-40 -ml-4">
+          <span class="material-symbols-outlined text-[18px]">check_circle</span><span class="text-label-md">Cotización</span>
+        </div>
+        <div class="flex-1 pipeline-chevron bg-primary text-white flex items-center justify-center gap-xs h-full px-lg relative z-30 -ml-4 shadow-lg">
+          <span class="material-symbols-outlined text-[18px]">pending</span><span class="text-label-md">Pedido</span>
+        </div>
+        <div class="flex-1 pipeline-chevron bg-surface-container-highest text-on-surface-variant flex items-center justify-center gap-xs h-full px-lg relative z-20 -ml-4">
+          <span class="material-symbols-outlined text-[18px]">radio_button_unchecked</span><span class="text-label-md">Facturado</span>
+        </div>
+        <div class="flex-1 pipeline-chevron bg-surface-container-highest text-on-surface-variant flex items-center justify-center gap-xs h-full px-lg relative z-10 -ml-4">
+          <span class="material-symbols-outlined text-[18px]">radio_button_unchecked</span><span class="text-label-md">Ganado</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Grid de dos columnas -->
+  <section class="flex-1 p-lg md:px-margin-desktop bg-background">
+    <div class="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-lg">
+      <!-- Columna izquierda -->
+      <div class="lg:col-span-4 space-y-lg">
+        <!-- Datos de contacto -->
+        <div class="bg-white rounded-lg border border-outline-variant p-lg shadow-[0_2px_4px_rgba(0,0,0,0.05)]">
+          <div class="flex items-center justify-between mb-md">
+            <h3 class="text-headline-md text-on-surface">Datos de contacto</h3>
+            <span class="material-symbols-outlined text-outline cursor-pointer hover:text-primary transition-colors">edit</span>
+          </div>
+          <div class="space-y-md">
+            <div class="flex items-start gap-md">
+              <span class="material-symbols-outlined text-primary mt-0.5">mail</span>
+              <div><p class="text-label-sm text-on-surface-variant uppercase">Correo</p><p class="text-body-md text-on-surface">compras@cafesdealtura.mx</p></div>
+            </div>
+            <div class="flex items-start gap-md">
+              <span class="material-symbols-outlined text-primary mt-0.5">phone</span>
+              <div><p class="text-label-sm text-on-surface-variant uppercase">Teléfono</p><p class="text-body-md text-on-surface">+52 273 734 2210</p></div>
+            </div>
+            <div class="flex items-start gap-md">
+              <span class="material-symbols-outlined text-primary mt-0.5">location_on</span>
+              <div><p class="text-label-sm text-on-surface-variant uppercase">Domicilio</p><p class="text-body-md text-on-surface">Av. Independencia 45, Huatusco, Ver.</p></div>
+            </div>
+            <div class="flex items-start gap-md">
+              <span class="material-symbols-outlined text-primary mt-0.5">language</span>
+              <div><p class="text-label-sm text-on-surface-variant uppercase">Sitio web</p><p class="text-body-md text-on-surface">cafesdealtura.mx</p></div>
+            </div>
+          </div>
+        </div>
+        <!-- Métricas de la cuenta -->
+        <div class="bg-white rounded-lg border border-outline-variant p-lg shadow-[0_2px_4px_rgba(0,0,0,0.05)]">
+          <h3 class="text-headline-md text-on-surface mb-md">Métricas de la cuenta</h3>
+          <div class="grid grid-cols-2 gap-md">
+            <div class="bg-surface-container-low p-sm rounded border border-outline-variant/30">
+              <p class="text-label-sm text-on-surface-variant uppercase">Compra anual</p><p class="text-headline-md font-bold text-primary">$2.9M</p>
+            </div>
+            <div class="bg-surface-container-low p-sm rounded border border-outline-variant/30">
+              <p class="text-label-sm text-on-surface-variant uppercase">Origen</p><p class="text-headline-md font-bold text-primary">Referido</p>
+            </div>
+            <div class="bg-surface-container-low p-sm rounded border border-outline-variant/30">
+              <p class="text-label-sm text-on-surface-variant uppercase">Antigüedad</p><p class="text-headline-md font-bold text-primary">3.2 años</p>
+            </div>
+            <div class="bg-surface-container-low p-sm rounded border border-outline-variant/30">
+              <p class="text-label-sm text-on-surface-variant uppercase">Salud cuenta</p>
+              <div class="flex items-center gap-xs"><span class="text-headline-md font-bold text-tertiary">96%</span><span class="material-symbols-outlined text-tertiary text-sm">trending_up</span></div>
+            </div>
+          </div>
+          <div class="mt-md pt-md border-t border-outline-variant">
+            <p class="text-label-sm text-on-surface-variant uppercase mb-xs">Segmento</p>
+            <div class="flex flex-wrap gap-xs">
+              <span class="px-2 py-1 bg-secondary-container text-on-secondary-container text-label-sm rounded-full">Cafetería</span>
+              <span class="px-2 py-1 bg-secondary-container text-on-secondary-container text-label-sm rounded-full">Mayorista</span>
+              <span class="px-2 py-1 bg-secondary-container text-on-secondary-container text-label-sm rounded-full">HORECA</span>
+            </div>
+          </div>
+        </div>
+        <!-- Producto habitual (extra Cafiver) -->
+        <div class="bg-white rounded-lg border border-outline-variant p-lg shadow-[0_2px_4px_rgba(0,0,0,0.05)]">
+          <h3 class="text-headline-md text-on-surface mb-md">Pedido recurrente</h3>
+          <div class="space-y-sm">
+            <div class="flex items-center justify-between text-body-sm">
+              <span class="text-on-surface">Café tostado en grano · Altura</span><span class="font-bold text-on-surface">120 kg / mes</span>
+            </div>
+            <div class="flex items-center justify-between text-body-sm">
+              <span class="text-on-surface">Café molido · Espresso</span><span class="font-bold text-on-surface">60 kg / mes</span>
+            </div>
+            <div class="flex items-center justify-between text-body-sm">
+              <span class="text-on-surface">Descafeinado · Molido</span><span class="font-bold text-on-surface">15 kg / mes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna derecha: línea de tiempo -->
+      <div class="lg:col-span-8">
+        <div class="bg-white rounded-lg border border-outline-variant flex flex-col h-full shadow-[0_2px_4px_rgba(0,0,0,0.05)]">
+          <div class="p-lg border-b border-outline-variant flex items-center justify-between">
+            <div class="flex items-center gap-sm">
+              <h3 class="text-headline-md text-on-surface">Bitácora de actividad</h3>
+              <span class="bg-surface-container text-on-surface-variant px-2 py-0.5 rounded-full text-label-sm">24 eventos</span>
+            </div>
+            <div class="flex items-center gap-xs">
+              <button class="p-xs text-on-surface-variant hover:bg-surface-container-low transition-colors rounded"><span class="material-symbols-outlined">filter_list</span></button>
+              <button class="p-xs text-on-surface-variant hover:bg-surface-container-low transition-colors rounded"><span class="material-symbols-outlined">more_vert</span></button>
+            </div>
+          </div>
+          <div class="p-lg flex-1 overflow-y-auto max-h-[700px] custom-scrollbar">
+            <div class="relative space-y-lg before:absolute before:inset-0 before:ml-5 before:-translate-x-px before:h-full before:w-0.5 before:bg-gradient-to-b before:from-outline-variant before:via-outline-variant before:to-transparent">
+              <!-- Evento 1 -->
+              <div class="relative flex items-start gap-lg pl-10">
+                <div class="absolute left-0 w-10 h-10 rounded-full bg-primary-container text-white flex items-center justify-center z-10 border-4 border-white"><span class="material-symbols-outlined text-[18px]">description</span></div>
+                <div class="flex-1 bg-surface-container-low p-md rounded-lg border border-outline-variant/30">
+                  <div class="flex justify-between items-start mb-xs">
+                    <h4 class="font-bold text-body-md text-on-surface">Cotización enviada: reposición trimestral Q3</h4>
+                    <span class="text-label-sm text-on-surface-variant">hace 2 horas</span>
+                  </div>
+                  <p class="text-body-sm text-on-surface-variant mb-md">Se envió la lista de precios actualizada para café en grano Altura y molido Espresso, con vigencia a 30 días.</p>
+                  <div class="flex items-center gap-sm p-sm bg-white rounded border border-outline-variant/50 w-max cursor-pointer hover:border-primary transition-colors">
+                    <span class="material-symbols-outlined text-primary">description</span>
+                    <span class="text-label-sm text-on-surface">Cotizacion_CafesAltura_Q3.pdf (0.8MB)</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Evento 2 -->
+              <div class="relative flex items-start gap-lg pl-10">
+                <div class="absolute left-0 w-10 h-10 rounded-full bg-tertiary-container text-white flex items-center justify-center z-10 border-4 border-white"><span class="material-symbols-outlined text-[18px]">call</span></div>
+                <div class="flex-1 bg-white p-md rounded-lg border border-outline-variant/30 shadow-sm">
+                  <div class="flex justify-between items-start mb-xs">
+                    <h4 class="font-bold text-body-md text-on-surface">Llamada de seguimiento: fechas de entrega</h4>
+                    <span class="text-label-sm text-on-surface-variant">Ayer, 4:15 PM</span>
+                  </div>
+                  <p class="text-body-sm text-on-surface-variant">La Ing. Beltrán confirmó recepción en almacén los martes por la mañana. Solicitó adelantar la entrega de octubre por temporada alta.</p>
+                  <div class="mt-sm flex items-center gap-md">
+                    <div class="flex items-center gap-xs">
+                      <div class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center text-[10px] font-bold">V1</div>
+                      <span class="text-label-sm font-bold text-on-surface">Vendedor 1</span>
+                    </div>
+                    <span class="px-2 py-0.5 bg-surface-container-high text-on-surface-variant rounded text-label-sm">Prioridad alta</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Evento 3 -->
+              <div class="relative flex items-start gap-lg pl-10">
+                <div class="absolute left-0 w-10 h-10 rounded-full bg-secondary-container text-white flex items-center justify-center z-10 border-4 border-white"><span class="material-symbols-outlined text-[18px]">mail</span></div>
+                <div class="flex-1 bg-white p-md rounded-lg border border-outline-variant/30 shadow-sm">
+                  <div class="flex justify-between items-start mb-xs">
+                    <h4 class="font-bold text-body-md text-on-surface">Correo entrante: solicitud de muestra</h4>
+                    <span class="text-label-sm text-on-surface-variant">14 ago 2025</span>
+                  </div>
+                  <p class="text-body-sm italic text-on-surface-variant">"Hola, quedamos muy satisfechos con el lote anterior. ¿Podrían enviar una muestra del tueste medio para la nueva sucursal? — Laura"</p>
+                </div>
+              </div>
+              <!-- Evento 4 -->
+              <div class="relative flex items-start gap-lg pl-10">
+                <div class="absolute left-0 w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center z-10 border-4 border-white"><span class="material-symbols-outlined text-[18px]">sync_alt</span></div>
+                <div class="flex-1 bg-white p-md rounded-lg border border-outline-variant/30 shadow-sm">
+                  <div class="flex justify-between items-start mb-xs">
+                    <h4 class="font-bold text-body-md text-on-surface">Cambio de etapa: Cotización → Pedido</h4>
+                    <span class="text-label-sm text-on-surface-variant">12 ago 2025</span>
+                  </div>
+                  <p class="text-body-sm text-on-surface-variant">La cuenta avanzó de etapa tras la confirmación verbal del volumen mensual.</p>
+                </div>
+              </div>
+            </div>
+            <div class="mt-xl flex justify-center">
+              <button class="text-primary text-label-md hover:underline flex items-center gap-xs">Ver actividad anterior <span class="material-symbols-outlined text-sm">expand_more</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

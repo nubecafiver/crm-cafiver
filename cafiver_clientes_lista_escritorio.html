@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clientes | Cafiver CRM</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = { darkMode: "class", theme: { extend: {
+    colors: {
+      "surface": "#faf9f9", "background": "#faf9f9", "surface-dim": "#dadada",
+      "surface-container-lowest": "#ffffff", "surface-container-low": "#f4f3f3",
+      "surface-container": "#eeeeee", "surface-container-high": "#e9e8e8",
+      "surface-container-highest": "#e3e2e2", "surface-variant": "#e3e2e2",
+      "on-surface": "#1a1c1c", "on-surface-variant": "#414752",
+      "outline": "#717784", "outline-variant": "#c0c7d4",
+      "primary": "#005da9", "on-primary": "#ffffff",
+      "primary-container": "#0176d3", "on-primary-container": "#fefcff",
+      "primary-fixed": "#d4e3ff", "on-primary-fixed": "#001c39",
+      "secondary": "#00658e", "on-secondary": "#ffffff",
+      "secondary-container": "#43beff", "on-secondary-container": "#004a6a",
+      "secondary-fixed": "#c7e7ff", "on-secondary-fixed": "#001e2e",
+      "tertiary": "#086a34", "on-tertiary": "#ffffff",
+      "tertiary-container": "#2e844a", "on-tertiary-container": "#f6fff3",
+      "tertiary-fixed": "#9ff6b0", "on-tertiary-fixed": "#00210b", "on-tertiary-fixed-variant": "#005226",
+      "error": "#ba1a1a", "on-error": "#ffffff"
+    },
+    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "2xl": "1rem", "full": "9999px" },
+    spacing: { "base": "4px", "xs": "0.25rem", "sm": "0.5rem", "md": "1rem", "lg": "1.5rem",
+      "xl": "2rem", "margin-mobile": "1rem", "margin-desktop": "1.5rem" },
+    fontFamily: { "sans": ["Hanken Grotesk", "sans-serif"] },
+    fontSize: {
+      "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+      "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+      "headline-md": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+      "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+      "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "700"}],
+      "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "500"}]
+    }
+  } } }
+</script>
+<style>
+  body { font-family: 'Hanken Grotesk', sans-serif; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+  .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+  .custom-scrollbar::-webkit-scrollbar-thumb { background: #dddbda; border-radius: 10px; }
+  tbody tr:hover { background: #f4f3f3; }
+</style>
+</head>
+<body class="bg-background text-on-surface flex flex-col min-h-screen">
+
+<!-- SideNavBar -->
+<aside class="hidden lg:flex flex-col fixed left-0 top-0 h-full p-md w-64 bg-surface-container border-r border-outline-variant z-50">
+  <div class="flex items-center gap-sm mb-xl">
+    <div class="w-10 h-10 bg-primary-container rounded flex items-center justify-center text-on-primary-container"><span class="material-symbols-outlined text-headline-md" style="font-variation-settings: 'FILL' 1;">coffee</span></div>
+    <div><h1 class="text-headline-md text-primary">Cafiver CRM</h1><p class="text-label-sm text-on-surface-variant">Sistema de ventas</p></div>
+  </div>
+  <button class="mb-lg w-full py-sm px-md bg-primary text-on-primary text-label-md rounded-lg flex items-center justify-center gap-xs shadow-sm hover:brightness-110 transition-all"><span class="material-symbols-outlined text-[18px]">add</span> Nuevo cliente</button>
+  <nav class="flex flex-col gap-xs flex-1">
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#"><span class="material-symbols-outlined">dashboard</span><span class="text-label-md">Tablero</span></a>
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#"><span class="material-symbols-outlined">account_tree</span><span class="text-label-md">Embudo</span></a>
+    <a class="flex items-center gap-md px-md py-sm bg-primary-container text-on-primary-container font-bold rounded-lg" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">groups</span><span class="text-label-md">Clientes</span></a>
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#"><span class="material-symbols-outlined">receipt_long</span><span class="text-label-md">Pedidos</span></a>
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#"><span class="material-symbols-outlined">map</span><span class="text-label-md">Rutas</span></a>
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#"><span class="material-symbols-outlined">calendar_month</span><span class="text-label-md">Agenda</span></a>
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#"><span class="material-symbols-outlined">bar_chart</span><span class="text-label-md">Reportes</span></a>
+  </nav>
+  <div class="mt-auto p-4 bg-surface-container-highest rounded-xl border border-outline-variant">
+    <p class="text-label-sm text-on-surface-variant uppercase mb-2">Meta trimestral</p>
+    <div class="w-full bg-outline-variant h-2 rounded-full mb-2 overflow-hidden"><div class="bg-primary h-full w-[72%]"></div></div>
+    <div class="flex justify-between text-label-sm"><span>$3.6M alcanzado</span><span class="text-primary font-bold">72%</span></div>
+  </div>
+</aside>
+
+<!-- TopNavBar -->
+<header class="flex justify-between items-center w-full px-margin-mobile lg:pl-80 lg:pr-margin-desktop h-16 z-40 sticky top-0 bg-surface border-b border-outline-variant">
+  <div class="flex items-center gap-md flex-1">
+    <div class="hidden md:flex items-center bg-surface-container-low px-md py-xs rounded-full w-full max-w-md border border-outline-variant">
+      <span class="material-symbols-outlined text-on-surface-variant mr-sm">search</span>
+      <input class="bg-transparent border-none focus:ring-0 text-body-md w-full placeholder:text-outline" placeholder="Buscar cliente por nombre o giro..." type="text"/>
+    </div>
+  </div>
+  <div class="flex items-center gap-md">
+    <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-xs rounded-full transition-colors cursor-pointer">notifications</button>
+    <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-xs rounded-full transition-colors cursor-pointer">settings</button>
+    <div class="h-8 w-[1px] bg-outline-variant mx-xs"></div>
+    <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-label-md font-bold">BA</div>
+  </div>
+</header>
+
+<!-- Main -->
+<main class="flex-1 lg:ml-64 p-margin-desktop bg-background">
+  <div class="flex flex-col md:flex-row md:items-center justify-between mb-lg gap-md">
+    <div class="flex items-center gap-md">
+      <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white"><span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">groups</span></div>
+      <div><p class="text-label-md text-on-surface-variant">Cartera</p><h1 class="text-headline-lg">Clientes (181)</h1></div>
+    </div>
+    <div class="flex items-center gap-sm">
+      <button class="bg-surface-container-lowest border border-outline-variant text-primary text-label-md px-4 py-2 rounded-lg hover:bg-surface-container transition-colors">Importar</button>
+      <button class="bg-primary text-white text-label-md px-4 py-2 rounded-lg hover:opacity-90 shadow-sm transition-all">Nuevo cliente</button>
+    </div>
+  </div>
+
+  <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden flex flex-col">
+    <!-- Filtros -->
+    <div class="p-md flex flex-wrap items-center justify-between gap-md border-b border-outline-variant">
+      <div class="flex items-center gap-sm flex-wrap">
+        <button class="flex items-center gap-2 px-4 py-2 bg-surface-container border border-outline-variant rounded-lg text-body-md hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-sm">filter_list</span><span>Filtrar</span><span class="material-symbols-outlined text-sm">expand_more</span></button>
+        <div class="h-6 w-px bg-outline-variant mx-1"></div>
+        <select class="bg-surface-container border border-outline-variant rounded-lg text-body-md py-2 px-4 outline-none focus:ring-1 focus:ring-primary"><option>Todos los CEDIS</option><option>Nichos</option><option>Centro</option><option>Costa</option></select>
+        <select class="bg-surface-container border border-outline-variant rounded-lg text-body-md py-2 px-4 outline-none focus:ring-1 focus:ring-primary"><option>Todos los vendedores</option><option>Ricardo Mendoza</option><option>Alma Rosas</option></select>
+        <select class="bg-surface-container border border-outline-variant rounded-lg text-body-md py-2 px-4 outline-none focus:ring-1 focus:ring-primary"><option>Cualquier estado</option><option>Cuenta clave</option><option>Activo</option><option>Prospecto</option></select>
+      </div>
+      <button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-lg border border-transparent hover:border-outline-variant transition-all"><span class="material-symbols-outlined">refresh</span></button>
+    </div>
+
+    <!-- Tabla -->
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-surface-container-low border-b border-outline-variant">
+            <th class="p-4 w-10"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></th>
+            <th class="p-4 text-label-md text-on-surface-variant uppercase tracking-wider">Cliente</th>
+            <th class="p-4 text-label-md text-on-surface-variant uppercase tracking-wider">Giro</th>
+            <th class="p-4 text-label-md text-on-surface-variant uppercase tracking-wider">Estado</th>
+            <th class="p-4 text-label-md text-on-surface-variant uppercase tracking-wider">Compra mensual</th>
+            <th class="p-4 text-label-md text-on-surface-variant uppercase tracking-wider">Vendedor</th>
+            <th class="p-4 text-label-md text-on-surface-variant uppercase tracking-wider">CEDI</th>
+            <th class="p-4 w-10"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-outline-variant">
+          <!-- fila -->
+          <tr class="transition-colors cursor-pointer">
+            <td class="p-4"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>
+            <td class="p-4"><div class="flex items-center gap-sm"><div class="w-8 h-8 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant flex items-center justify-center font-bold text-label-sm">CA</div><a class="text-primary font-bold hover:underline text-body-md" href="#">Cafés de Altura S.A.</a></div></td>
+            <td class="p-4 text-body-md">Cafetería · Mayorista</td>
+            <td class="p-4"><span class="px-2 py-1 bg-tertiary-fixed text-on-tertiary-fixed-variant rounded text-label-sm font-bold uppercase">Cuenta clave</span></td>
+            <td class="p-4 text-body-md">$245,000</td>
+            <td class="p-4"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center text-[10px] font-bold">RM</div><span class="text-body-md">Ricardo Mendoza</span></div></td>
+            <td class="p-4 text-body-md text-on-surface-variant">Nichos</td>
+            <td class="p-4"><button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button></td>
+          </tr>
+          <tr class="transition-colors cursor-pointer">
+            <td class="p-4"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>
+            <td class="p-4"><div class="flex items-center gap-sm"><div class="w-8 h-8 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center font-bold text-label-sm">DG</div><a class="text-primary font-bold hover:underline text-body-md" href="#">Distribuidora del Golfo</a></div></td>
+            <td class="p-4 text-body-md">Distribuidor</td>
+            <td class="p-4"><span class="px-2 py-1 bg-secondary-container text-on-secondary-container rounded text-label-sm font-bold uppercase">Activo</span></td>
+            <td class="p-4 text-body-md">$184,000</td>
+            <td class="p-4"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant flex items-center justify-center text-[10px] font-bold">AR</div><span class="text-body-md">Alma Rosas</span></div></td>
+            <td class="p-4 text-body-md text-on-surface-variant">Costa</td>
+            <td class="p-4"><button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button></td>
+          </tr>
+          <tr class="transition-colors cursor-pointer">
+            <td class="p-4"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>
+            <td class="p-4"><div class="flex items-center gap-sm"><div class="w-8 h-8 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center font-bold text-label-sm">HM</div><a class="text-primary font-bold hover:underline text-body-md" href="#">Hotel Mocambo</a></div></td>
+            <td class="p-4 text-body-md">Hotelería · HORECA</td>
+            <td class="p-4"><span class="px-2 py-1 bg-secondary-container text-on-secondary-container rounded text-label-sm font-bold uppercase">Activo</span></td>
+            <td class="p-4 text-body-md">$112,000</td>
+            <td class="p-4"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center text-[10px] font-bold">RM</div><span class="text-body-md">Ricardo Mendoza</span></div></td>
+            <td class="p-4 text-body-md text-on-surface-variant">Costa</td>
+            <td class="p-4"><button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button></td>
+          </tr>
+          <tr class="transition-colors cursor-pointer">
+            <td class="p-4"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>
+            <td class="p-4"><div class="flex items-center gap-sm"><div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-bold text-label-sm">SC</div><a class="text-primary font-bold hover:underline text-body-md" href="#">Súper Che</a></div></td>
+            <td class="p-4 text-body-md">Autoservicio</td>
+            <td class="p-4"><span class="px-2 py-1 bg-secondary-container text-on-secondary-container rounded text-label-sm font-bold uppercase">Activo</span></td>
+            <td class="p-4 text-body-md">$96,500</td>
+            <td class="p-4"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant flex items-center justify-center text-[10px] font-bold">AR</div><span class="text-body-md">Alma Rosas</span></div></td>
+            <td class="p-4 text-body-md text-on-surface-variant">Nichos</td>
+            <td class="p-4"><button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button></td>
+          </tr>
+          <tr class="transition-colors cursor-pointer">
+            <td class="p-4"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>
+            <td class="p-4"><div class="flex items-center gap-sm"><div class="w-8 h-8 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant flex items-center justify-center font-bold text-label-sm">LP</div><a class="text-primary font-bold hover:underline text-body-md" href="#">Restaurante Los Portales</a></div></td>
+            <td class="p-4 text-body-md">Restaurante · HORECA</td>
+            <td class="p-4"><span class="px-2 py-1 bg-surface-container-high text-on-surface-variant rounded text-label-sm font-bold uppercase">Prospecto</span></td>
+            <td class="p-4 text-body-md">$52,000</td>
+            <td class="p-4"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center text-[10px] font-bold">RM</div><span class="text-body-md">Ricardo Mendoza</span></div></td>
+            <td class="p-4 text-body-md text-on-surface-variant">Nichos</td>
+            <td class="p-4"><button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button></td>
+          </tr>
+          <tr class="transition-colors cursor-pointer">
+            <td class="p-4"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>
+            <td class="p-4"><div class="flex items-center gap-sm"><div class="w-8 h-8 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center font-bold text-label-sm">PE</div><a class="text-primary font-bold hover:underline text-body-md" href="#">Panadería La Esperanza</a></div></td>
+            <td class="p-4 text-body-md">Panadería</td>
+            <td class="p-4"><span class="px-2 py-1 bg-secondary-container text-on-secondary-container rounded text-label-sm font-bold uppercase">Activo</span></td>
+            <td class="p-4 text-body-md">$29,800</td>
+            <td class="p-4"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant flex items-center justify-center text-[10px] font-bold">AR</div><span class="text-body-md">Alma Rosas</span></div></td>
+            <td class="p-4 text-body-md text-on-surface-variant">Centro</td>
+            <td class="p-4"><button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Paginación -->
+    <div class="p-md flex items-center justify-between bg-surface-container-low border-t border-outline-variant">
+      <p class="text-label-md text-on-surface-variant">Mostrando 1 a 6 de 181 clientes</p>
+      <div class="flex items-center gap-sm">
+        <button class="p-2 bg-surface-container-lowest border border-outline-variant rounded-lg text-on-surface-variant disabled:opacity-50" disabled><span class="material-symbols-outlined text-sm">chevron_left</span></button>
+        <div class="flex items-center">
+          <button class="w-10 h-10 bg-primary text-white font-bold rounded-lg shadow-sm">1</button>
+          <button class="w-10 h-10 hover:bg-surface-container rounded-lg transition-colors">2</button>
+          <button class="w-10 h-10 hover:bg-surface-container rounded-lg transition-colors">3</button>
+          <span class="px-2">...</span>
+          <button class="w-10 h-10 hover:bg-surface-container rounded-lg transition-colors">31</button>
+        </div>
+        <button class="p-2 bg-surface-container-lowest border border-outline-variant rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bento -->
+  <div class="mt-lg grid grid-cols-1 md:grid-cols-3 gap-lg">
+    <div class="col-span-1 md:col-span-2 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+      <h3 class="text-headline-md mb-2">Clientes activos</h3>
+      <p class="text-body-md text-on-surface-variant mb-4">Cuentas con al menos un pedido en los últimos 90 días.</p>
+      <div class="flex items-baseline gap-2"><span class="text-display-lg font-bold text-primary">147</span><span class="text-tertiary font-bold text-label-md flex items-center"><span class="material-symbols-outlined text-sm">trending_up</span> +6</span></div>
+    </div>
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+      <h3 class="text-headline-md mb-4">Reparto por CEDI</h3>
+      <div class="space-y-3 text-body-md">
+        <div class="flex justify-between"><span class="text-on-surface-variant">Nichos</span><span class="font-bold">181</span></div>
+        <div class="flex justify-between"><span class="text-on-surface-variant">Centro</span><span class="font-bold">96</span></div>
+        <div class="flex justify-between"><span class="text-on-surface-variant">Costa</span><span class="font-bold">74</span></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- BottomNav (móvil) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 h-16 bg-surface border-t border-outline-variant shadow-md">
+  <a class="flex flex-col items-center justify-center text-on-surface-variant" href="#"><span class="material-symbols-outlined">home</span><span class="text-[10px]">Inicio</span></a>
+  <a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1" href="#"><span class="material-symbols-outlined">groups</span><span class="text-[10px]">Clientes</span></a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant" href="#"><span class="material-symbols-outlined">receipt_long</span><span class="text-[10px]">Pedidos</span></a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant" href="#"><span class="material-symbols-outlined">map</span><span class="text-[10px]">Rutas</span></a>
+</nav>
+</body></html>

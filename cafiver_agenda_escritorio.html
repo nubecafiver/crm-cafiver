@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Agenda | Cafiver CRM</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = { darkMode: "class", theme: { extend: {
+    colors: {
+      "surface": "#faf9f9", "background": "#faf9f9",
+      "surface-container-lowest": "#ffffff", "surface-container-low": "#f4f3f3",
+      "surface-container": "#eeeeee", "surface-container-high": "#e9e8e8", "surface-container-highest": "#e3e2e2",
+      "on-surface": "#1a1c1c", "on-surface-variant": "#414752", "outline": "#717784", "outline-variant": "#c0c7d4",
+      "primary": "#005da9", "on-primary": "#ffffff", "primary-container": "#0176d3", "on-primary-container": "#fefcff",
+      "secondary": "#00658e", "secondary-container": "#43beff", "on-secondary-container": "#004a6a",
+      "tertiary": "#086a34", "on-tertiary": "#ffffff", "tertiary-container": "#2e844a",
+      "tertiary-fixed": "#9ff6b0", "on-tertiary-fixed-variant": "#005226", "error": "#ba1a1a"
+    },
+    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "2xl": "1rem", "full": "9999px" },
+    spacing: { "xs": "0.25rem", "sm": "0.5rem", "md": "1rem", "lg": "1.5rem", "xl": "2rem", "margin-mobile": "1rem", "margin-desktop": "1.5rem" },
+    fontFamily: { "sans": ["Hanken Grotesk", "sans-serif"] },
+    fontSize: {
+      "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+      "headline-md": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+      "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+      "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "700"}],
+      "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "500"}]
+    }
+  } } }
+</script>
+<style>
+  body { font-family: 'Hanken Grotesk', sans-serif; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+</style>
+</head>
+<body class="bg-background text-on-surface flex flex-col min-h-screen">
+<aside class="hidden lg:flex flex-col fixed left-0 top-0 h-full p-md w-64 bg-surface-container border-r border-outline-variant z-50">
+  <div class="flex items-center gap-sm mb-xl"><div class="w-10 h-10 bg-primary-container rounded flex items-center justify-center text-on-primary-container"><span class="material-symbols-outlined text-headline-md" style="font-variation-settings: 'FILL' 1;">coffee</span></div><div><h1 class="text-headline-md text-primary">Cafiver CRM</h1><p class="text-label-sm text-on-surface-variant">Sistema de ventas</p></div></div>
+  <button class="mb-lg w-full py-sm px-md bg-primary text-on-primary text-label-md rounded-lg flex items-center justify-center gap-xs shadow-sm hover:brightness-110 transition-all"><span class="material-symbols-outlined text-[18px]">add</span> Nueva visita</button>
+  <nav class="flex flex-col gap-xs flex-1">
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#"><span class="material-symbols-outlined">dashboard</span><span class="text-label-md">Tablero</span></a>
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#"><span class="material-symbols-outlined">account_tree</span><span class="text-label-md">Embudo</span></a>
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#"><span class="material-symbols-outlined">groups</span><span class="text-label-md">Clientes</span></a>
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#"><span class="material-symbols-outlined">receipt_long</span><span class="text-label-md">Pedidos</span></a>
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#"><span class="material-symbols-outlined">map</span><span class="text-label-md">Rutas</span></a>
+    <a class="flex items-center gap-md px-md py-sm bg-primary-container text-on-primary-container font-bold rounded-lg" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calendar_month</span><span class="text-label-md">Agenda</span></a>
+    <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#"><span class="material-symbols-outlined">bar_chart</span><span class="text-label-md">Reportes</span></a>
+  </nav>
+  <div class="mt-auto pt-md border-t border-outline-variant flex items-center gap-sm px-sm py-xs"><div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-label-md font-bold">BA</div><div><p class="text-label-md">Bob Amaya</p><p class="text-label-sm text-on-surface-variant">Administrador</p></div></div>
+</aside>
+
+<main class="flex-1 lg:ml-64 flex flex-col bg-background">
+  <!-- Toolbar -->
+  <div class="p-lg flex flex-col md:flex-row md:items-center justify-between gap-md border-b border-outline-variant bg-white">
+    <div class="flex items-center gap-lg">
+      <h1 class="text-display-lg text-on-surface">Julio 2026</h1>
+      <div class="flex border border-outline-variant rounded-lg overflow-hidden">
+        <button class="px-md py-2 hover:bg-surface-container transition-colors border-r border-outline-variant material-symbols-outlined">chevron_left</button>
+        <button class="px-lg py-2 hover:bg-surface-container transition-colors font-bold text-body-md">Hoy</button>
+        <button class="px-md py-2 hover:bg-surface-container transition-colors border-l border-outline-variant material-symbols-outlined">chevron_right</button>
+      </div>
+    </div>
+    <div class="flex items-center gap-sm">
+      <div class="bg-surface-container-low rounded-lg p-1 flex">
+        <button class="px-lg py-1.5 rounded text-label-md hover:bg-white hover:shadow-sm transition-all">Día</button>
+        <button class="px-lg py-1.5 rounded text-label-md hover:bg-white hover:shadow-sm transition-all">Semana</button>
+        <button class="px-lg py-1.5 rounded text-label-md bg-white shadow-sm font-bold">Mes</button>
+      </div>
+      <button class="bg-primary text-white px-lg py-2 rounded-lg font-bold flex items-center gap-xs"><span class="material-symbols-outlined text-[20px]">event</span> Nueva visita</button>
+    </div>
+  </div>
+
+  <div class="flex-1 flex flex-col xl:flex-row overflow-hidden">
+    <!-- Grid -->
+    <div class="flex-1 overflow-auto bg-white">
+      <div class="grid grid-cols-7 border-b border-outline-variant sticky top-0 bg-white z-10">
+        <div class="p-sm text-center text-label-md text-on-surface-variant">DOM</div><div class="p-sm text-center text-label-md text-on-surface-variant">LUN</div><div class="p-sm text-center text-label-md text-on-surface-variant">MAR</div><div class="p-sm text-center text-label-md text-on-surface-variant">MIÉ</div><div class="p-sm text-center text-label-md text-on-surface-variant">JUE</div><div class="p-sm text-center text-label-md text-on-surface-variant">VIE</div><div class="p-sm text-center text-label-md text-on-surface-variant">SÁB</div>
+      </div>
+      <div id="grid" class="grid grid-cols-7"></div>
+    </div>
+    <!-- Rail agenda del día -->
+    <aside class="xl:w-80 xl:border-l border-outline-variant bg-surface-container-low p-lg overflow-auto">
+      <h3 class="text-headline-md mb-1">Hoy, lunes 6</h3>
+      <p class="text-body-sm text-on-surface-variant mb-lg">4 visitas programadas · Ricardo Mendoza</p>
+      <div class="space-y-md">
+        <div class="bg-white border border-outline-variant rounded-xl p-md border-l-4 border-l-primary"><div class="flex justify-between"><span class="text-label-md">9:30 AM</span><span class="text-label-sm text-on-surface-variant">Prospecto</span></div><p class="font-semibold text-body-md mt-1">Abarrotes El Puerto</p><p class="text-body-sm text-on-surface-variant">Veracruz</p></div>
+        <div class="bg-white border border-outline-variant rounded-xl p-md border-l-4 border-l-tertiary"><div class="flex justify-between"><span class="text-label-md">11:00 AM</span><span class="text-label-sm text-on-surface-variant">Cotización</span></div><p class="font-semibold text-body-md mt-1">Restaurante Los Portales</p><p class="text-body-sm text-on-surface-variant">Orizaba</p></div>
+        <div class="bg-white border border-outline-variant rounded-xl p-md border-l-4 border-l-secondary"><div class="flex justify-between"><span class="text-label-md">1:15 PM</span><span class="text-label-sm text-on-surface-variant">Pedido</span></div><p class="font-semibold text-body-md mt-1">Cafetería Central</p><p class="text-body-sm text-on-surface-variant">Fortín</p></div>
+        <div class="bg-white border border-outline-variant rounded-xl p-md border-l-4 border-l-primary"><div class="flex justify-between"><span class="text-label-md">4:00 PM</span><span class="text-label-sm text-on-surface-variant">Seguimiento</span></div><p class="font-semibold text-body-md mt-1">Cafés de Altura S.A.</p><p class="text-body-sm text-on-surface-variant">Huatusco</p></div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<script>
+  const events = { 2:[{t:'Súper Che',c:'primary'}], 6:[{t:'4 visitas',c:'primary'}], 8:[{t:'Hotel Mocambo',c:'secondary'}], 9:[{t:'Distribuidora Golfo',c:'tertiary'}], 15:[{t:'Panadería',c:'secondary'}], 16:[{t:'Cafés Altura',c:'primary'}], 22:[{t:'Comedor Ixtac',c:'tertiary'}], 23:[{t:'Ruta Costa',c:'secondary'}] };
+  const cmap = { primary:'bg-primary-container text-on-primary-container', secondary:'bg-secondary-container text-on-secondary-container', tertiary:'bg-tertiary-container text-on-tertiary' };
+  const firstDow = 3; // Jul 1 2026 = Wednesday (0=Sun)
+  const daysInMonth = 31, today = 6;
+  const grid = document.getElementById('grid');
+  let html = '';
+  const prev = [28,29,30];
+  for (let i=0;i<firstDow;i++) html += `<div class="min-h-[120px] p-sm border-b border-r border-outline-variant bg-surface-container-lowest opacity-40"><span class="text-body-sm">${prev[i]}</span></div>`;
+  for (let d=1; d<=daysInMonth; d++) {
+    const isToday = d===today;
+    let ev = (events[d]||[]).map(e=>`<div class="mt-1 px-2 py-0.5 rounded ${cmap[e.c]} text-[11px] font-semibold truncate">${e.t}</div>`).join('');
+    html += `<div class="min-h-[120px] p-sm border-b border-r border-outline-variant hover:bg-surface-container-low transition-colors">
+      <span class="text-body-sm ${isToday?'bg-primary text-white w-6 h-6 rounded-full inline-flex items-center justify-center font-bold':'font-semibold text-on-surface-variant'}">${d}</span>${ev}</div>`;
+  }
+  const rem = (firstDow+daysInMonth)%7; const trail = rem===0?0:7-rem;
+  for (let i=1;i<=trail;i++) html += `<div class="min-h-[120px] p-sm border-b border-r border-outline-variant bg-surface-container-lowest opacity-40"><span class="text-body-sm">${i}</span></div>`;
+  grid.innerHTML = html;
+</script>
+
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 h-16 bg-surface border-t border-outline-variant shadow-md">
+  <a class="flex flex-col items-center justify-center text-on-surface-variant" href="#"><span class="material-symbols-outlined">home</span><span class="text-[10px]">Inicio</span></a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant" href="#"><span class="material-symbols-outlined">groups</span><span class="text-[10px]">Clientes</span></a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant" href="#"><span class="material-symbols-outlined">receipt_long</span><span class="text-[10px]">Pedidos</span></a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant" href="#"><span class="material-symbols-outlined">map</span><span class="text-[10px]">Rutas</span></a>
+</nav>
+</body></html>

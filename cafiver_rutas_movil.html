@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ruta | Cafiver CRM móvil</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = { darkMode: "class", theme: { extend: {
+    colors: {
+      "surface": "#faf9f9", "background": "#faf9f9",
+      "surface-container-lowest": "#ffffff", "surface-container-low": "#f4f3f3",
+      "surface-container": "#eeeeee", "surface-container-high": "#e9e8e8", "surface-container-highest": "#e3e2e2",
+      "on-surface": "#1a1c1c", "on-surface-variant": "#414752", "outline": "#717784", "outline-variant": "#c0c7d4",
+      "primary": "#005da9", "on-primary": "#ffffff", "primary-container": "#0176d3",
+      "secondary": "#00658e", "secondary-container": "#43beff", "on-secondary-container": "#004a6a",
+      "tertiary": "#086a34", "on-tertiary": "#ffffff", "tertiary-container": "#2e844a", "error": "#ba1a1a"
+    },
+    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "2xl": "1rem", "full": "9999px" },
+    spacing: { "xs": "0.25rem", "sm": "0.5rem", "md": "1rem", "lg": "1.5rem", "xl": "2rem", "margin-mobile": "1rem" },
+    fontFamily: { "sans": ["Hanken Grotesk", "sans-serif"] },
+    fontSize: {
+      "headline-md": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+      "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+      "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "700"}],
+      "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "500"}]
+    }
+  } } }
+</script>
+<style>
+  body { font-family: 'Hanken Grotesk', sans-serif; -webkit-tap-highlight-color: transparent; min-height: max(884px, 100dvh); }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .mapbg { background: radial-gradient(circle at 25% 35%, #e9f2ea 0 14%, transparent 14%), radial-gradient(circle at 75% 65%, #eaf0f6 0 18%, transparent 18%), linear-gradient(#f4f6f4,#eef2f5); }
+</style>
+</head>
+<body class="bg-background text-on-surface min-h-screen pb-24 max-w-[420px] mx-auto border-x border-outline-variant/40">
+<header class="bg-surface sticky top-0 z-40 border-b border-outline-variant flex items-center gap-3 w-full px-margin-mobile h-16">
+  <span class="material-symbols-outlined text-primary">arrow_back</span>
+  <div class="flex-1"><h1 class="text-headline-md font-bold text-primary leading-tight">Ruta de hoy</h1><p class="text-label-sm text-on-surface-variant">Zona Centro–Costa · 5 paradas · 84 km</p></div>
+</header>
+
+<!-- Mapa -->
+<div class="relative mapbg h-64">
+  <svg viewBox="0 0 400 260" class="w-full h-full" preserveAspectRatio="xMidYMid slice">
+    <path d="M50,60 C120,90 90,150 160,150 S260,190 210,220 S330,200 360,160" fill="none" stroke="#0176d3" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round"/>
+    <g id="pins"></g>
+  </svg>
+  <button class="absolute bottom-3 right-3 w-11 h-11 bg-white border border-outline-variant rounded-full shadow flex items-center justify-center"><span class="material-symbols-outlined text-primary">my_location</span></button>
+</div>
+
+<main class="px-margin-mobile pt-md">
+  <p class="text-label-md text-on-surface-variant uppercase mb-md">Paradas</p>
+  <div id="stops" class="space-y-2"></div>
+</main>
+
+<div class="fixed bottom-16 left-1/2 -translate-x-1/2 w-full max-w-[420px] px-margin-mobile py-3 bg-surface border-t border-outline-variant z-40">
+  <button class="w-full bg-primary text-on-primary py-3 rounded-xl font-bold flex items-center justify-center gap-2 active:scale-95 transition-transform"><span class="material-symbols-outlined text-[20px]">navigation</span> Ir a la siguiente parada</button>
+</div>
+
+<nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[420px] z-50 flex justify-around items-center px-4 h-16 bg-surface border-t border-outline-variant">
+  <a class="flex flex-col items-center justify-center text-on-surface-variant" href="#"><span class="material-symbols-outlined">home</span><span class="text-label-sm">Inicio</span></a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant" href="#"><span class="material-symbols-outlined">groups</span><span class="text-label-sm">Clientes</span></a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant" href="#"><span class="material-symbols-outlined">receipt_long</span><span class="text-label-sm">Pedidos</span></a>
+  <a class="flex flex-col items-center justify-center bg-secondary-container rounded-full px-4 py-1" style="color:#004a6a" href="#"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">map</span><span class="text-label-sm">Rutas</span></a>
+</nav>
+
+<script>
+  const STOPS = [
+    {n:1,name:'Abarrotes El Puerto',place:'Veracruz · 9:30',status:'done',x:50,y:60},
+    {n:2,name:'Hotel Mocambo',place:'Boca del Río · 10:45',status:'done',x:160,y:150},
+    {n:3,name:'Restaurante Los Portales',place:'Orizaba · 12:15',status:'now',x:210,y:220},
+    {n:4,name:'Cafetería Central',place:'Fortín · 1:30',status:'pend',x:360,y:160},
+    {n:5,name:'Súper Che',place:'Ixtaczoquitlán · 3:00',status:'pend',x:290,y:95},
+  ];
+  const S = { done:['bg-tertiary text-on-tertiary','Visitada','#086a34'], now:['bg-primary text-white','En curso','#0176d3'], pend:['bg-surface-container-high text-on-surface-variant','Pendiente','#717784'] };
+  document.getElementById('stops').innerHTML = STOPS.map(s=>`
+    <div class="flex items-center gap-3 p-3 rounded-xl border ${s.status==='now'?'border-primary':'border-outline-variant'} bg-surface-container-lowest active:scale-98">
+      <div class="w-8 h-8 rounded-full ${S[s.status][0]} flex items-center justify-center font-bold text-label-md">${s.status==='done'?'✓':s.n}</div>
+      <div class="flex-1"><p class="font-semibold text-body-md leading-tight">${s.name}</p><p class="text-label-sm text-on-surface-variant">${s.place}</p></div>
+      <span class="material-symbols-outlined text-outline">chevron_right</span>
+    </div>`).join('');
+  document.getElementById('pins').innerHTML = STOPS.map(s=>`
+    <g><circle cx="${s.x}" cy="${s.y}" r="14" fill="${S[s.status][2]}" opacity="0.15"/><circle cx="${s.x}" cy="${s.y}" r="10" fill="${S[s.status][2]}"/><text x="${s.x}" y="${s.y+4}" text-anchor="middle" fill="white" font-size="11" font-weight="700">${s.n}</text></g>`).join('');
+</script>
+</body></html>
