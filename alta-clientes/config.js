@@ -2,5 +2,5 @@
 window.ALTA_CONFIG = {
   SUPABASE_URL: "",
   SUPABASE_KEY: "",
-  CSF_VIGENCIA_DIAS: 90   // la constancia debe tener máximo estos días desde su emisión
+  CSF_VIGENCIA_DIAS: 30   // la constancia debe tener máximo estos días desde su emisión
 };

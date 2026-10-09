@@ -16,9 +16,8 @@ Flujo: vendedor captura → jefe fijo autoriza → jefe/admin pulsa **Enviar a S
 4. Secretos de la función: `SAP_WS_URL`, `SAP_WS_USER`, `SAP_WS_PASS`, `SAP_WS_NS`, `SAP_WS_FUNCTION`, `RESEND_API_KEY`, `CORREO_REMITENTE`, `CORREO_COPIA`.
 
 ## Reglas de la constancia fiscal
-La app lee el PDF en el navegador (RFC, razón social, domicilio, estatus y fecha de emisión). Bloquea el envío si la constancia tiene más de 90 días (`CSF_VIGENCIA_DIAS`), si el estatus no es ACTIVO o si RFC y C.P. no coinciden con el formulario.
+La app lee el PDF en el navegador (RFC, razón social, domicilio, estatus y fecha de emisión). Bloquea el envío si la constancia tiene más de 30 días (`CSF_VIGENCIA_DIAS`), si el estatus no es ACTIVO o si RFC y C.P. no coinciden con el formulario.
 
 ## Pendiente de confirmar
 - WSDL real del servicio de alta en SAP (los nombres de campo en `buildEnvelope` son una propuesta).
 - Significado y catálogos de sector, unidades de medida y centros suministradores.
-- Si la vigencia de la constancia es de 90 días.

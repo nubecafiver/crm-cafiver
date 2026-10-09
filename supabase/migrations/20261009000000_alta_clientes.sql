@@ -119,8 +119,8 @@ begin
   if not found then raise exception 'Solicitud no encontrada'; end if;
   if s.estatus not in ('borrador','rechazada') then raise exception 'La solicitud ya fue enviada'; end if;
   if s.csf_path is null or s.contrato_path is null then raise exception 'Faltan documentos'; end if;
-  if s.csf_fecha_emision is null or s.csf_fecha_emision < current_date - 90 then
-    raise exception 'La constancia fiscal no está vigente (máximo 90 días de emitida)'; end if;
+  if s.csf_fecha_emision is null or s.csf_fecha_emision < current_date - 30 then
+    raise exception 'La constancia fiscal no está vigente (máximo 30 días de emitida)'; end if;
   select jefe_id into v_jefe from public.ac_perfiles where id = auth.uid();
   if v_jefe is null then raise exception 'Tu usuario no tiene jefe asignado'; end if;
   update public.ac_solicitudes set estatus='por_autorizar', jefe_id=v_jefe, enviada_at=now(), motivo_rechazo=null where id=p_id;
