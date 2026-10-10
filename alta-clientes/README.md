@@ -10,9 +10,9 @@ Flujo: vendedor captura → jefe fijo autoriza → jefe/admin pulsa **Enviar a S
 - `supabase/functions/enviar-sap/index.ts`: función que llama al web service SOAP de SAP y manda el correo. Sin `SAP_WS_URL` corre en modo **simulado**.
 
 ## Puesta en marcha
-1. Elegir el proyecto Supabase, aplicar la migración y desplegar la función.
+1. Ya instalado en el proyecto "CAFIVER Coffee Service" (esquema `ac_*`, bucket `ac-documentos`, función `enviar-sap`).
 2. Poner `SUPABASE_URL` y la clave publishable en `alta-clientes/config.js`.
-3. Crear usuarios en Authentication. Luego, en la tabla `ac_perfiles`, asignar `rol` (`vendedor`, `jefe`, `admin`), `jefe_id` y `oficina`.
+3. Crear usuarios en Authentication. Cada persona entra a la app solo si tiene una fila en `ac_perfiles` (id = id del usuario, nombre, email, `rol`: `vendedor`, `jefe` o `admin`, `jefe_id`, `oficina`). No hay trigger automático para no afectar a otros sistemas del proyecto.
 4. Secretos de la función: `SAP_WS_URL`, `SAP_WS_USER`, `SAP_WS_PASS`, `SAP_WS_NS`, `SAP_WS_FUNCTION`, `RESEND_API_KEY`, `CORREO_REMITENTE`, `CORREO_COPIA`.
 
 ## Reglas de la constancia fiscal

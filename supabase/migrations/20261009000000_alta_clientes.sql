@@ -72,18 +72,7 @@ drop trigger if exists ac_solicitudes_touch on public.ac_solicitudes;
 create trigger ac_solicitudes_touch before update on public.ac_solicitudes
   for each row execute function public.ac_touch();
 
--- Perfil automático al crear un usuario en Authentication (rol vendedor por defecto; el admin lo ajusta)
-create or replace function public.ac_nuevo_usuario() returns trigger
-  language plpgsql security definer set search_path = public as
-$$ begin
-  insert into public.ac_perfiles(id, nombre, email)
-  values (new.id, coalesce(new.raw_user_meta_data->>'nombre', split_part(new.email,'@',1)), new.email)
-  on conflict (id) do nothing;
-  return new;
-end $$;
-drop trigger if exists ac_on_auth_user_created on auth.users;
-create trigger ac_on_auth_user_created after insert on auth.users
-  for each row execute function public.ac_nuevo_usuario();
+-- Los perfiles se dan de alta a mano (insert en ac_perfiles) para no afectar a otros sistemas del mismo proyecto.
 
 -- Reglas de acceso
 alter table public.ac_perfiles enable row level security;
