@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alta de Clientes · Cafiver</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f5f8; --surface:#fff; --surface-2:#f7f8fb; --fg:#171b26; --muted:#5a6477; --line:#dce1ea;
+  --accent:#0176d3; --accent-ink:#fff; --accent-soft:#e2effb;
+  --ok:#2e844a; --ok-soft:#e1f3e6; --warn:#a85f00; --warn-soft:#fdf0d9; --bad:#ba1a1a; --bad-soft:#fbe5e5; --idle:#5a6477; --idle-soft:#eceff4;
+  --side:#0f2a47; --side-fg:#d5e3f3; --side-active:#1b4472;
+  --font:'Hanken Grotesk',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0e131b; --surface:#161d28; --surface-2:#1b2331; --fg:#e8ecf3; --muted:#9aa5b8; --line:#2a3445;
+  --accent:#4da3ee; --accent-ink:#06182b; --accent-soft:#16304d;
+  --ok:#5cc47d; --ok-soft:#173424; --warn:#f0b24d; --warn-soft:#3a2b10; --bad:#ff8a8a; --bad-soft:#3d1a1a; --idle:#9aa5b8; --idle-soft:#222c3b;
+  --side:#0a1522; --side-fg:#b9c8dc; --side-active:#173556; color-scheme:dark}}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:14px;line-height:1.45;margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+.app{display:grid;grid-template-columns:232px minmax(0,1fr);min-height:100vh}
+.side{background:var(--side);color:var(--side-fg);padding:20px 14px;display:flex;flex-direction:column;gap:22px}
+.brand{display:flex;gap:10px;align-items:center;padding:0 6px}
+.brand i{width:34px;height:34px;border-radius:6px;background:var(--accent);display:grid;place-items:center;color:var(--accent-ink);font-style:normal;font-weight:700}
+.brand b{display:block;color:#fff;font-size:15px}.brand span{font-size:11px;opacity:.75}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav button{background:none;border:0;text-align:left;padding:9px 10px;border-radius:5px;color:inherit;cursor:pointer;font-weight:500;display:flex;justify-content:space-between}
+.nav button:hover{background:rgba(255,255,255,.06)}.nav button.on{background:var(--side-active);color:#fff}
+.nav .cnt{font-size:11px;background:rgba(255,255,255,.14);padding:1px 7px;border-radius:99px}
+.who{margin-top:auto;font-size:12.5px;display:flex;flex-direction:column;gap:6px}
+.who b{color:#fff;display:block}.who button{background:none;border:1px solid rgba(255,255,255,.25);color:inherit;border-radius:5px;padding:6px;cursor:pointer}
+.main{padding:22px 28px 60px;min-width:0}
+h1{font-size:24px;line-height:1.2;margin:0;font-weight:700;letter-spacing:-.01em;text-wrap:balance}
+.sub{color:var(--muted);margin:4px 0 0}
+.head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-bottom:18px}
+.btn{border:1px solid var(--line);background:var(--surface);padding:8px 14px;border-radius:5px;cursor:pointer;font-weight:600}
+.btn:hover{background:var(--surface-2)}
+.btn.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}.btn.pri:hover{filter:brightness(1.08)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}.btn.bad{color:var(--bad)}.btn.sm{padding:4px 10px;font-size:12.5px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tabs button{border:1px solid var(--line);background:var(--surface);padding:6px 12px;border-radius:99px;cursor:pointer;font-weight:500;color:var(--muted)}
+.tabs button.on{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:720px}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+tbody tr.row{cursor:pointer}tbody tr.row:hover{background:var(--surface-2)}tbody tr:last-child td{border-bottom:0}
+.mono{font-family:var(--mono);font-size:12.5px;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12px;font-weight:600;white-space:nowrap}
+.s-borrador{background:var(--idle-soft);color:var(--idle)}.s-por_autorizar{background:var(--warn-soft);color:var(--warn)}
+.s-autorizada{background:var(--accent-soft);color:var(--accent)}.s-en_sap{background:var(--ok-soft);color:var(--ok)}
+.s-rechazada,.s-error_sap{background:var(--bad-soft);color:var(--bad)}
+.name b{display:block}.name span{color:var(--muted);font-size:12px}
+.formgrid{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:18px;align-items:start}
+.sec{padding:18px 20px;margin-bottom:14px}
+.sec h2{font-size:15px;margin:0 0 2px}.sec p.hint{margin:0 0 14px;color:var(--muted);font-size:12.5px}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px}
+.fields.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.field{display:flex;flex-direction:column;gap:4px;min-width:0}.field.full{grid-column:1/-1}
+.field label{font-size:12.5px;font-weight:600}
+.req{color:var(--bad)}
+.field input,.field select,.field textarea{border:1px solid var(--line);background:var(--surface);border-radius:4px;padding:8px 10px;width:100%;min-width:0}
+.field input[readonly]{background:var(--surface-2);color:var(--muted)}
+.field.err input,.field.err select{border-color:var(--bad)}
+.msg{color:var(--bad);font-size:12px}
+.help{color:var(--muted);font-size:12.5px}
+.checks{display:flex;flex-wrap:wrap;gap:6px 16px}.checks label{font-weight:500;display:flex;gap:6px;align-items:center}
+.row-card{border:1px solid var(--line);border-radius:6px;padding:14px;margin-bottom:12px;background:var(--surface-2)}
+.row-card .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-weight:600}
+.drop{border:1.5px dashed var(--line);border-radius:6px;padding:14px;display:flex;gap:12px;align-items:center;justify-content:space-between;background:var(--surface-2);flex-wrap:wrap}
+.drop.has{border-style:solid;border-color:var(--ok);background:var(--ok-soft)}
+.drop b{display:block}.drop span{color:var(--muted);font-size:12.5px}.drop input{display:none}
+.csf{margin-top:12px;border:1px solid var(--line);border-radius:6px;padding:12px 14px;background:var(--surface)}
+.csf .big{font-size:15px;font-weight:700}
+.csf ul{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:4px;font-size:13px}
+.csf li::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;background:var(--ok)}
+.csf li.no::before{background:var(--bad)}
+.aside{position:sticky;top:16px;padding:16px}
+.aside h3{margin:0 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.meter{height:8px;background:var(--idle-soft);border-radius:99px;overflow:hidden;margin:8px 0 12px}.meter i{display:block;height:100%;background:var(--accent)}.meter i.full{background:var(--ok)}
+.miss{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:4px;font-size:12.5px;max-height:240px;overflow:auto}
+.miss a{color:var(--bad);cursor:pointer}
+.actions{display:flex;flex-direction:column;gap:8px}
+.dgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:16px;align-items:start}
+.panel{padding:16px;margin-bottom:14px}.panel h3{margin:0 0 8px;font-size:15px}
+dl{display:grid;grid-template-columns:160px minmax(0,1fr);gap:8px 14px;margin:0}
+dt{color:var(--muted);font-size:12.5px}dd{margin:0;font-weight:500;overflow-wrap:anywhere}
+.sub-h{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:16px 0 8px;padding-top:12px;border-top:1px solid var(--line)}
+.sub-h:first-child{border:0;padding:0;margin-top:0}
+.bignum{font-family:var(--mono);font-size:30px;font-weight:500;color:var(--ok)}
+.tl{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:13px}.tl span{color:var(--muted);font-size:12px}
+.login{max-width:380px;margin:12vh auto;padding:28px}.login .field{margin-bottom:14px}
+.banner{background:var(--warn-soft);color:var(--warn);padding:10px 14px;border-radius:5px;margin-bottom:14px;font-weight:600}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:5px;font-weight:600;z-index:9;max-width:90vw}
+@media (max-width:900px){
+  .app{grid-template-columns:minmax(0,1fr)}
+  .side{flex-direction:row;flex-wrap:wrap;align-items:center;padding:12px 16px;gap:12px}.nav{flex-direction:row}.who{margin:0 0 0 auto;flex-direction:row;align-items:center}
+  .main{padding:18px 16px 60px}.formgrid,.dgrid{grid-template-columns:minmax(0,1fr)}.aside{position:static}
+  .fields,.fields.three{grid-template-columns:minmax(0,1fr)}dl{grid-template-columns:minmax(0,1fr)}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<div class="toast" id="toast" hidden></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="config.js"></script>
+<script>
+const CFG = window.ALTA_CONFIG || {};
+const OFICINAS = ['DIFE','ORIZ','PUEB','CANC','MERI','BAJA','QTRO','VALL','MONT','GUAD','MAZA'];
+const CANALES = ['Hotel','Restaurante','Cafetería','Corporativo','Otros'];
+const SECTORES = ['FC','CK','RT','EQ','PQ','RF','TZ','AZ','SR','IN'];
+const PROCESOS = [['alta_cliente','Alta de cliente'],['alta_productos','Alta de productos'],['cambio_precios','Cambio de precios'],['cambio_razon','Cambio de razón social']];
+const FORMAS = [['01','01 Efectivo'],['02','02 Cheque'],['03','03 Transferencia'],['04','04 Tarjeta de crédito'],['28','28 Tarjeta de débito'],['99','99 Por definir']];
+const USOS = ['G01 Adquisición de mercancías','G03 Gastos en general','S01 Sin efectos fiscales','CP01 Pagos'];
+const UMS = ['KG','PZ','CJ','LT','PAQ'];
+const ESTATUS = {borrador:'Borrador',por_autorizar:'Por autorizar',autorizada:'Autorizada · lista para SAP',rechazada:'Rechazada',en_sap:'Dada de alta en SAP',error_sap:'Error al enviar a SAP'};
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const $ = id => document.getElementById(id);
+const fmtF = d => d ? new Date(d.length===10 ? d+'T12:00:00' : d).toLocaleDateString('es-MX',{day:'2-digit',month:'short',year:'numeric'}) : '—';
+const money = n => n==='' || n==null ? '—' : '$ '+Number(n).toLocaleString('es-MX');
+function toast(t){const e=$('toast');e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>e.hidden=true,3200)}
+
+let sb, S = {user:null, perfil:null, jefe:null, view:'list', filtro:null, lista:[], sel:null, eventos:[]};
+let D = null, FILES = {}, touched = new Set(), attempt = false, busy = false;
+
+/* ---------- Arranque y sesión ---------- */
+async function boot(){
+  if(!CFG.SUPABASE_URL || !CFG.SUPABASE_KEY){
+    $('root').innerHTML = `<div class="card login"><h1>Configuración pendiente</h1><p class="help">Completa <span class="mono">SUPABASE_URL</span> y <span class="mono">SUPABASE_KEY</span> en <span class="mono">alta-clientes/config.js</span>.</p></div>`; return;
+  }
+  sb = supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_KEY);
+  const {data:{session}} = await sb.auth.getSession();
+  session ? await entrar(session.user) : vistaLogin();
+}
+function vistaLogin(msg=''){
+  $('root').innerHTML = `<form class="card login" id="lf"><h1>Alta de clientes</h1><p class="sub" style="margin-bottom:18px">Inicia sesión con tu correo de Cafiver.</p>
+  <div class="field"><label for="em">Correo</label><input id="em" type="email" autocomplete="username" required></div>
+  <div class="field"><label for="pw">Contraseña</label><input id="pw" type="password" autocomplete="current-password" required></div>
+  <div class="msg" id="lm">${esc(msg)}</div><button class="btn pri" style="width:100%;margin-top:8px">Entrar</button></form>`;
+  $('lf').onsubmit = async e => { e.preventDefault();
+    const {data,error} = await sb.auth.signInWithPassword({email:$('em').value.trim(),password:$('pw').value});
+    if(error) $('lm').textContent='Correo o contraseña incorrectos'; else entrar(data.user); };
+}
+async function entrar(user){
+  S.user = user;
+  const {data:p} = await sb.from('ac_perfiles').select('*').eq('id',user.id).single();
+  if(!p || !p.activo){ await sb.auth.signOut(); return vistaLogin('Tu usuario no tiene acceso. Pide a un administrador que lo active.'); }
+  S.perfil = p; S.jefe = null;
+  if(p.jefe_id){ const {data:j} = await sb.from('ac_perfiles').select('id,nombre').eq('id',p.jefe_id).single(); S.jefe=j; }
+  S.filtro = p.rol==='vendedor' ? 'todas' : 'por_autorizar';
+  await cargarLista(); shell(); ir('list');
+}
+const esJefe = () => ['jefe','admin'].includes(S.perfil.rol);
+async function cargarLista(){
+  const {data,error} = await sb.from('ac_solicitudes').select('id,folio,estatus,razon_social,rfc,oficina,vendedor_id,jefe_id,num_cliente_sap,updated_at,datos,ac_vendedor:ac_perfiles!ac_solicitudes_vendedor_id_fkey(nombre)').order('updated_at',{ascending:false});
+  if(error) toast('No pude cargar las solicitudes: '+error.message);
+  S.lista = data || [];
+}
+function shell(){
+  $('root').innerHTML = `<div class="app"><aside class="side"><div class="brand"><i>C</i><div><b>Cafiver</b><span>Alta de clientes</span></div></div>
+  <nav class="nav" id="nav"></nav><div class="who"><div><b>${esc(S.perfil.nombre)}</b>${{vendedor:'Vendedor',jefe:'Jefe de ventas',admin:'Administrador'}[S.perfil.rol]}</div><button id="out">Salir</button></div></aside><main class="main" id="main"></main></div>`;
+  $('out').onclick = async()=>{await sb.auth.signOut(); location.reload()};
+}
+function nav(){
+  const por = S.lista.filter(s=>s.estatus==='por_autorizar'&&(s.jefe_id===S.user.id||S.perfil.rol==='admin')).length;
+  const it = [['list','Solicitudes',''],['new','Nueva solicitud','']];
+  if(esJefe()) it.splice(1,0,['inbox','Por autorizar',por]);
+  $('nav').innerHTML = it.map(([k,l,c])=>`<button data-v="${k}" class="${(S.view===k||(k==='list'&&S.view==='detail'))?'on':''}">${l}${c!==''?`<span class="cnt">${c}</span>`:''}</button>`).join('');
+  $('nav').querySelectorAll('button').forEach(b=>b.onclick=()=>{const v=b.dataset.v; if(v==='new')nueva(); else if(v==='inbox'){S.filtro='por_autorizar';ir('list')} else {ir(v)}});
+}
+function ir(v){S.view=v; nav(); ({list:vistaLista,form:vistaForm,detail:vistaDetalle})[v](); window.scrollTo(0,0)}
+
+/* ---------- Lista ---------- */
+async function vistaLista(){
+  await cargarLista(); nav();
+  const tabs = [['todas','Todas'],['borrador','Borradores'],['por_autorizar','Por autorizar'],['autorizada','Para enviar a SAP'],['en_sap','En SAP'],['rechazada','Rechazadas']];
+  const rows = S.lista.filter(s => S.filtro==='todas' || s.estatus===S.filtro);
+  $('main').innerHTML = `<div class="head"><div><h1>Solicitudes de alta de cliente</h1><p class="sub">Captura, autorización y envío a SAP.</p></div><button class="btn pri" id="bn">+ Nueva solicitud</button></div>
+  <div class="tabs">${tabs.map(([k,l])=>`<button data-f="${k}" class="${S.filtro===k?'on':''}">${l}</button>`).join('')}</div>
+  <div class="card tablewrap"><table><thead><tr><th>Folio</th><th>Cliente</th><th>Oficina</th><th>Vendedor</th><th>Estatus</th><th>N.º cliente SAP</th></tr></thead><tbody>
+  ${rows.map(s=>`<tr class="row" data-id="${s.id}"><td class="mono">${String(s.folio).padStart(4,'0')}</td><td class="name"><b>${esc(s.razon_social||'(sin nombre)')}</b><span>${esc(s.rfc||'RFC pendiente')} · ${fmtF(s.updated_at)}</span></td><td>${esc(s.oficina||'—')}</td><td>${esc(s.ac_vendedor?.nombre||'')}</td><td><span class="pill s-${s.estatus}">${ESTATUS[s.estatus]}</span></td><td class="mono">${esc(s.num_cliente_sap||'—')}</td></tr>`).join('')
+   || '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:30px">No hay solicitudes en este estatus.</td></tr>'}</tbody></table></div>`;
+  $('bn').onclick = nueva;
+  $('main').querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{S.filtro=b.dataset.f;vistaLista()});
+  $('main').querySelectorAll('tr.row').forEach(t=>t.onclick=()=>abrir(t.dataset.id));
+}
+async function abrir(id){
+  const {data} = await sb.from('ac_solicitudes').select('*').eq('id',id).single();
+  const {data:ev} = await sb.from('ac_eventos').select('*, ac_perfiles(nombre)').eq('solicitud_id',id).order('created_at');
+  S.sel = data; S.eventos = ev||[]; ir('detail');
+}
+
+/* ---------- Constancia fiscal ---------- */
+const MESES={ENERO:0,FEBRERO:1,MARZO:2,ABRIL:3,MAYO:4,JUNIO:5,JULIO:6,AGOSTO:7,SEPTIEMBRE:8,OCTUBRE:9,NOVIEMBRE:10,DICIEMBRE:11};
+function parseCSF(raw){
+  const t = raw.replace(/\s+/g,' '); const g = re => (re.exec(t)?.[1]||'').trim();
+  const f = /Fecha de Emisión.*?A (\d{1,2}) DE ([A-ZÁÉÍÓÚ]+) DE (\d{4})/i.exec(t);
+  const iso = f && MESES[f[2].toUpperCase()]!==undefined ? `${f[3]}-${String(MESES[f[2].toUpperCase()]+1).padStart(2,'0')}-${f[1].padStart(2,'0')}` : '';
+  let razon = g(/Denominación\/Razón Social: (.*?) Régimen Capital:/);
+  if(!razon){ const n=g(/Nombre \(s\): (.*?) Primer Apellido:/), a=g(/Primer Apellido: (.*?) Segundo Apellido:/), b=g(/Segundo Apellido: (.*?) (?:Fecha|Estatus)/); razon=[n,a,b].filter(Boolean).join(' '); }
+  const mun = g(/Demarcación Territorial: (.*?) Nombre de la Entidad/);
+  return {rfc:g(/RFC: ([A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3})/), razon_social:razon, nombre_comercial:g(/Nombre Comercial: (.*?) Fecha inicio/), estatus_padron:g(/Estatus en el padrón: (\w+)/),
+   cp:g(/Código Postal:\s*(\d{5})/), calle:g(/Nombre de Vialidad: (.*?) Número Exterior:/), num_ext:g(/Número Exterior: (\S+)/), num_int:g(/Número Interior:\s*(.*?) Nombre de la Colonia:/),
+   colonia:g(/Nombre de la Colonia: (.*?) Nombre de la Localidad:/), localidad:g(/Localidad: (.*?) (?:Nombre del Municipio|Nombre de la Entidad|Entre Calle)/), municipio:mun,
+   estado:g(/Entidad Federativa: (.*?) Entre Calle:/)||g(/Entidad Federativa: (.*?) (?:Y Calle|Actividades)/), fecha_emision:iso};
+}
+async function leerPDF(file){
+  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const pdf = await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise; let txt='';
+  for(let i=1;i<=Math.min(pdf.numPages,3);i++){ const c=await (await pdf.getPage(i)).getTextContent(); txt+=' '+c.items.map(x=>x.str).join(' '); }
+  return parseCSF(txt);
+}
+function vigenciaCSF(){
+  const e = D.csf_fecha_emision; if(!e) return null;
+  const vence = new Date(new Date(e+'T12:00:00').getTime() + CFG.CSF_VIGENCIA_DIAS*864e5);
+  const dias = Math.ceil((vence - new Date())/864e5);
+  return {vence, dias, ok: dias>=0};
+}
+function aplicarCSF(c){
+  D.csf_data = c; if(c.fecha_emision) D.csf_fecha_emision = c.fecha_emision;
+  const set=(p,v)=>{ if(v && !val(p)) setv(p,v) };
+  set('razon_social',c.razon_social); set('nombre_comercial',c.nombre_comercial); set('rfc',c.rfc);
+  set('datos.fiscal.calle',[c.calle&&c.num_ext?`${c.calle} #${c.num_ext}`:c.calle, c.num_int].filter(Boolean).join(' '));
+  set('datos.fiscal.colonia',c.colonia); set('datos.fiscal.delegacion',c.municipio); set('datos.fiscal.cp',c.cp);
+  set('datos.fiscal.ciudad',c.localidad||c.municipio); set('datos.fiscal.estado',c.estado);
+}
+
+/* ---------- Modelo del borrador ---------- */
+const val = p => p.split('.').reduce((o,k)=>o?.[k],D);
+const setv = (p,v) => { const ks=p.split('.'); let o=D; ks.slice(0,-1).forEach(k=>{o[k]=o[k]??{};o=o[k]}); o[ks.at(-1)]=v; };
+const destVacio = () => ({calle:'',colonia:'',delegacion:'',cp:'',ciudad:'',estado:'',telefono:'',entrecalles:'',horario_entrega:'',referencias:'',horario_revision:'',portal:'no',portal_link:'',portal_usuario:'',dias_pago:'',lugar_pagos:''});
+const prodVacio = () => ({material:'',descripcion:'',um:'KG',precio:'',vigencia_desde:'',vigencia_hasta:'',consumo:''});
+function nueva(){
+  D = {id:null,estatus:'borrador',oficina:S.perfil.oficina||'',nombre_comercial:'',razon_social:'',rfc:'',
+    datos:{canal:'',canal_otro:'',sector:[],proceso:['alta_cliente'],comodato:{aplica:false,tipo:'',renta:'',duracion:'',analisis_valor:'no',equipo:'',inversion_usd:'',fecha_instalacion:''},
+      centro_suministrador:'',envio_igual_fiscal:true,fiscal:{calle:'',colonia:'',delegacion:'',cp:'',ciudad:'',estado:'',telefono:''},dias_credito:'',limite_credito:'',forma_pago:'',cuenta:'',metodo_pago:'',uso_cfdi:'',archivos:{}},
+    contactos:{compras:{nombre:'',correo:'',tel:''},pagos:{nombre:'',correo:'',tel:''},operacion:{nombre:'',correo:'',tel:''}},
+    destinatarios:[],productos:[prodVacio()],csf_fecha_emision:'',csf_data:null,csf_path:null,contrato_path:null};
+  FILES={}; touched=new Set(); attempt=false; ir('form');
+}
+function editar(s){
+  D = JSON.parse(JSON.stringify({id:s.id,folio:s.folio,estatus:s.estatus,oficina:s.oficina||'',nombre_comercial:s.nombre_comercial||'',razon_social:s.razon_social||'',rfc:s.rfc||'',datos:s.datos,contactos:s.contactos,destinatarios:s.destinatarios,productos:s.productos,csf_fecha_emision:s.csf_fecha_emision||'',csf_data:s.csf_data,csf_path:s.csf_path,contrato_path:s.contrato_path}));
+  D.datos.archivos ??= {}; FILES={}; touched=new Set(); attempt=false; ir('form');
+}
+
+/* ---------- Validación ---------- */
+function validar(){
+  const e=[]; const r=(p,l,m='Campo obligatorio')=>{ if(!String(val(p)??'').trim()) e.push([p,l,m]) };
+  const d=D.datos, ver=(p,l,rx,m)=>{ const v=String(val(p)??'').trim(); if(!v) e.push([p,l,'Campo obligatorio']); else if(!rx.test(v)) e.push([p,l,m]) };
+  r('oficina','Oficina de ventas'); r('nombre_comercial','Nombre comercial'); r('razon_social','Razón social');
+  ver('rfc','RFC',/^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$/i,'RFC inválido');
+  r('datos.canal','Canal de distribución'); if(d.canal==='Otros') r('datos.canal_otro','Especifica el canal');
+  if(!d.proceso.length) e.push(['datos.proceso','Proceso a realizar','Elige al menos uno']);
+  if(d.comodato.aplica){ r('datos.comodato.tipo','Tipo de comodato'); r('datos.comodato.equipo','Equipo a instalar'); }
+  r('datos.centro_suministrador','Centro suministrador');
+  [['calle','Calle y número'],['colonia','Colonia'],['delegacion','Delegación'],['ciudad','Ciudad'],['estado','Estado']].forEach(([k,l])=>r('datos.fiscal.'+k,'Fiscal · '+l));
+  ver('datos.fiscal.cp','Fiscal · C.P.',/^\d{5}$/,'5 dígitos'); ver('datos.fiscal.telefono','Fiscal · Teléfono',/^[\d\s()+-]{10,15}$/,'Mínimo 10 dígitos');
+  ver('datos.dias_credito','Días de crédito',/^\d{1,3}$/,'Número de días (0 si es contado)');
+  if(Number(d.dias_credito)>0) ver('datos.limite_credito','Límite de crédito',/^\d+(\.\d{1,2})?$/,'Solo números');
+  r('datos.forma_pago','Forma de pago'); r('datos.metodo_pago','Método de pago'); r('datos.uso_cfdi','Uso del CFDI');
+  ['compras','pagos'].forEach(k=>{ r(`contactos.${k}.nombre`,`Contacto de ${k} · Nombre`); ver(`contactos.${k}.correo`,`Contacto de ${k} · Correo`,/^[^@\s]+@[^@\s]+\.[^@\s]+$/,'Correo inválido'); ver(`contactos.${k}.tel`,`Contacto de ${k} · Teléfono`,/^[\d\s()+-]{10,15}$/,'Mínimo 10 dígitos'); });
+  if(!d.envio_igual_fiscal){ if(!D.destinatarios.length) e.push(['destinatarios','Dirección de envío','Agrega al menos una']); }
+  D.destinatarios.forEach((x,i)=>{ [['calle','Calle y número'],['colonia','Colonia'],['ciudad','Ciudad'],['estado','Estado'],['horario_entrega','Días y horarios de entrega']].forEach(([k,l])=>r(`destinatarios.${i}.${k}`,`Envío ${i+1} · ${l}`)); ver(`destinatarios.${i}.cp`,`Envío ${i+1} · C.P.`,/^\d{5}$/,'5 dígitos'); });
+  if(d.proceso.includes('alta_productos')||d.proceso.includes('cambio_precios')){
+    if(!D.productos.length) e.push(['productos','Productos','Agrega al menos un material']);
+    D.productos.forEach((p,i)=>{ r(`productos.${i}.material`,`Material ${i+1} · Clave SAP`); r(`productos.${i}.descripcion`,`Material ${i+1} · Descripción`); r(`productos.${i}.um`,`Material ${i+1} · Unidad`);
+      ver(`productos.${i}.precio`,`Material ${i+1} · Precio`,/^\d+(\.\d{1,4})?$/,'Solo números'); r(`productos.${i}.vigencia_desde`,`Material ${i+1} · Vigencia desde`); r(`productos.${i}.vigencia_hasta`,`Material ${i+1} · Vigencia hasta`);
+      if(p.vigencia_desde&&p.vigencia_hasta&&p.vigencia_hasta<p.vigencia_desde) e.push([`productos.${i}.vigencia_hasta`,`Material ${i+1} · Vigencia hasta`,'Debe ser posterior al inicio']); });
+  }
+  if(!FILES.csf && !D.csf_path) e.push(['doc_csf','Constancia de situación fiscal','Adjunta el PDF']);
+  if(!FILES.contrato && !D.contrato_path) e.push(['doc_contrato','Contrato firmado','Adjunta el PDF']);
+  if(!D.csf_fecha_emision) e.push(['csf_fecha_emision','Fecha de emisión de la constancia','Campo obligatorio']);
+  else { const v=vigenciaCSF(); if(!v.ok) e.push(['csf_fecha_emision','Constancia fiscal','Vencida: tiene más de '+CFG.CSF_VIGENCIA_DIAS+' días. Sube una constancia nueva.']); }
+  const c=D.csf_data;
+  if(c){ if(c.estatus_padron && c.estatus_padron.toUpperCase()!=='ACTIVO') e.push(['doc_csf','Constancia fiscal','El contribuyente no está ACTIVO en el padrón']);
+    if(c.rfc && D.rfc && c.rfc.toUpperCase()!==D.rfc.trim().toUpperCase()) e.push(['rfc','RFC','No coincide con la constancia ('+c.rfc+')']);
+    if(c.cp && d.fiscal.cp && c.cp!==d.fiscal.cp.trim()) e.push(['datos.fiscal.cp','Fiscal · C.P.','No coincide con la constancia ('+c.cp+')']); }
+  return e;
+}
+function pintar(){
+  const errs = validar(), m = new Map(errs.map(x=>[x[0],x]));
+  document.querySelectorAll('[data-msg]').forEach(el=>{ const x=m.get(el.dataset.msg), show=x&&(attempt||touched.has(el.dataset.msg)); el.textContent=show?x[2]:''; el.closest('.field,.drop')?.classList.toggle('err',!!show); });
+  const falt = errs.length, tot = 40, pct = Math.max(4, Math.round((1-Math.min(falt,tot)/tot)*100));
+  const b=$('bar'); if(b){ b.style.width=(falt?pct:100)+'%'; b.classList.toggle('full',!falt); $('cnt').textContent = falt? `Faltan ${falt} por completar`:'Todo listo para enviar';
+    $('miss').innerHTML = errs.slice(0,12).map(x=>`<li><a data-go="${x[0]}">${esc(x[1])}</a></li>`).join('') + (falt>12?`<li class="help">y ${falt-12} más…</li>`:'');
+    $('miss').querySelectorAll('[data-go]').forEach(a=>a.onclick=()=>{ attempt=true; pintar(); (document.querySelector(`[data-path="${a.dataset.go}"]`)||document.querySelector(`[data-msg="${a.dataset.go}"]`))?.scrollIntoView({behavior:'smooth',block:'center'}); }); }
+  const c=$('csfbox'); if(c) c.innerHTML = csfPanel();
+  return errs;
+}
+function csfPanel(){
+  const c=D.csf_data, v=vigenciaCSF(); if(!c && !v) return '<span class="help">Sube la constancia para leer RFC, domicilio y fecha de emisión.</span>';
+  const li=(ok,t)=>`<li class="${ok?'':'no'}">${t}</li>`;
+  return `${v?`<div class="big">${v.ok?`Vigente hasta ${fmtF(v.vence.toISOString().slice(0,10))}`:`Vencida el ${fmtF(v.vence.toISOString().slice(0,10))}`}</div><span class="help">Emitida el ${fmtF(D.csf_fecha_emision)} · ${v.ok?`quedan ${v.dias} días`:`pasaron ${-v.dias} días`} (límite ${CFG.CSF_VIGENCIA_DIAS} días)</span>`:''}
+   ${c?`<ul>${li(c.estatus_padron.toUpperCase()==='ACTIVO','Estatus en el padrón: '+esc(c.estatus_padron||'—'))}${li(!c.rfc||!D.rfc||c.rfc.toUpperCase()===D.rfc.trim().toUpperCase(),'RFC en constancia: '+esc(c.rfc))}${li(!c.cp||!D.datos.fiscal.cp||c.cp===D.datos.fiscal.cp.trim(),'C.P. en constancia: '+esc(c.cp))}</ul>`:''}`;
+}
+
+/* ---------- Formulario ---------- */
+function fld(p,l,o={}){
+  const v=val(p)??''; const t=o.t||'text';
+  let ctl;
+  if(t==='select') ctl=`<select data-path="${p}"><option value="">Selecciona…</option>${o.o.map(x=>{const [k,lb]=Array.isArray(x)?x:[x,x];return `<option value="${esc(k)}" ${v===k?'selected':''}>${esc(lb)}</option>`}).join('')}</select>`;
+  else ctl=`<input data-path="${p}" type="${t}" value="${esc(v)}" ${o.ro?'readonly':''} ${o.ph?`placeholder="${esc(o.ph)}"`:''} ${t==='number'?'min="0" step="any"':''} autocomplete="off">`;
+  return `<div class="field ${o.full?'full':''}"><label>${l}${o.req?'<span class="req"> *</span>':''}</label>${ctl}<div class="msg" data-msg="${p}"></div></div>`;
+}
+const chk = (p,list) => `<div class="checks">${list.map(x=>{const [k,l]=Array.isArray(x)?x:[x,x];return `<label><input type="checkbox" data-group="${p}" value="${k}" ${val(p).includes(k)?'checked':''}> ${l}</label>`}).join('')}</div>`;
+function secDest(i){const p=`destinatarios.${i}.`;return `<div class="row-card"><div class="top">Dirección de envío ${i+1}<button type="button" class="btn sm bad" data-del="destinatarios" data-i="${i}">Quitar</button></div><div class="fields">
+ ${fld(p+'calle','Calle y número',{req:1,full:1})}${fld(p+'colonia','Colonia',{req:1})}${fld(p+'delegacion','Delegación')}${fld(p+'cp','C.P.',{req:1})}${fld(p+'ciudad','Ciudad',{req:1})}${fld(p+'estado','Estado',{req:1})}${fld(p+'telefono','Teléfono')}${fld(p+'entrecalles','Entrecalles')}
+ ${fld(p+'horario_entrega','Días y horarios de entrega',{req:1,full:1,ph:'Lunes a viernes de 10:00 a 16:00 hrs'})}${fld(p+'referencias','Referencias',{full:1})}${fld(p+'horario_revision','Días y horarios de revisión')}${fld(p+'dias_pago','Días de pago')}${fld(p+'lugar_pagos','Lugar de revisión y pagos')}
+ ${fld(p+'portal','Uso de portal',{t:'select',o:[['no','No'],['si','Sí']]})}${val(p+'portal')==='si'?fld(p+'portal_link','Link del portal',{full:1})+fld(p+'portal_usuario','Usuario')+fld(p+'portal_usuario'.replace('usuario','pass'),'Contraseña'):''}</div></div>`}
+function secProd(i){const p=`productos.${i}.`;return `<div class="row-card"><div class="top">Material ${i+1}<button type="button" class="btn sm bad" data-del="productos" data-i="${i}">Quitar</button></div><div class="fields three">
+ ${fld(p+'material','Clave SAP (material)',{req:1})}${fld(p+'descripcion','Descripción',{req:1})}${fld(p+'um','Unidad de medida',{t:'select',o:UMS,req:1})}${fld(p+'precio','Precio (MXN)',{req:1})}${fld(p+'vigencia_desde','Vigencia desde',{t:'date',req:1})}${fld(p+'vigencia_hasta','Vigencia hasta',{t:'date',req:1})}${fld(p+'consumo','Consumo estimado',{full:1,ph:'30 kilogramos mensuales'})}</div></div>`}
+function contacto(k,l,req){return `<div class="fields three" style="margin-bottom:12px">${fld(`contactos.${k}.nombre`,'Contacto de '+l+' · Nombre',{req})}${fld(`contactos.${k}.correo`,'Correo',{req})}${fld(`contactos.${k}.tel`,'Teléfono',{req})}</div>`}
+function vistaForm(){
+  const d=D.datos;
+  $('main').innerHTML = `<div class="head"><div><button class="btn sm" id="back">← Solicitudes</button><h1 style="margin-top:10px">${D.id?'Solicitud '+String(D.folio).padStart(4,'0'):'Nueva solicitud de alta'}</h1><p class="sub">Los campos con <span class="req">*</span> son obligatorios para dar de alta el cliente en SAP.</p></div></div>
+  ${D.estatus==='rechazada'?'<div class="banner">Esta solicitud fue rechazada. Corrige y vuelve a enviarla.</div>':''}
+  <div class="formgrid"><div>
+  <section class="card sec"><h2>Documentos</h2><p class="hint">Sube primero la constancia: se leen RFC, razón social, domicilio y fecha de emisión.</p><div style="display:grid;gap:12px">
+   <div class="drop ${FILES.csf||D.csf_path?'has':''}"><div><b>Constancia de situación fiscal <span class="req">*</span></b><span id="n_csf">${esc(FILES.csf?.name||D.datos.archivos.csf||'PDF del SAT')}</span><div class="msg" data-msg="doc_csf"></div></div><label class="btn" style="cursor:pointer">Subir PDF<input type="file" id="u_csf" accept=".pdf"></label></div>
+   <div class="csf" id="csfbox"></div>
+   ${fld('csf_fecha_emision','Fecha de emisión de la constancia',{t:'date',req:1})}
+   <div class="drop ${FILES.contrato||D.contrato_path?'has':''}"><div><b>Contrato firmado <span class="req">*</span></b><span id="n_contrato">${esc(FILES.contrato?.name||D.datos.archivos.contrato||'PDF firmado. Se elabora en otro sistema.')}</span><div class="msg" data-msg="doc_contrato"></div></div><label class="btn" style="cursor:pointer">Subir PDF<input type="file" id="u_contrato" accept=".pdf,image/*"></label></div></div></section>
+  <section class="card sec"><h2>Datos generales</h2><p class="hint">Proceso a realizar y clasificación del cliente.</p><div class="fields">
+   ${fld('oficina','Oficina de ventas',{t:'select',o:OFICINAS,req:1})}<div class="field"><label>Vendedor / Gerente</label><input readonly value="${esc(S.perfil.nombre)} / ${esc(S.jefe?.nombre||'sin jefe asignado')}"></div>
+   ${fld('razon_social','Razón social',{req:1,full:1})}${fld('nombre_comercial','Nombre comercial',{req:1})}${fld('rfc','RFC',{req:1})}
+   <div class="field full"><label>Proceso a realizar <span class="req">*</span></label>${chk('datos.proceso',PROCESOS)}<div class="msg" data-msg="datos.proceso"></div></div>
+   ${fld('datos.canal','Canal de distribución',{t:'select',o:CANALES,req:1})}${d.canal==='Otros'?fld('datos.canal_otro','¿Cuál?',{req:1}):'<div></div>'}
+   <div class="field full"><label>Sector</label>${chk('datos.sector',SECTORES)}</div>
+   ${fld('datos.centro_suministrador','Centro suministrador',{req:1,ph:'KFMY'})}</div></section>
+  <section class="card sec"><h2>Comodato</h2><p class="hint">Solo si se instala equipo en comodato.</p><div class="checks" style="margin-bottom:12px"><label><input type="checkbox" data-bool="datos.comodato.aplica" ${d.comodato.aplica?'checked':''}> Este cliente lleva comodato</label></div>
+   ${d.comodato.aplica?`<div class="fields three">${fld('datos.comodato.tipo','Tipo',{t:'select',o:['Paquete','Renta','Taza'],req:1})}${fld('datos.comodato.renta','Renta')}${fld('datos.comodato.duracion','Duración')}${fld('datos.comodato.equipo','Equipo a instalar',{req:1,full:1})}${fld('datos.comodato.inversion_usd','Inversión USD')}${fld('datos.comodato.fecha_instalacion','Fecha de instalación',{t:'date'})}${fld('datos.comodato.analisis_valor','Análisis de valor',{t:'select',o:[['si','Sí'],['no','No']]})}</div>`:''}</section>
+  <section class="card sec"><h2>Dirección fiscal y crédito</h2><p class="hint">Debe coincidir con la constancia de situación fiscal.</p><div class="fields">
+   ${fld('datos.fiscal.calle','Calle y número',{req:1,full:1})}${fld('datos.fiscal.colonia','Colonia',{req:1})}${fld('datos.fiscal.delegacion','Delegación',{req:1})}${fld('datos.fiscal.cp','C.P.',{req:1})}${fld('datos.fiscal.ciudad','Ciudad',{req:1})}${fld('datos.fiscal.estado','Estado',{req:1})}${fld('datos.fiscal.telefono','Teléfono',{req:1})}
+   ${fld('datos.dias_credito','Días de crédito',{t:'number',req:1,ph:'0 si es contado'})}${fld('datos.limite_credito','Límite de crédito (MXN)',{t:'number',ph:'Obligatorio si hay días de crédito'})}</div></section>
+  <section class="card sec"><h2>Direcciones de envío</h2><p class="hint">Cada una genera un destinatario de mercancía en SAP.</p><div class="checks" style="margin-bottom:12px"><label><input type="checkbox" data-bool="datos.envio_igual_fiscal" ${d.envio_igual_fiscal?'checked':''}> La dirección de envío es la misma que la fiscal</label></div>
+   ${D.destinatarios.map((_,i)=>secDest(i)).join('')}${D.destinatarios.length<4?'<button type="button" class="btn" id="adddest">+ Agregar dirección de envío</button>':''}<div class="msg" data-msg="destinatarios"></div></section>
+  <section class="card sec"><h2>Contactos</h2><p class="hint">Compras y pagos son obligatorios.</p>${contacto('compras','compras',1)}${contacto('pagos','pagos',1)}${contacto('operacion','operación',0)}</section>
+  <section class="card sec"><h2>Productos y precios</h2><p class="hint">Material, unidad de medida, precio y vigencia. Obligatorio si el proceso incluye alta de productos o cambio de precios.</p>
+   ${D.productos.map((_,i)=>secProd(i)).join('')}<button type="button" class="btn" id="addprod">+ Agregar material</button><div class="msg" data-msg="productos"></div></section>
+  <section class="card sec"><h2>Facturación</h2><div class="fields">${fld('datos.forma_pago','Forma de pago',{t:'select',o:FORMAS,req:1})}${fld('datos.cuenta','Cuenta')}${fld('datos.metodo_pago','Método de pago',{t:'select',o:['PUE','PPD'],req:1})}${fld('datos.uso_cfdi','Uso del CFDI',{t:'select',o:USOS,req:1})}</div></section>
+  </div><aside class="card aside"><h3>Avance</h3><b id="cnt"></b><div class="meter"><i id="bar"></i></div><ul class="miss" id="miss"></ul>
+   <div class="actions"><button class="btn pri" id="bsend">Enviar a autorización</button><button class="btn" id="bsave">Guardar borrador</button></div>
+   <p class="help" style="margin:10px 0 0">${S.jefe?`Tu jefe, ${esc(S.jefe.nombre)}, recibirá la solicitud.`:'Tu usuario no tiene jefe asignado.'}</p></aside></div>`;
+  $('back').onclick=()=>ir('list');
+  const f=$('main');
+  f.oninput=f.onchange=ev=>{ const t=ev.target;
+    if(t.dataset.path){ setv(t.dataset.path,t.value); touched.add(t.dataset.path); pintar(); }
+    else if(t.dataset.group){ const a=val(t.dataset.group); t.checked?a.push(t.value):a.splice(a.indexOf(t.value),1); if(t.dataset.group==='datos.proceso'){const y=scrollY;vistaForm();scrollTo(0,y)} else pintar(); }
+    else if(t.dataset.bool){ setv(t.dataset.bool,t.checked); const y=scrollY; if(t.dataset.bool==='datos.envio_igual_fiscal'&&!t.checked&&!D.destinatarios.length)D.destinatarios.push(destVacio()); vistaForm(); scrollTo(0,y); } };
+  f.onclick=ev=>{ const b=ev.target.closest('[data-del]'); if(b){ D[b.dataset.del].splice(+b.dataset.i,1); const y=scrollY; vistaForm(); scrollTo(0,y); } };
+  const ad=$('adddest'); if(ad) ad.onclick=()=>{D.destinatarios.push(destVacio());vistaForm()};
+  $('addprod').onclick=()=>{D.productos.push(prodVacio());vistaForm()};
+  $('u_contrato').onchange=e=>{ const fl=e.target.files[0]; if(!fl)return; FILES.contrato=fl; $('n_contrato').textContent='✓ '+fl.name; e.target.closest('.drop').classList.add('has'); pintar(); };
+  $('u_csf').onchange=async e=>{ const fl=e.target.files[0]; if(!fl)return; FILES.csf=fl; $('n_csf').textContent='Leyendo constancia…'; e.target.closest('.drop').classList.add('has');
+    try{ const c=await leerPDF(fl); if(!c.rfc) throw new Error('sin datos'); aplicarCSF(c); toast('Constancia leída: '+c.rfc); }
+    catch(err){ toast('No pude leer la constancia automáticamente. Captura la fecha de emisión.'); D.csf_data=null; }
+    const y=scrollY; vistaForm(); scrollTo(0,y); };
+  $('bsave').onclick=()=>guardar(false); $('bsend').onclick=()=>guardar(true);
+  pintar();
+}
+async function subir(clave,archivo){
+  const path=`${S.user.id}/${D.id}/${clave}.${(archivo.name.split('.').pop()||'pdf').toLowerCase()}`;
+  const {error}=await sb.storage.from('ac-documentos').upload(path,archivo,{upsert:true,contentType:archivo.type||'application/pdf'});
+  if(error) throw new Error('No pude subir '+archivo.name+': '+error.message);
+  D[clave+'_path']=path; D.datos.archivos[clave]=archivo.name;
+}
+async function guardar(enviar){
+  if(busy)return;
+  if(enviar){ attempt=true; const errs=pintar(); if(errs.length){ toast(`Faltan ${errs.length} campos por completar`); document.querySelector('.err')?.scrollIntoView({behavior:'smooth',block:'center'}); return; } }
+  busy=true; ['bsave','bsend'].forEach(i=>$(i).disabled=true);
+  try{
+    D.id = D.id || crypto.randomUUID();
+    if(FILES.csf) await subir('csf',FILES.csf); if(FILES.contrato) await subir('contrato',FILES.contrato); FILES={};
+    if(D.datos.envio_igual_fiscal) D.destinatarios=[];
+    const row={id:D.id,vendedor_id:S.user.id,estatus:D.estatus,oficina:D.oficina,razon_social:D.razon_social.trim(),nombre_comercial:D.nombre_comercial.trim(),rfc:D.rfc.trim().toUpperCase(),
+      datos:D.datos,contactos:D.contactos,destinatarios:D.destinatarios,productos:D.productos,csf_fecha_emision:D.csf_fecha_emision||null,csf_data:D.csf_data,csf_path:D.csf_path,contrato_path:D.contrato_path};
+    const {data,error}=await sb.from('ac_solicitudes').upsert(row).select('folio').single(); if(error) throw error; D.folio=data.folio;
+    if(enviar){ const {error:e2}=await sb.rpc('ac_enviar_a_autorizacion',{p_id:D.id}); if(e2) throw e2; toast('Solicitud enviada a autorización'); await abrir(D.id); }
+    else { toast('Borrador guardado'); ir('list'); }
+  }catch(err){ toast(err.message||String(err)); }
+  finally{ busy=false; ['bsave','bsend'].forEach(i=>$(i)&&($(i).disabled=false)); }
+}
+
+/* ---------- Detalle ---------- */
+async function verDoc(path){ const {data,error}=await sb.storage.from('ac-documentos').createSignedUrl(path,120); if(error)return toast('No pude abrir el documento'); window.open(data.signedUrl,'_blank'); }
+function vistaDetalle(){
+  const s=S.sel, d=s.datos||{}, f=d.fiscal||{}, c=s.contactos||{}, yoDuenio=s.vendedor_id===S.user.id, soyJefe=(s.jefe_id===S.user.id)||S.perfil.rol==='admin';
+  const dl=rows=>`<dl>${rows.map(([k,v])=>`<dt>${k}</dt><dd>${v===''||v==null?'<span class="help">—</span>':esc(v)}</dd>`).join('')}</dl>`;
+  const con=(k,l)=>[`Contacto de ${l}`, c[k]?.nombre?`${c[k].nombre} · ${c[k].correo} · ${c[k].tel}`:''];
+  const v=s.csf_fecha_emision?new Date(new Date(s.csf_fecha_emision+'T12:00:00').getTime()+CFG.CSF_VIGENCIA_DIAS*864e5):null;
+  const det=`<div class="sub-h">Datos generales</div>${dl([['Razón social',s.razon_social],['Nombre comercial',s.nombre_comercial],['RFC',s.rfc],['Oficina de ventas',s.oficina],['Canal',d.canal==='Otros'?'Otros: '+d.canal_otro:d.canal],['Sector',(d.sector||[]).join(', ')],['Proceso',(d.proceso||[]).map(x=>PROCESOS.find(p=>p[0]===x)?.[1]).join(', ')],['Centro suministrador',d.centro_suministrador]])}
+  ${d.comodato?.aplica?`<div class="sub-h">Comodato</div>${dl([['Tipo',d.comodato.tipo],['Equipo',d.comodato.equipo],['Renta',d.comodato.renta],['Duración',d.comodato.duracion],['Inversión USD',d.comodato.inversion_usd],['Instalación',fmtF(d.comodato.fecha_instalacion)],['Análisis de valor',d.comodato.analisis_valor==='si'?'Sí':'No']])}`:''}
+  <div class="sub-h">Dirección fiscal y crédito</div>${dl([['Domicilio',[f.calle,f.colonia,f.delegacion,f.ciudad,f.estado,'C.P. '+f.cp].filter(Boolean).join(', ')],['Teléfono',f.telefono],['Días de crédito',d.dias_credito],['Límite de crédito',Number(d.dias_credito)>0?money(d.limite_credito):'No aplica']])}
+  <div class="sub-h">Envío</div>${d.envio_igual_fiscal?dl([['Dirección','Igual a la dirección fiscal']]):(s.destinatarios||[]).map((x,i)=>dl([['Envío '+(i+1),[x.calle,x.colonia,x.ciudad,x.estado,'C.P. '+x.cp].join(', ')],['Entrega',x.horario_entrega],['Revisión / pago',[x.horario_revision,x.dias_pago,x.lugar_pagos].filter(Boolean).join(' · ')],['N.º destinatario SAP',(s.destinatarios_sap||[]).find(z=>z.posicion===i+1)?.numero_sap||'']])).join('<br>')}
+  <div class="sub-h">Contactos</div>${dl([con('compras','compras'),con('pagos','pagos'),con('operacion','operación')])}
+  <div class="sub-h">Productos y precios</div>${(s.productos||[]).length?`<div class="tablewrap"><table style="min-width:520px"><thead><tr><th>Material</th><th>UM</th><th>Precio</th><th>Vigencia</th></tr></thead><tbody>${s.productos.map(p=>`<tr><td><span class="mono">${esc(p.material)}</span> ${esc(p.descripcion)}</td><td>${esc(p.um)}</td><td class="mono">${money(p.precio)}</td><td>${fmtF(p.vigencia_desde)} al ${fmtF(p.vigencia_hasta)}</td></tr>`).join('')}</tbody></table></div>`:'<span class="help">Sin productos</span>'}
+  <div class="sub-h">Facturación y documentos</div>${dl([['Forma / método de pago',[d.forma_pago,d.metodo_pago].join(' · ')],['Uso del CFDI',d.uso_cfdi],['Constancia fiscal',s.csf_path?`Emitida ${fmtF(s.csf_fecha_emision)}${v?` · vence ${fmtF(v.toISOString().slice(0,10))}`:''}`:'Falta'],['Contrato firmado',s.contrato_path?'Adjunto':'Falta']])}
+  <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">${s.csf_path?'<button class="btn sm" data-doc="csf">Ver constancia</button>':''}${s.contrato_path?'<button class="btn sm" data-doc="contrato">Ver contrato</button>':''}</div>`;
+  let side='';
+  if(['borrador','rechazada'].includes(s.estatus)&&yoDuenio) side+=`<div class="card panel"><h3>${s.estatus==='rechazada'?'Rechazada':'Borrador'}</h3>${s.motivo_rechazo?`<p class="help">Motivo: ${esc(s.motivo_rechazo)}</p>`:''}<button class="btn pri" id="bedit">${s.estatus==='rechazada'?'Corregir y reenviar':'Continuar captura'}</button></div>`;
+  if(s.estatus==='por_autorizar') side+= soyJefe ? `<div class="card panel"><h3>Autorizar alta</h3><p class="help">Revisa constancia, contrato, precios y crédito.</p><div class="actions"><button class="btn ok" id="bauth">Autorizar</button><div class="field"><input id="motivo" placeholder="Motivo si rechazas"></div><button class="btn bad" id="brej">Rechazar</button></div></div>` : `<div class="card panel"><h3>En espera de autorización</h3><p class="help">Pendiente de tu jefe.</p></div>`;
+  if(['autorizada','error_sap'].includes(s.estatus)) side+= soyJefe ? `<div class="card panel"><h3>${s.estatus==='error_sap'?'Falló el envío a SAP':'Autorizada'}</h3>${s.estatus==='error_sap'?`<p class="msg">${esc(s.sap_log?.mensaje||'')}</p>`:'<p class="help">Al enviar, SAP crea el cliente y devuelve el número.</p>'}<button class="btn pri" id="bsap" style="width:100%">${s.estatus==='error_sap'?'Reintentar envío a SAP':'Enviar a SAP'}</button></div>` : `<div class="card panel"><h3>Autorizada</h3><p class="help">Pendiente de envío a SAP por tu jefe.</p></div>`;
+  if(s.estatus==='en_sap') side+=`<div class="card panel"><h3>Alta en SAP completada</h3>${s.sap_log?.simulado?'<span class="pill s-por_autorizar">Simulado, SAP aún no conectado</span>':''}<div class="help" style="margin-top:8px">Número de cliente</div><div class="bignum">${esc(s.num_cliente_sap)}</div><div class="help">${fmtF(s.sap_at)}</div></div>`;
+  side+=`<div class="card panel"><h3>Historial</h3><ul class="tl">${S.eventos.map(e=>`<li><b>${({enviada_a_autorizacion:'Enviada a autorización',autorizada:'Autorizada',rechazada:'Rechazada',alta_en_sap:'Alta en SAP',error_sap:'Error SAP'})[e.accion]||e.accion}</b> · ${esc(e.ac_perfiles?.nombre||'')}${e.comentario?`<br>${esc(e.comentario)}`:''}<br><span>${new Date(e.created_at).toLocaleString('es-MX')}</span></li>`).join('')||'<li class="help">Sin movimientos</li>'}</ul></div>`;
+  $('main').innerHTML=`<button class="btn sm" id="back">← Solicitudes</button><div class="head" style="margin-top:10px"><div><h1>${esc(s.razon_social||'(sin nombre)')}</h1><p class="sub"><span class="mono">${String(s.folio).padStart(4,'0')}</span> · ${esc(s.oficina||'')}</p></div><span class="pill s-${s.estatus}">${ESTATUS[s.estatus]}</span></div><div class="dgrid"><div class="card panel">${det}</div><div>${side}</div></div>`;
+  $('back').onclick=()=>ir('list');
+  $('main').querySelectorAll('[data-doc]').forEach(b=>b.onclick=()=>verDoc(s[b.dataset.doc+'_path']));
+  const be=$('bedit'); if(be) be.onclick=()=>editar(s);
+  const accion=async(fn,msg)=>{ const {error}=await fn(); if(error) return toast(error.message); toast(msg); await abrir(s.id); };
+  if($('bauth')) $('bauth').onclick=()=>accion(()=>sb.rpc('ac_autorizar',{p_id:s.id}),'Solicitud autorizada');
+  if($('brej')) $('brej').onclick=()=>accion(()=>sb.rpc('ac_rechazar',{p_id:s.id,p_motivo:$('motivo').value}),'Solicitud rechazada');
+  if($('bsap')) $('bsap').onclick=async()=>{ const b=$('bsap'); b.disabled=true; b.textContent='Enviando a SAP…';
+    const {data,error}=await sb.functions.invoke('enviar-sap',{body:{id:s.id}});
+    if(error||data?.error){ let m=data?.error||error.message; try{ const j=await error.context.json(); m=j.error||m }catch{} toast(m); } else toast('Cliente '+data.numero_cliente+' dado de alta en SAP');
+    await abrir(s.id); };
+}
+boot();
+</script>
+</body>
+</html>
