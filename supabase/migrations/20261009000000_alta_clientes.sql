@@ -150,3 +150,6 @@ create policy ac_doc_insert on storage.objects for insert to authenticated with 
   bucket_id = 'ac-documentos' and (storage.foldername(name))[1] = auth.uid()::text);
 create policy ac_doc_update on storage.objects for update to authenticated using (
   bucket_id = 'ac-documentos' and (storage.foldername(name))[1] = auth.uid()::text);
+
+-- Permisos de tabla para la API (las reglas RLS limitan qué filas ve cada quien)
+grant select, insert, update, delete on public.ac_perfiles, public.ac_solicitudes, public.ac_eventos to authenticated;
